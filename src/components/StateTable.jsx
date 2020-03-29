@@ -11,7 +11,7 @@ export class StateTable extends Component {
     render() {
         return (
             <div className="state-table-container">
-                <div style={{ width: "inherit", textAlign: "right", fontSize: "13px", margin: "8px 0px 4px 0px" }}>
+                <div className="affectedDiv" >
                     <span>{this.props.affectedState} STATES/UTS AFFECTED</span>
                 </div>
                 {/* <StateTable stateData={this.state.stateData} isDark={this.props.isDark} /> */}
@@ -32,7 +32,7 @@ export class StateTable extends Component {
                                 return (
                                     obj.confirmed !== 0 &&
                                     <tr key={obj.state}
-                                        style={{ background: `${index % 2 !== 0 ? this.props.isDark ? 'rgb(173, 173, 173)' : '#eee' : ''}` }}
+                                        style={{ background: `${index % 2 !== 0 ? this.props.isDark ? '' : '#eee' : ''}` }}
                                     // onMouseOver={() => console.log(err)}
                                     >
                                         <td>></td>

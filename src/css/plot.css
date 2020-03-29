@@ -85,10 +85,10 @@
     /* State Details Container End */
     /* TABLE CSS START */
     
-    .state-table-container {
-        width: 40%;
-        margin: 0px auto;
-    }
+    .state-table-container { width: 100%; margin: 0px auto; padding: 15px;  }
+    .state-table-container .affectedDiv{ text-align: center; margin: 10px 0; }
+    .state-table{ display: inline;}
+    .state-table-container table thead, .state-table-container table tbody{ display: table; width: 90%; }
     
     .state-table {
         font-family: sans-serif;
@@ -103,17 +103,10 @@
         font-size: 11px;
     }
     
-    .state-table th {
-        /* background-color: rgb(141, 133, 211); */
-        border-radius: 10px;
-    }
-    
-    .state-table tr {}
-    
     td {
         border: solid 1px transparent;
         border-style: solid none;
-        border-radius: 10px;
+        border-radius: 0px;
     }
     
     td:nth-child(3),
@@ -122,14 +115,13 @@
     td:nth-child(6) {
         text-align: right;
     }
-    
-    .state-table tr:nth-child(even) {
-        /* background-color: ; */
-    }
-    
-    .state-table tr:hover {
-        background-color: rgb(202, 177, 177);
-    }
+    .state-table td, .state-table th{ display: inline-block;  text-align: center; width:120px; font-size: 14px; }
+    .state-table td:nth-child(1), .state-table th:nth-child(1){ width:20px; }
+    .state-table thead tr:first-child{ background: rgb(50, 58, 70) !important; border-top-left-radius: 3px; color:#fff !important;}
+    .state-table thead tr th{ font-weight: 400; }
+    .state-table td:nth-child(2), .state-table th:nth-child(2){ width:200px; text-align: left; }
+    .state-table tbody tr:nth-child(2n+2){ background-color: #1c1c1c; }
+    .state-table tr:hover { background-color:rgb(50, 58, 70) !important; cursor: pointer;  }
     
     .state-table td:nth-child(1) {
         color: aqua;

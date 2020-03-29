@@ -64,7 +64,7 @@ body {
     left: 0; text-align: center;
 }
 .footer h5{margin-top: 18px; color: #adadad;}
-.site-holder{ height: 100vh; display: inline-block;}
+.site-holder{ height: 100%; display: inline-block;}
 .no-details-right { width: 100%; text-align: center; margin: 10px 0px; font-size: 1.4em; font-weight: bold; }
 
 .today-delta {
@@ -76,6 +76,8 @@ body {
 
 #rate-percent { width: fit-content; text-align: center; margin: 0 auto; padding: 4px; border-radius: 10px; font-size: 12px; }
 .progress-bar { width: 100px; margin: 0 auto; }
+
+.state-table-container{ width: 100%; display: inline-block; transform: translateX(30%); max-width: 840px; margin-bottom:100px !important; }
 
 @media(max-width:767px) {
     /*.tabs-container, .main-cont{ display: none !important;}
