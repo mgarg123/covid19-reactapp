@@ -1,0 +1,180 @@
+    .plot-cont {
+        width: auto;
+        margin: 15px auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .map-container {
+        display: flex;
+        justify-content: center;
+        height: 450px;
+        width: 45%;
+    }
+    
+    .plot-cont-heading {
+        width: 100vw;
+        /* color: #fff; */
+        font-weight: bold;
+        text-align: center;
+        margin: 8px auto;
+        font-size: 1.3em;
+    }
+    
+    .plot-cont-heading span {
+        padding: 10px 0px;
+    }
+    
+    .path-region:hover {
+        stroke: rgb(255, 0, 119);
+        fill: rgb(255, 6, 172);
+    }
+    
+    #india-map {
+        width: 100vw;
+        height: 450px;
+    }
+    /* State Details Container */
+    
+    .state-details-cont {
+        padding-bottom: 20px;
+        width: 15%;
+        height: 370px;
+    }
+    
+    .state-name {
+        font-weight: bold;
+        font-family: sans-serif;
+        padding: 10px 6px;
+        text-align: center;
+        font-size: 14px;
+    }
+    
+    .state-details {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: space-evenly;
+        font-weight: bold;
+        padding-top: 5px;
+        align-items: center;
+    }
+    
+    .state-det-1 {
+        border: 0.4px solid rgb(43, 42, 42);
+        width: 63px;
+        height: 65px;
+        box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.4);
+        text-align: center;
+        margin: 0px 8px;
+    }
+    
+    .status-name {
+        text-align: center;
+        padding: 6px 0px;
+    }
+    
+    .status-val {
+        text-align: center;
+        padding: 6px 0px;
+    }
+    /* State Details Container End */
+    /* TABLE CSS START */
+    
+    .state-table-container {
+        width: 40%;
+        margin: 0px auto;
+    }
+    
+    .state-table {
+        font-family: sans-serif;
+        border-collapse: collapse;
+        border-radius: 5px;
+        margin: 5px 0px;
+    }
+    
+    .state-table td,
+    .state-table th {
+        padding: 5px;
+        font-size: 11px;
+    }
+    
+    .state-table th {
+        /* background-color: rgb(141, 133, 211); */
+        border-radius: 10px;
+    }
+    
+    .state-table tr {}
+    
+    td {
+        border: solid 1px transparent;
+        border-style: solid none;
+        border-radius: 10px;
+    }
+    
+    td:nth-child(3),
+    td:nth-child(4),
+    td:nth-child(5),
+    td:nth-child(6) {
+        text-align: right;
+    }
+    
+    .state-table tr:nth-child(even) {
+        /* background-color: ; */
+    }
+    
+    .state-table tr:hover {
+        background-color: rgb(202, 177, 177);
+    }
+    
+    .state-table td:nth-child(1) {
+        color: aqua;
+        font-weight: bold;
+        ;
+    }
+    /* Table CSS END */
+    /* Pie Chart AFFECTED AGE GROUP START */
+    
+    .graphs-main-cont {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .graph-container {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .daily-trend-container {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-left: 1px solid rgb(182, 182, 182);
+    }
+    
+    @media(max-width:600px) {
+        .state-table-container {
+            width: 97%;
+            margin: 0 auto;
+        }
+        .map-container {
+            width: 80%;
+        }
+        .state-details-cont {
+            width: 20%;
+        }
+        .graphs-main-cont {
+            flex-direction: column;
+        }
+        .graph-container {
+            margin: 0 auto;
+            width: 100%;
+        }
+        .daily-trend-container {
+            width: 100%;
+        }
+    }
