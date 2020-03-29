@@ -1,17 +1,16 @@
     .plot-cont {
-        width: auto;
-        margin: 15px auto;
+        width: 50%;
+        margin: 0 auto;
         display: inline-block;
         flex-direction: row;
         flex-wrap: wrap;
         float: left;
-        max-width: 55%;
     }
     
     .map-container {
-        display: inline-block;
+        /* display: inline-block; */
         justify-content: center;
-        height: 450px;
+        height: auto;
         width: 45%;
         float: left;
     }
@@ -159,12 +158,16 @@
         border-left: 1px solid rgb(182, 182, 182);
     }
     
-    @media(max-width:600px) {
+    @media(max-width:767px) {
+        .plot-cont {
+            margin: 0;
+            width: auto;
+            max-width: 100%;
+        }
         .state-table-container {
             width: 97%;
             margin: 0 auto;
         }
-        
         .state-details-cont {
             width: 20%;
         }

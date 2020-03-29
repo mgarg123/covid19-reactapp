@@ -40,9 +40,9 @@ export class IndiaSvg extends Component {
             <svg
                 id="ind-svg"
                 ref={this.svgRef}
-                width={350}
-                height={400}
-                viewBox="140 -50 510 500"
+                width={320}
+                height={390}
+                viewBox="140 -50 580 520"
                 preserveAspectRatio="xMidYMid meet"
             >
                 <g className="states">
