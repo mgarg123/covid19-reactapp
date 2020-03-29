@@ -88,7 +88,7 @@ function App() {
   return (
     <Fragment>
       <div className="site-holder" style={{
-        background: `${isDarkMode ? "#282e38" : "#fff"}`,
+        background: `${isDarkMode ? "#262626" : "#fff"}`,
         color: `${isDarkMode ? '#fff' : '#2d2d2d'}`
       }}>
         <Header isDarkCallBack={isDarkModeActive} />

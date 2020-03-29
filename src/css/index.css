@@ -11,17 +11,18 @@ body {
     font-family: sans-serif;
 }
 
-.main-cont {}
+.main-cont { width: 100%;
+    display: block;
+    float: left; 
+}
 
 .header {
-    background: rgb(55, 44, 95);
-    clear: both;
-    width: 100vw;
-    height: 50px;
-    padding: 0px 12px;
-    box-shadow: 1px 5px 30px 3px rgba(0, 0, 0, 0.5);
-    box-sizing: border-box;
+    background: #2e97d3; clear: both; width: 100vw; height: 70px; padding: 10px 12px; box-shadow: 1px 5px 30px 3px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box; margin-bottom: 20px;
 }
+.tabs-container .tabs{ background: rgb(40, 44, 49); transition: 0.3s; margin-right: 5px; }
+.tabs-container .tabs:hover{ background: rgb(50, 58, 70); }
+.tabs-container .tabs:last-child{ margin-right: 0px; }
 
 #heading {
     color: #fff;
@@ -48,64 +49,23 @@ body {
     align-items: center
 }
 
-.react-switch {}
+.current-number-container {  float: left; margin: 0 auto; width: 45%; text-align: center; }
+.total-numbers { width: 40%; float: left; padding:15px; margin: 15px;  box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.5); }
 
-.current-number-container {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    justify-items: center;
-    margin: 0 auto;
+#number-details-heading { font-weight: bold; font-size: 1em; letter-spacing: 0.2px; width: 100%; text-align: center; margin: 8px 0px; }
+.moer-details { display: flex; justify-content: center; justify-items: center; flex-wrap: wrap;
+    clear: both; width: 100%; height: 100%; padding-top: 2px;
 }
-
-.total-numbers {
-    /* background: #323A46; */
-    /* border: 0.3px solid rgb(80, 73, 73); */
-    /* color: #fff; */
-    width: 150px;
-    height: 150px;
-    margin-top: 6px;
-    box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.5);
+.material-icons{ margin: 0px 5px; }
+.no-details-left { margin: 10px 0px; width: 100%; }
+.footer{
+    display: inline-block; justify-content: center; align-items: center; width: 100vw; height: 50px; background: #1c1c1c;
+    position: fixed; bottom: 0px;
+    left: 0; text-align: center;
 }
-
-#number-details-heading {
-    font-weight: bold;
-    font-size: 1em;
-    letter-spacing: 0.2px;
-    width: 150px;
-    text-align: center;
-    margin: 8px 0px;
-}
-
-#number-details-heading span {}
-
-.moer-details {
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    flex-wrap: wrap;
-    clear: both;
-    width: 100%;
-    height: 100%;
-    padding-top: 2px;
-}
-
-.no-details-left {
-    margin: 4px 0px;
-    width: 150px;
-}
-
-.no-details-right {
-    width: 150px;
-    text-align: center;
-    margin: 6px 0px;
-    font-size: 1.4em;
-    font-weight: bold;
-    height: 30px;
-    padding: 8px 0px;
-}
-
-.no-details-right span {}
+.footer h5{margin-top: 18px; color: #adadad;}
+.site-holder{ height: 100vh; display: inline-block;}
+.no-details-right { width: 100%; text-align: center; margin: 10px 0px; font-size: 1.4em; font-weight: bold; }
 
 .today-delta {
     height: 30px;
@@ -114,20 +74,21 @@ body {
     text-align: center;
 }
 
-#rate-percent {
-    width: fit-content;
-    text-align: center;
-    margin: 0 auto;
-    padding: 3px 3px;
-    border-radius: 10px;
-    font-size: 12px;
+#rate-percent { width: fit-content; text-align: center; margin: 0 auto; padding: 4px; border-radius: 10px; font-size: 12px; }
+.progress-bar { width: 100px; margin: 0 auto; }
+
+@media(max-width:767px) {
+    /*.tabs-container, .main-cont{ display: none !important;}
+    html, body, #root, .site-holder{ width:100%; float: left; display: inline-block;}
+    .header{ height: 100px;}
+    #heading{ width:100%; margin-bottom:10px; }    
+    #switch-theme{ margin: 0 auto; float: left; padding-left: 0px; display: inline-block; margin-bottom:20px; }
+    .current-number-container{ width: 100%; margin-bottom: 20px; }
+    .total-numbers{ width: 100%; margin:0px 0 20px 0; padding:0px; }
+    .plot-cont{ width:100%; max-width: 100%;}
+    .state-details-cont{ height: auto !important; padding-bottom:0px; width: 100% !important;}
+    .state-details .state-det-1{ float: left; }
+    .map-container{ width: 100% !important; }
+    .header, .footer, .map-container svg{ width: 100%;}
+    .footer{ position: relative; }*/
 }
-
-.progress-bar {
-    width: 100px;
-    margin: 0 auto;
-}
-
-.progress-bar hr {}
-
-@media(max-width:700px) {}

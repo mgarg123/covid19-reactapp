@@ -23,17 +23,17 @@ export class HeaderTab extends Component {
         return (
             <div className="tabs-container" style={{ color: "#fff" }}>
                 <div className="tabs"
-                    style={{ background: `${this.state.isStatsClicked ? "rgb(87, 64, 169)" : ""}` }}
+                    style={{ background: `${this.state.isStatsClicked ? "rgb(50, 58, 70)" : ""}` }}
                     onClick={() => this.setState({ isStatsClicked: true, isStatewiseClicked: false, isGraphsClicked: false })}>
                     <span>Current Statistics</span>
                 </div>
                 <div className="tabs"
-                    style={{ background: `${this.state.isStatewiseClicked ? "rgb(87, 64, 169)" : ""}` }}
+                    style={{ background: `${this.state.isStatewiseClicked ? "rgb(50, 58, 70)" : ""}` }}
                     onClick={() => this.setState({ isStatsClicked: false, isStatewiseClicked: true, isGraphsClicked: false })}>
                     <span>Data List</span>
                 </div>
                 <div className="tabs"
-                    style={{ background: `${this.state.isGraphsClicked ? "rgb(87, 64, 169)" : ""}` }}
+                    style={{ background: `${this.state.isGraphsClicked ? "rgb(50, 58, 70)" : ""}` }}
                     onClick={() => this.setState({ isStatsClicked: false, isStatewiseClicked: false, isGraphsClicked: true })}>
                     <span>Graphical Data</span>
                 </div>

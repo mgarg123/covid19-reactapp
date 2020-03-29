@@ -1,20 +1,23 @@
     .plot-cont {
         width: auto;
         margin: 15px auto;
-        display: flex;
+        display: inline-block;
         flex-direction: row;
         flex-wrap: wrap;
+        float: left;
+        max-width: 55%;
     }
     
     .map-container {
-        display: flex;
+        display: inline-block;
         justify-content: center;
         height: 450px;
         width: 45%;
+        float: left;
     }
     
     .plot-cont-heading {
-        width: 100vw;
+        width: 100%;
         /* color: #fff; */
         font-weight: bold;
         text-align: center;
@@ -39,22 +42,22 @@
     
     .state-details-cont {
         padding-bottom: 20px;
-        width: 15%;
+        width: 120px;
         height: 370px;
+        float: left;
     }
     
     .state-name {
         font-weight: bold;
         font-family: sans-serif;
-        padding: 10px 6px;
-        text-align: center;
+        padding: 0px;
+        text-align: left;
         font-size: 14px;
+        height: 45px;
     }
     
     .state-details {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
+        display: inline-block;
         justify-content: space-evenly;
         font-weight: bold;
         padding-top: 5px;
@@ -67,7 +70,7 @@
         height: 65px;
         box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.4);
         text-align: center;
-        margin: 0px 8px;
+        margin: 0px;
     }
     
     .status-name {
@@ -161,9 +164,7 @@
             width: 97%;
             margin: 0 auto;
         }
-        .map-container {
-            width: 80%;
-        }
+        
         .state-details-cont {
             width: 20%;
         }
