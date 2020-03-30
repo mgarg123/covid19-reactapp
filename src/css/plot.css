@@ -96,7 +96,8 @@
             
             .state-table-container .affectedDiv {
                 text-align: center;
-                margin: 10px 0 20px 0;
+                margin: 15px 0 0px 0;
+                font-size: 15px;
             }
             
             .state-table-container table thead,
@@ -169,7 +170,7 @@
             }
             
             .state-table tr:hover {
-                background-color: rgb(50, 58, 70) !important;
+                background-color: rgb(122, 122, 122) !important;
                 cursor: pointer;
             }
             
@@ -183,7 +184,8 @@
             
             .graphs-main-cont {
                 display: flex;
-                flex-direction: row; padding: 30px 0 50px 0;
+                flex-direction: row;
+                padding: 30px 0 50px 0;
             }
             
             .graph-container {
@@ -192,6 +194,8 @@
                 justify-content: center;
                 align-items: center;
             }
+            
+            .chartjs-render-monitor {}
             
             .daily-trend-container {
                 width: 50%;
@@ -231,21 +235,62 @@
                     width: 100%;
                     border-right: none;
                 }
-                /* .highcharts-container {
-            width: 350px !important;
-            height: 300px !important;
-        }
-        .highcharts-root {
-            width: 350px;
-            height: 450px !important;
-            color: #fff;
-        }
-        .highcharts-container svg:last-of-type {
-            transform-box: border-box;
-            height: 80%;
-            width: 100%;
-        } */
-                /* .highcharts-background {
-            fill: #1c1c1c;
-        } */
+                .chartjs-render-monitor {
+                    width: 703px;
+                }
+                /* Responsive Table CSS */
+                .state-table-container {
+                    transform: none;
+                    padding: 0;
+                }
+                .state-table-container table thead,
+                .state-table-container table tbody {
+                    display: table;
+                    font-size: 10px !important;
+                    /* margin: 0 auto; */
+                    /* text-align: center; */
+                    transform: none;
+                }
+                /* tr th {
+                    width: 40px;
+                }
+                .state-table tr td {
+                    width: 40px;
+                } */
+                /* .state-table td:nth-child(2),
+                .state-table th:nth-child(2) {
+                    width: fit-content;
+                    text-align: left;
+                } */
+                .state-table td,
+                .state-table th {
+                    display: table-cell;
+                    text-align: right;
+                }
+                .state-table thead tr th {
+                    font-size: 11px;
+                }
+                .state-table thead tr {
+                    width: 100%;
+                }
+                .state-table thead tr th:nth-child(1) {
+                    width: 5%;
+                }
+                .state-table thead tr th:nth-child(2) {
+                    width: 24%;
+                    padding-left: 6px;
+                    text-align: left;
+                }
+                .state-table thead tr th:nth-last-child(1) {
+                    padding-right: 2px;
+                    text-align: right;
+                }
+                .state-table tbody tr td {
+                    text-align: right;
+                }
+                .state-table thead tr th {
+                    text-align: right;
+                    padding: 6px 0px;
+                    width: 100vw;
+                }
             }

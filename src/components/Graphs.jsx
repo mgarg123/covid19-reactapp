@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import '../css/plot.css'
-//import DailyTrendGraph from './DailyTrendGraph'
 import AgeGroupChart from './AgeGroupChart'
 import DailyTrends from './DailyTrends'
 export class Graphs extends Component {

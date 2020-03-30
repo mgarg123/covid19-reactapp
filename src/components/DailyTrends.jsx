@@ -1,8 +1,6 @@
-import React, { Component, createRef } from 'react'
-import HighchartsReact from 'highcharts-react-official';
-import HighchartsGroupedCategories from 'highcharts-grouped-categories';
-import Highcharts from 'highcharts';
-
+import React, { Component } from 'react'
+import HighchartsReact from 'highcharts-react-official'
+import Highcharts from 'highcharts'
 import axios from 'axios'
 
 class DailyTrends extends Component {

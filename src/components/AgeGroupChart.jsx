@@ -8,30 +8,7 @@ export class AgeGroupChart extends Component {
         super(props)
         this.state = {
             ageData: [],
-            data: {
-                labels: ['Age 0-12', 'Age 13-25', 'Age 26-40',
-                    'Age 40-59', 'Age 60+'],
-                datasets: [
-                    {
-                        label: 'Rainfall',
-                        backgroundColor: [
-                            '#B21F00',
-                            '#C9DE00',
-                            '#2FDE00',
-                            '#00A6B4',
-                            '#6800B4'
-                        ],
-                        hoverBackgroundColor: [
-                            '#501800',
-                            '#4B5000',
-                            '#175000',
-                            '#003350',
-                            '#35014F'
-                        ],
-                        data: [],
-                    }
-                ]
-            }
+            data: {}
         }
     }
 
@@ -104,7 +81,8 @@ export class AgeGroupChart extends Component {
                             labels: {
                                 fontColor: `${this.props.isDark ? '#fff' : '#2d2d2d'}`
                             }
-                        }
+                        },
+                        responsive: true
                     }}
 
                 />
