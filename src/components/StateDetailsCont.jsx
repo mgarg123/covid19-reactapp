@@ -20,7 +20,6 @@ export class StateDetailsCont extends Component {
         let url = "https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise"
         axios.get(url).then(response => {
             let data = response.data.data
-            let count = 0
             this.setState({
                 stateData: data.statewise,
                 recovered: data.statewise[1].recovered,
