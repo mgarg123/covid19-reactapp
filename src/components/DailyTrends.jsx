@@ -1,6 +1,8 @@
 import React, { Component, createRef } from 'react'
-import HighchartsReact from 'highcharts-react-official'
-import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official';
+import HighchartsGroupedCategories from 'highcharts-grouped-categories';
+import Highcharts from 'highcharts';
+
 import axios from 'axios'
 
 class DailyTrends extends Component {
@@ -34,7 +36,8 @@ class DailyTrends extends Component {
 
             this.setState({
                 labels: labels,
-                confirmeds: confirmeds
+                confirmeds: confirmeds,
+                apiresponseData: data
             })
 
 
@@ -42,10 +45,93 @@ class DailyTrends extends Component {
 
     }
 
+    loadDayData = (event) =>{
+        let data = this.state.apiresponseData;
+        //It's important to use Numeric Values dataset in order to plot the graph else the graph will be blank
+        let labels = data.cases_time_series.map(x => x.dailyconfirmed !== "0" && x.date).filter(x => x !== false)
+        let confirmeds = data.cases_time_series.map(x => x.dailyconfirmed !== "0" && parseInt(x.dailyconfirmed)).filter(x => x !== false)
+        // let labels = data.cases_time_series.map(x => x.date)
+        // let confirmeds = data.cases_time_series.map(x => parseInt(x.dailyconfirmed))     
+
+        this.setState({
+            labels: labels,
+            confirmeds: confirmeds
+        })        
+    }
+
+    loadWeekData = (event) =>{
+        let apiData = this.state.apiresponseData;
+        var weekCount = 0;
+        var weekdata = 0;
+        var weeklyDataSub = [];
+        var weeklyLabel = [];
+        var weekLabel = '';
+        apiData.cases_time_series.map( function(data){
+            console.log(data );
+            weekCount++;
+            if( weekCount == 1){
+                weekLabel = data.date;
+            }
+            
+            weekdata = parseInt(weekdata) + parseInt(data.dailyconfirmed);
+            if( weekCount == 7 ){
+                weekLabel = weekLabel+' - '+data.date;
+                weeklyLabel.push( weekLabel );
+                weeklyDataSub.push( weekdata );
+                weekdata = 0;
+                weekCount = 0;
+                weekLabel ='';
+            }
+        } );
+        
+        this.setState({
+            labels: weeklyLabel,
+            confirmeds: weeklyDataSub
+        });        
+    }
+
+    loadMonthData = (event) =>{
+        let apiData = this.state.apiresponseData;
+        
+        var monthlyConfirmedCase = [];
+        var monthlyLabel = [];
+        var Count = 0;
+        var confirmedCases = 0;
+        var previousMonth = '';
+        apiData.cases_time_series.map( function(data){
+            Count++;
+            var dated = data.date;
+            dated = dated.split(' ');
+            var month = dated[1];
+            if( previousMonth == '' ){
+                previousMonth = month;
+            }
+            if( month == previousMonth ){
+                confirmedCases = parseInt(confirmedCases) + parseInt(data.dailyconfirmed);
+            }else{
+                monthlyConfirmedCase.push(confirmedCases);
+                previousMonth = month;
+            }
+            if( Count == apiData.cases_time_series.length ){
+                monthlyConfirmedCase.push(confirmedCases);
+            }
+            if( month && monthlyLabel.indexOf(month) == -1 ){
+                monthlyLabel.push( month );
+            }
+            
+        } );
+
+        this.setState({
+            labels: monthlyLabel,
+            confirmeds: monthlyConfirmedCase
+        });
+    }
+
     render() {
-        console.log(this.state.labels);
-        console.log(this.state.confirmeds);
-        return (
+        //console.log(this.state.labels);
+        //console.log(this.state.confirmeds);
+       
+         return (
             <div className="daily-trend-container">
                 <span style={{
                     textAlign: 'center',
@@ -55,6 +141,11 @@ class DailyTrends extends Component {
                     fontWeight: 'bold'
                 }}>Daily Spread Trends</span>
                 <div className="daily-trends">
+                    <div className="buttons">
+                        <button onClick={this.loadDayData} id="day">Day</button>
+                        <button onClick={this.loadWeekData} id="week">Week</button>
+                        <button onClick={this.loadMonthData} id="month">Month</button>
+                    </div>
                     <HighchartsReact
                         // ref={this.chartRef}
                         highcharts={Highcharts}
@@ -62,6 +153,11 @@ class DailyTrends extends Component {
                             chart: {
                                 zoomType: 'xy',
                                 backgroundColor: `${this.props.isDark ? 'transparent' : '#fff'}`,
+                            },
+                            dateRangeGrouping: {
+                                dayFormat: { month: 'numeric', day: 'numeric', year: 'numeric' },                               
+                                weekFormat: { month: 'numeric', day: 'numeric', year: 'numeric' },                               
+                                monthFormat: { month: 'numeric', year: 'numeric'  }   
                             },
                             credits: {
                                 enabled: false
@@ -77,6 +173,7 @@ class DailyTrends extends Component {
                             xAxis: [{
                                 // type: 'datetime',
                                 categories: this.state.labels,
+                                //categories: categories,
                                 crosshair: true,
                                 labels: {
                                     style: {
