@@ -9,8 +9,8 @@ export class AgeGroupChart extends Component {
         this.state = {
             ageData: [],
             data: {
-                labels: ['0-12', '13-25', '26-40',
-                    '40-59', '60+'],
+                labels: ['Age 0-12', 'Age 13-25', 'Age 26-40',
+                    'Age 40-59', 'Age 60+'],
                 datasets: [
                     {
                         label: 'Rainfall',
@@ -49,8 +49,8 @@ export class AgeGroupChart extends Component {
             this.setState({ ageData: ageData })
 
             let newData = {
-                labels: ['0-12', '13-25', '26-40',
-                    '40-59', '60+'],
+                labels: ['Age 0-12', 'Age 13-25', 'Age 26-40',
+                    'Age 40-59', 'Age 60+'],
                 datasets: [
                     {
                         label: 'Age',

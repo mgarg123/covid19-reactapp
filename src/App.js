@@ -21,7 +21,7 @@ function App() {
   const [affectedState, setAffectedState] = useState(0)
   const [stats, setStats] = useState({})
   const [keyValues, setKeyValues] = useState({})    //For Setting last updated and todays data
-
+  const [lastUpdated, setLastUpdated] = useState("")
 
 
   function isDarkModeActive(isDark) {
@@ -74,6 +74,22 @@ function App() {
       let data = response.data
 
       let obj = data.key_values[0]    //this obj has lastupdatedtime,deceaseddelta,confirmeddelta,reecovereddelta
+
+      //Setting up Last Updated Time
+      let lastUpTime = obj.lastupdatedtime.split(" ")[1].split(":")
+
+      let time = new Date()
+      let currHour = time.getHours()
+      let currMin = time.getMinutes()
+
+      if ((currHour - parseInt(lastUpTime[0]) === 0) && (currMin - parseInt(lastUpTime[1]) >= 0)) {
+        setLastUpdated(Math.abs(currMin - parseInt(lastUpTime[1])) + " Minutes")
+      } else if ((currHour - parseInt(lastUpTime[0]) !== 0) && (currMin - parseInt(lastUpTime[1]) <= 0)) {
+        setLastUpdated(60 - Math.abs(currMin - parseInt(lastUpTime[1])) + " Minutes")
+      } else {
+        setLastUpdated(Math.abs(currHour - parseInt(lastUpTime[0])) + " Hours")
+      }
+
       console.log(obj)
       setKeyValues(obj)
 
@@ -97,7 +113,7 @@ function App() {
         <Header isDarkCallBack={isDarkModeActive} />
         <HeaderTab tabClickedCallBack={whichTab} />
         {
-          isStatsClicked ? <CaseNumber isDark={isDarkMode} stats={stats} keyVals={keyValues} /> : isStatewiseClicked ? <StateTable
+          isStatsClicked ? <CaseNumber isDark={isDarkMode} stats={stats} keyVals={keyValues} lastUpdated={lastUpdated} /> : isStatewiseClicked ? <StateTable
             stateData={stateData}
             affectedState={affectedState}
             isDark={isDarkMode} /> :

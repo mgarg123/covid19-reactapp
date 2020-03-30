@@ -63,7 +63,9 @@ class DailyTrends extends Component {
                                 zoomType: 'xy',
                                 backgroundColor: `${this.props.isDark ? 'transparent' : '#fff'}`,
                             },
-
+                            credits: {
+                                enabled: false
+                            },
                             title: {
                                 text: '',
                                 style: {

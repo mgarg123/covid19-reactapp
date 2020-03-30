@@ -76,7 +76,22 @@ body {
     float: left;
     margin: 0 auto;
     width: 50%;
-    text-align: center;
+}
+
+.last-updated-at {
+    width: 100%;
+    text-align: left;
+    padding-left: 55px;
+    padding-top: 7px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+
+.current-cont {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
 
 .total-numbers {
@@ -211,8 +226,13 @@ body {
     .current-number-container {
         width: 100%;
         text-align: center;
+    }
+    .current-cont {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+    }
+    .last-updated-at {
+        padding-left: 23px;
     }
 }
