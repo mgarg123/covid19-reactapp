@@ -54,7 +54,8 @@
                 font-family: sans-serif;
                 padding: 0px;
                 font-size: 14px;
-                /* height: 45px; */
+                height: 45px;
+                text-align: left;
             }
             
             .state-details {
@@ -63,7 +64,7 @@
                 justify-content: space-evenly;
                 font-weight: bold;
                 padding-top: 5px;
-                align-items: center;
+                align-items: left;
             }
             
             .state-det-1 {
@@ -90,23 +91,21 @@
             .state-table-container {
                 width: 100%;
                 margin: 0px auto;
-                padding: 15px;
+                padding: 30px 0 50px 0;
             }
             
             .state-table-container .affectedDiv {
-                text-align: right;
-                margin: 0px 0;
-            }
-            
-            .state-table {
-                /* display: inline; */
+                text-align: center;
+                margin: 10px 0 20px 0;
             }
             
             .state-table-container table thead,
             .state-table-container table tbody {
-                display: table;
-                width: 90%;
+                display: inline-block;
                 font-size: 12px;
+                margin: 0 auto;
+                text-align: center;
+                transform: translateX(35%);
             }
             
             .state-table {
@@ -140,13 +139,13 @@
             .state-table th {
                 display: inline-block;
                 text-align: center;
-                /* width: 120px; */
-                /* font-size: 14px; */
+                width: 120px;
+                font-size: 14px;
             }
             
             .state-table td:nth-child(1),
             .state-table th:nth-child(1) {
-                /* width: 20px; */
+                width: 20px;
             }
             
             .state-table thead tr:first-child {
@@ -161,7 +160,7 @@
             
             .state-table td:nth-child(2),
             .state-table th:nth-child(2) {
-                /* width: 200px; */
+                width: 200px;
                 text-align: left;
             }
             
@@ -184,7 +183,7 @@
             
             .graphs-main-cont {
                 display: flex;
-                flex-direction: row;
+                flex-direction: row; padding: 30px 0 50px 0;
             }
             
             .graph-container {
