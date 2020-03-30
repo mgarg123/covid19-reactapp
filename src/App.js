@@ -11,15 +11,17 @@ import Graphs from './components/Graphs'
 
 
 
+
 function App() {
   const [isDarkMode, setDarkMode] = useState(true)
   const [isStatsClicked, setStatsClicked] = useState(true)
   const [isStatewiseClicked, setStatewiseClicked] = useState(false)
-  const [isGraphsClicked, setGraphsClicked] = useState(false)
+  // const [isGraphsClicked, setGraphsClicked] = useState(false)
   const [stateData, setStateData] = useState([])
   const [affectedState, setAffectedState] = useState(0)
   const [stats, setStats] = useState({})
   const [keyValues, setKeyValues] = useState({})    //For Setting last updated and todays data
+
 
 
   function isDarkModeActive(isDark) {
@@ -29,7 +31,7 @@ function App() {
   function whichTab(isStat, isState, isGraphs) {
     setStatsClicked(isStat)
     setStatewiseClicked(isState)
-    setGraphsClicked(isGraphs)
+    // setGraphsClicked(isGraphs)
   }
 
   useEffect(() => {
@@ -71,13 +73,14 @@ function App() {
     axios.get(url2).then(response => {
       let data = response.data
 
-      let obj = data.key_values[0]
+      let obj = data.key_values[0]    //this obj has lastupdatedtime,deceaseddelta,confirmeddelta,reecovereddelta
       console.log(obj)
       setKeyValues(obj)
 
     }).catch(error => {
       console.log(error.message)
     })
+
 
     return () => {
 

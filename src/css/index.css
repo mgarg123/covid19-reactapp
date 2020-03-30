@@ -142,6 +142,24 @@ body {
     font-weight: bold;
 }
 
+.footer h5 {
+    margin-top: 18px;
+    color: #adadad;
+}
+
+.site-holder {
+    height: 100%;
+    display: inline-block;
+}
+
+.no-details-right {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0px;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
 .today-delta {
     height: 30px;
     font-size: 12px;
@@ -161,6 +179,14 @@ body {
 .progress-bar {
     width: 100px;
     margin: 0 auto;
+}
+
+.state-table-container {
+    /* width: 100%; */
+    /* display: flex; */
+    /* transform: translateX(30%); */
+    /* max-width: 840px; */
+    margin-bottom: 100px !important;
 }
 
 @media(max-width:767px) {

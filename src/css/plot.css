@@ -1,184 +1,251 @@
-    .plot-cont {
-        width: 50%;
-        margin: 0 auto;
-        display: inline-block;
-        flex-direction: row;
-        flex-wrap: wrap;
-        float: left;
-    }
-    
-    .map-container {
-        /* display: inline-block; */
-        justify-content: center;
-        height: auto;
-        width: 45%;
-        float: left;
-    }
-    
-    .plot-cont-heading {
-        width: 100%;
-        /* color: #fff; */
-        font-weight: bold;
-        text-align: center;
-        margin: 8px auto;
-        font-size: 1.3em;
-    }
-    
-    .plot-cont-heading span {
-        padding: 10px 0px;
-    }
-    
-    .path-region:hover {
-        stroke: rgb(255, 0, 119);
-        fill: rgb(255, 6, 172);
-    }
-    
-    #india-map {
-        width: 100vw;
-        height: 450px;
-    }
-    /* State Details Container */
-    
-    .state-details-cont {
-        padding-bottom: 20px;
-        width: 120px;
-        height: 370px;
-        float: left;
-    }
-    
-    .state-name {
-        font-weight: bold;
-        font-family: sans-serif;
-        padding: 0px;
-        text-align: left;
-        font-size: 14px;
-        height: 45px;
-    }
-    
-    .state-details {
-        display: inline-block;
-        justify-content: space-evenly;
-        font-weight: bold;
-        padding-top: 5px;
-        align-items: center;
-    }
-    
-    .state-det-1 {
-        border: 0.4px solid rgb(43, 42, 42);
-        width: 63px;
-        height: 65px;
-        box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.4);
-        text-align: center;
-        margin: 0px;
-    }
-    
-    .status-name {
-        text-align: center;
-        padding: 6px 0px;
-    }
-    
-    .status-val {
-        text-align: center;
-        padding: 6px 0px;
-    }
-    /* State Details Container End */
-    /* TABLE CSS START */
-    
-    .state-table-container {
-        width: 40%;
-        margin: 0px auto;
-    }
-    
-    .state-table {
-        font-family: sans-serif;
-        border-collapse: collapse;
-        border-radius: 5px;
-        margin: 5px 0px;
-    }
-    
-    .state-table td,
-    .state-table th {
-        padding: 5px;
-        font-size: 11px;
-    }
-    
-    .state-table th {
-        /* background-color: rgb(141, 133, 211); */
-        border-radius: 10px;
-    }
-    
-    .state-table tr {}
-    
-    td {
-        border: solid 1px transparent;
-        border-style: solid none;
-        border-radius: 10px;
-    }
-    
-    td:nth-child(3),
-    td:nth-child(4),
-    td:nth-child(5),
-    td:nth-child(6) {
-        text-align: right;
-    }
-    
-    .state-table tr:nth-child(even) {
-        /* background-color: ; */
-    }
-    
-    .state-table tr:hover {
-        background-color: rgb(202, 177, 177);
-    }
-    
-    .state-table td:nth-child(1) {
-        color: aqua;
-        font-weight: bold;
-        ;
-    }
-    /* Table CSS END */
-    /* Pie Chart AFFECTED AGE GROUP START */
-    
-    .graphs-main-cont {
-        display: flex;
-        flex-direction: row;
-    }
-    
-    .graph-container {
-        width: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .daily-trend-container {
-        width: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-left: 1px solid rgb(182, 182, 182);
-    }
-    
-    @media(max-width:767px) {
-        .plot-cont {
-            margin: 0;
-            width: auto;
-            max-width: 100%;
+            .plot-cont {
+                width: 50%;
+                margin: 0 auto;
+                display: inline-block;
+                flex-direction: row;
+                flex-wrap: wrap;
+                /* float: left; */
+            }
+            
+            .map-container {
+                /* display: inline-block; */
+                justify-content: center;
+                height: auto;
+                width: 45%;
+                float: left;
+            }
+            
+            .plot-cont-heading {
+                width: 100%;
+                /* color: #fff; */
+                font-weight: bold;
+                text-align: center;
+                margin: 8px auto;
+                font-size: 1.3em;
+            }
+            
+            .plot-cont-heading span {
+                padding: 10px 0px;
+            }
+            
+            .path-region:hover {
+                stroke: rgb(255, 0, 119);
+                fill: rgb(255, 6, 172);
+            }
+            
+            #india-map {
+                width: 100vw;
+                height: 450px;
+            }
+            /* State Details Container */
+            
+            .state-details-cont {
+                padding-bottom: 20px;
+                width: 120px;
+                height: 370px;
+                float: left;
+                display: flex;
+                text-align: center;
+                flex-direction: column;
+            }
+            
+            .state-name {
+                font-weight: bold;
+                font-family: sans-serif;
+                padding: 0px;
+                font-size: 14px;
+                /* height: 45px; */
+            }
+            
+            .state-details {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                font-weight: bold;
+                padding-top: 5px;
+                align-items: center;
+            }
+            
+            .state-det-1 {
+                border: 0.4px solid rgb(43, 42, 42);
+                width: 63px;
+                height: 65px;
+                box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.4);
+                text-align: center;
+                margin: 0px;
+            }
+            
+            .status-name {
+                text-align: center;
+                padding: 6px 0px;
+            }
+            
+            .status-val {
+                text-align: center;
+                padding: 6px 0px;
+            }
+            /* State Details Container End */
+            /* TABLE CSS START */
+            
+            .state-table-container {
+                width: 100%;
+                margin: 0px auto;
+                padding: 15px;
+            }
+            
+            .state-table-container .affectedDiv {
+                text-align: right;
+                margin: 0px 0;
+            }
+            
+            .state-table {
+                /* display: inline; */
+            }
+            
+            .state-table-container table thead,
+            .state-table-container table tbody {
+                display: table;
+                width: 90%;
+                font-size: 12px;
+            }
+            
+            .state-table {
+                font-family: sans-serif;
+                border-collapse: collapse;
+                border-radius: 5px;
+                margin: 5px 0px;
+                width: 100%;
+            }
+            
+            .state-table td,
+            .state-table th {
+                padding: 5px;
+                font-size: 12px;
+            }
+            
+            td {
+                border: solid 1px transparent;
+                border-style: solid none;
+                border-radius: 0px;
+            }
+            
+            td:nth-child(3),
+            td:nth-child(4),
+            td:nth-child(5),
+            td:nth-child(6) {
+                text-align: right;
+            }
+            
+            .state-table td,
+            .state-table th {
+                display: inline-block;
+                text-align: center;
+                /* width: 120px; */
+                /* font-size: 14px; */
+            }
+            
+            .state-table td:nth-child(1),
+            .state-table th:nth-child(1) {
+                /* width: 20px; */
+            }
+            
+            .state-table thead tr:first-child {
+                background: rgb(50, 58, 70) !important;
+                border-top-left-radius: 3px;
+                color: #fff !important;
+            }
+            
+            .state-table thead tr th {
+                font-weight: 400;
+            }
+            
+            .state-table td:nth-child(2),
+            .state-table th:nth-child(2) {
+                /* width: 200px; */
+                text-align: left;
+            }
+            
+            .state-table tbody tr:nth-child(2n+2) {
+                background-color: #1c1c1c;
+            }
+            
+            .state-table tr:hover {
+                background-color: rgb(50, 58, 70) !important;
+                cursor: pointer;
+            }
+            
+            .state-table td:nth-child(1) {
+                color: aqua;
+                font-weight: bold;
+                ;
+            }
+            /* Table CSS END */
+            /* Pie Chart AFFECTED AGE GROUP START */
+            
+            .graphs-main-cont {
+                display: flex;
+                flex-direction: row;
+            }
+            
+            .graph-container {
+                width: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .daily-trend-container {
+                width: 50%;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                border-left: 1px solid rgb(182, 182, 182);
+            }
+            
+            .daily-trends {
+                width: 100%;
+            }
+            
+            @media(max-width:767px) {
+                .plot-cont {
+                    margin: 0;
+                    width: auto;
+                    max-width: 100%;
+                }
+                .state-table-container {
+                    width: 100%;
+                    margin: 0 auto;
+                }
+                .state-details-cont {
+                    width: 20%;
+                    margin-left: 0px;
+                }
+                .graphs-main-cont {
+                    flex-direction: column;
+                }
+                .graph-container {
+                    margin: 0 auto 50px auto;
+                    width: 100%;
+                }
+                .daily-trend-container {
+                    width: 100%;
+                }
+                /* .highcharts-container {
+            width: 350px !important;
+            height: 300px !important;
         }
-        .state-table-container {
-            width: 97%;
-            margin: 0 auto;
+        .highcharts-root {
+            width: 350px;
+            height: 450px !important;
+            color: #fff;
         }
-        .state-details-cont {
-            width: 20%;
-        }
-        .graphs-main-cont {
-            flex-direction: column;
-        }
-        .graph-container {
-            margin: 0 auto;
+        .highcharts-container svg:last-of-type {
+            transform-box: border-box;
+            height: 80%;
             width: 100%;
-        }
-        .daily-trend-container {
-            width: 100%;
-        }
-    }
+        } */
+                /* .highcharts-background {
+            fill: #1c1c1c;
+        } */
+            }

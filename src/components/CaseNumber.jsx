@@ -8,16 +8,23 @@ export class CaseNumber extends Component {
         super(props)
 
         this.state = {
-
+            lastUpdatedTime: ""
         }
     }
+
 
 
     render() {
         return (
             <Fragment>
                 <div className="main-cont">
-                    {/* <Header /> */}
+                    <div className='last-updated-at' style={{
+                        width: '100%',
+                        textAlign: 'right',
+                        paddingRight: '25px',
+                        paddingTop: '7px',
+                        color: 'lightgreen'
+                    }}>Last Updated 40 Minutes Ago</div>
                     <div className="current-number-container">
                         <CaseBox title={"Infected"}
                             bgColor={"rgb(1, 176, 230)"}
