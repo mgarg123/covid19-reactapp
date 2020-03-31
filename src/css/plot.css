@@ -46,6 +46,7 @@
                 float: left;
                 display: flex;
                 text-align: center;
+                justify-content: center;
                 flex-direction: column;
             }
             
@@ -54,16 +55,18 @@
                 font-family: sans-serif;
                 padding: 0px;
                 font-size: 14px;
-                height: 45px;
-                text-align: left;
+                height: auto;
+                text-align: center;
             }
             
             .state-details {
                 display: flex;
                 flex-direction: column;
-                justify-content: space-evenly;
+                justify-content: center;
+                align-items: center;
                 font-weight: bold;
                 padding-top: 5px;
+                /* margin-left: 5px; */
                 align-items: left;
             }
             

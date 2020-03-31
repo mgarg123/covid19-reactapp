@@ -26,8 +26,8 @@ export class AgeGroupChart extends Component {
             this.setState({ ageData: ageData })
 
             let newData = {
-                labels: ['Age 0-12', 'Age 13-25', 'Age 26-40',
-                    'Age 40-59', 'Age 60+'],
+                labels: ['0-12', '13-25', '26-40',
+                    '40-59', '60+'],
                 datasets: [
                     {
                         label: 'Age',
@@ -77,7 +77,7 @@ export class AgeGroupChart extends Component {
                         },
                         legend: {
                             display: true,
-                            position: 'right',
+                            position: `${window.screen.width <= 767 ? 'right' : 'bottom'}`,
                             labels: {
                                 fontColor: `${this.props.isDark ? '#fff' : '#2d2d2d'}`
                             }
