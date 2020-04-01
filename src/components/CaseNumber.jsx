@@ -29,11 +29,13 @@ export class CaseNumber extends Component {
                                 val={this.props.stats.confirmed}
                                 conf={this.props.stats.confirmed}
                                 todayDelta={this.props.keyVals.confirmeddelta}
+                                cls={'conf-no'}         //For Animating
                                 isDark={this.props.isDark} />
                             <CaseBox title={"Recovered"}
                                 bgColor={"rgb(42, 180, 7)"}
                                 val={this.props.stats.recovered}
                                 conf={this.props.stats.confirmed}
+                                cls={'rec-no'}
                                 todayDelta={this.props.keyVals.recovereddelta}
                                 isDark={this.props.isDark} />
                             <CaseBox title={"Deaths"}
@@ -41,11 +43,13 @@ export class CaseNumber extends Component {
                                 val={this.props.stats.deaths}
                                 conf={this.props.stats.confirmed}
                                 todayDelta={this.props.keyVals.deceaseddelta}
+                                cls={'dth-no'}
                                 isDark={this.props.isDark} />
                             <CaseBox title={"Active"}
                                 bgColor={"rgb(196, 4, 221)"}
                                 val={this.props.stats.active}
                                 conf={this.props.stats.confirmed}
+                                cls={'act-no'}
                                 isDark={this.props.isDark} />
                         </div>
                     </div>

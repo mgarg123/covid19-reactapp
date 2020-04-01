@@ -84,10 +84,11 @@ function App() {
 
       if ((currHour - parseInt(lastUpTime[0]) === 0) && (currMin - parseInt(lastUpTime[1]) >= 0)) {
         setLastUpdated(Math.abs(currMin - parseInt(lastUpTime[1])) + " Minutes")
-      } else if ((currHour - parseInt(lastUpTime[0]) !== 0) && (currMin - parseInt(lastUpTime[1]) <= 0)) {
+      }
+      else if ((currHour - parseInt(lastUpTime[0]) !== 0) && (currMin < parseInt(lastUpTime[1]))) {
         setLastUpdated(60 - Math.abs(currMin - parseInt(lastUpTime[1])) + " Minutes")
       } else {
-        setLastUpdated(Math.abs(currHour - parseInt(lastUpTime[0])) + " Hours")
+        setLastUpdated("About " + Math.abs(currHour - parseInt(lastUpTime[0])) + " Hours")
       }
 
       console.log(obj)

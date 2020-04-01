@@ -27,6 +27,9 @@ export class IndiaSvg extends Component {
 
         })
     }
+    componentWillUnmount() {
+        this.svgRef.current.removeEventListener("mouseover", () => { })
+    }
     componentDidUpdate(prevProps, prevState) {
         if (prevState.selectedState !== this.state.selectedState) {
             if (this.selectedState !== "chart") {

@@ -14,7 +14,7 @@ export class CaseBox extends Component {
     render() {
         return (
             <Fragment>
-                <div className="total-numbers confirmed-number"
+                <div className={`total-numbers ${this.props.cls}`}
                     style={{
                         background: `${this.props.isDark ? '#323A46' : '#fff'}`,
                         color: `${this.props.isDark ? '#fff' : '#222'}`

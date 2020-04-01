@@ -8,8 +8,9 @@ class DailyTrends extends Component {
         super(props)
 
         this.state = {
-            labels: ["30 January ", "31 January ", "01 February ", "02 February ", "03 February ", "04 February ", "05 February ", "06 February ", "07 February ", "08 February ", "09 February ", "10 February ", "11 February ", "12 February ", "13 February ", "14 February ", "15 February ", "16 February ", "17 February ", "18 February ", "19 February ", "20 February ", "21 February ", "22 February ", "23 February ", "24 February ", "25 February ", "26 February ", "27 February ", "28 February ", "29 February ", "01 March ", "02 March ", "03 March ", "04 March ", "05 March ", "06 March ", "07 March ", "08 March ", "09 March ", "10 March ", "11 March ", "12 March ", "13 March ", "14 March ", "15 March ", "16 March ", "17 March ", "18 March ", "19 March ", "20 March ", "21 March ", "22 March ", "23 March ", "24 March ", "25 March ", "26 March ", "27 March ", "28 March ", "29 March "],
-            confirmeds: ["1", "0", "0", "1", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2", "1", "22", "2", "1", "3", "5", "9", "15", "7", "12", "9", "16", "6", "14", "19", "25", "28", "59", "76", "69", "102", "66", "86", "78", "151", "143", "110"]
+            labels: [],
+            confirmeds: [],
+            toggledLine: true
         }
         // this.chartRef = createRef()
     }
@@ -43,7 +44,7 @@ class DailyTrends extends Component {
 
     }
 
-    loadDayData = (event) =>{
+    loadDayData = (event) => {
         let data = this.state.apiresponseData;
         //It's important to use Numeric Values dataset in order to plot the graph else the graph will be blank
         let labels = data.cases_time_series.map(x => x.dailyconfirmed !== "0" && x.date).filter(x => x !== false)
@@ -54,70 +55,70 @@ class DailyTrends extends Component {
         this.setState({
             labels: labels,
             confirmeds: confirmeds
-        })        
+        })
     }
 
-    loadWeekData = (event) =>{
+    loadWeekData = (event) => {
         let apiData = this.state.apiresponseData;
         var weekCount = 0;
         var weekdata = 0;
         var weeklyDataSub = [];
         var weeklyLabel = [];
         var weekLabel = '';
-        apiData.cases_time_series.map( function(data){
-            console.log(data );
+        apiData.cases_time_series.map((data) => {
+            console.log(data);
             weekCount++;
-            if( weekCount == 1){
+            if (weekCount === 1) {
                 weekLabel = data.date;
             }
-            
+
             weekdata = parseInt(weekdata) + parseInt(data.dailyconfirmed);
-            if( weekCount == 7 ){
-                weekLabel = weekLabel+' - '+data.date;
-                weeklyLabel.push( weekLabel );
-                weeklyDataSub.push( weekdata );
+            if (weekCount === 7) {
+                weekLabel = weekLabel + ' - ' + data.date;
+                weeklyLabel.push(weekLabel);
+                weeklyDataSub.push(weekdata);
                 weekdata = 0;
                 weekCount = 0;
-                weekLabel ='';
+                weekLabel = '';
             }
-        } );
-        
+        });
+
         this.setState({
             labels: weeklyLabel,
             confirmeds: weeklyDataSub
-        });        
+        });
     }
 
-    loadMonthData = (event) =>{
+    loadMonthData = (event) => {
         let apiData = this.state.apiresponseData;
-        
+
         var monthlyConfirmedCase = [];
         var monthlyLabel = [];
         var Count = 0;
         var confirmedCases = 0;
         var previousMonth = '';
-        apiData.cases_time_series.map( function(data){
+        apiData.cases_time_series.map((data) => {
             Count++;
             var dated = data.date;
             dated = dated.split(' ');
             var month = dated[1];
-            if( previousMonth == '' ){
+            if (previousMonth === '') {
                 previousMonth = month;
             }
-            if( month == previousMonth ){
+            if (month === previousMonth) {
                 confirmedCases = parseInt(confirmedCases) + parseInt(data.dailyconfirmed);
-            }else{
+            } else {
                 monthlyConfirmedCase.push(confirmedCases);
                 previousMonth = month;
             }
-            if( Count == apiData.cases_time_series.length ){
+            if (Count === apiData.cases_time_series.length) {
                 monthlyConfirmedCase.push(confirmedCases);
             }
-            if( month && monthlyLabel.indexOf(month) == -1 ){
-                monthlyLabel.push( month );
+            if (month && monthlyLabel.indexOf(month) === -1) {
+                monthlyLabel.push(month);
             }
-            
-        } );
+
+        });
 
         this.setState({
             labels: monthlyLabel,
@@ -125,21 +126,32 @@ class DailyTrends extends Component {
         });
     }
 
+    //For Toggling Column
+    toggleLine = (event) => {
+        this.setState((prevState, prevProps) => ({ toggledLine: !prevState.toggledLine }))
+    }
+
     render() {
         //console.log(this.state.labels);
         //console.log(this.state.confirmeds);
-       
-         return (
+
+        return (
             <div className="daily-trend-container">
                 <span style={{
                     textAlign: 'center',
                     color: `${this.props.isDark ? '#fff' : '#2d2d2d'}`,
-                    paddingTop: '10px',
+                    paddingTop: '-8px',
                     fontSize: '20px',
                     fontWeight: 'bold'
                 }}>Daily Spread Trends</span>
                 <div className="daily-trends">
-                    <div className="buttons">
+                    {/* <div className="buttons-left" style={{ border: '1px solid red' }}>
+                        
+                    </div> */}
+                    <div className="buttons" style={{ marginTop: '10px' }}>
+                        <button onClick={this.toggleLine} id="toggle-line"
+                            style={{ float: 'left', marginLeft: '2px' }}>Toggle Column
+                        </button>
                         <button onClick={this.loadDayData} id="day">Day</button>
                         <button onClick={this.loadWeekData} id="week">Week</button>
                         <button onClick={this.loadMonthData} id="month">Month</button>
@@ -153,9 +165,9 @@ class DailyTrends extends Component {
                                 backgroundColor: `${this.props.isDark ? 'transparent' : '#fff'}`,
                             },
                             dateRangeGrouping: {
-                                dayFormat: { month: 'numeric', day: 'numeric', year: 'numeric' },                               
-                                weekFormat: { month: 'numeric', day: 'numeric', year: 'numeric' },                               
-                                monthFormat: { month: 'numeric', year: 'numeric'  }   
+                                dayFormat: { month: 'numeric', day: 'numeric', year: 'numeric' },
+                                weekFormat: { month: 'numeric', day: 'numeric', year: 'numeric' },
+                                monthFormat: { month: 'numeric', year: 'numeric' }
                             },
                             credits: {
                                 enabled: false
@@ -220,14 +232,13 @@ class DailyTrends extends Component {
 
                             series: [{
                                 title: 'Confirmed Cases',
-                                type: 'column',
+                                type: `${this.state.toggledLine ? 'column' : 'spline'}`,
                                 yAxis: 1,
                                 data: this.state.confirmeds,
                                 color: `${this.props.isDark ? '#fff' : 'skyblue'}`,
                                 tooltip: {
                                     valueSuffix: ' infected'
-                                }
-
+                                },
                             }, {
                                 type: 'spline',
                                 data: this.state.confirmeds,

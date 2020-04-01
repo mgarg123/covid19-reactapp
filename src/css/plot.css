@@ -1,6 +1,6 @@
             .plot-cont {
                 width: 50%;
-                margin: 0 auto;
+                /* margin: 0 auto; */
                 display: inline-block;
                 flex-direction: row;
                 flex-wrap: wrap;
@@ -169,11 +169,12 @@
             }
             
             .state-table tbody tr:nth-child(2n+2) {
-                background-color: #1c1c1c;
+                /* background-color: #1c1c1c; */
+                background-color: rgb(177, 145, 145) !important;
             }
             
             .state-table tr:hover {
-                background-color: rgb(122, 122, 122) !important;
+                /* background-color: rgb(136, 134, 134) !important; */
                 cursor: pointer;
             }
             
@@ -272,12 +273,16 @@
                 }
                 .state-table thead tr th {
                     font-size: 11px;
+                    border-right: 0.5px solid rgb(160, 31, 31);
                 }
                 .state-table thead tr {
+                    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                    -webkit-tap-highlight-color: transparent;
                     width: 100%;
                 }
                 .state-table thead tr th:nth-child(1) {
                     width: 5%;
+                    border-right: none;
                 }
                 .state-table thead tr th:nth-child(2) {
                     width: 24%;
@@ -289,7 +294,7 @@
                     text-align: right;
                 }
                 .state-table tbody tr td {
-                    text-align: right;
+                    text-align: center;
                 }
                 .state-table thead tr th {
                     text-align: right;

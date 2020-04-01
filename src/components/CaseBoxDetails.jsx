@@ -16,8 +16,8 @@ export class CaseBoxDetails extends Component {
                     </div>
                 </div>
                 <div className="no-details-right"><CountUp
-                    start={parseInt(this.props.val) - 15}
-                    duration={1.5}
+                    start={parseInt(this.props.val) - 20}
+                    duration={1.8}
                     end={parseInt(this.props.val)} /></div>
                 <div className="today-delta"
                     style={{

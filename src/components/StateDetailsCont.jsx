@@ -22,10 +22,10 @@ export class StateDetailsCont extends Component {
             let data = response.data.data
             this.setState({
                 stateData: data.statewise,
-                recovered: data.statewise[1].recovered,
-                confirmed: data.statewise[1].confirmed,
-                deaths: data.statewise[1].deaths,
-                active: data.statewise[1].active
+                recovered: data.statewise[0].recovered,
+                confirmed: data.statewise[0].confirmed,
+                deaths: data.statewise[0].deaths,
+                active: data.statewise[0].active
             })
 
         }).catch(error => {
