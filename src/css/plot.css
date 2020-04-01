@@ -169,8 +169,8 @@
             }
             
             .state-table tbody tr:nth-child(2n+2) {
-                /* background-color: #1c1c1c; */
-                background-color: rgb(177, 145, 145) !important;
+                background-color: #1c1c1c;
+                /* background-color: rgb(177, 145, 145) !important; */
             }
             
             .state-table tr:hover {

@@ -30,8 +30,6 @@ class DailyTrends extends Component {
             //It's important to use Numeric Values dataset in order to plot the graph else the graph will be blank
             let labels = data.cases_time_series.map(x => x.dailyconfirmed !== "0" && x.date).filter(x => x !== false)
             let confirmeds = data.cases_time_series.map(x => x.dailyconfirmed !== "0" && parseInt(x.dailyconfirmed)).filter(x => x !== false)
-            // let labels = data.cases_time_series.map(x => x.date)
-            // let confirmeds = data.cases_time_series.map(x => parseInt(x.dailyconfirmed))     
 
             this.setState({
                 labels: labels,

@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import Switch from 'react-switch'
+import logo from '../img/Logo.png'
 
-export class Header extends Component {
+class Header extends Component {
     constructor(props) {
         super(props)
 
@@ -27,7 +28,9 @@ export class Header extends Component {
         return (
             <Fragment>
                 <div className="header" style={{ color: '#fff' }}>
-                    <div id="heading"><span>nCov-India</span></div>
+                    <div id="heading"><span><img src={logo} height="42px" width="42px" alt="" /></span>
+                        <span style={{ marginLeft: "5px" }}>nCov-India</span>
+                    </div>
                     <div id="switch-theme"><span style={{ marginRight: "0px", paddingRight: "4px", fontSize: "15px" }}>Dark Mode</span>
                         <Switch onChange={this.toggleSwitch}
                             checked={this.state.switched}

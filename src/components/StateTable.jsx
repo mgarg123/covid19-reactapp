@@ -5,7 +5,7 @@ export class StateTable extends Component {
 
         this.state = {
             stateData: props.stateData,
-            sortState: false,
+            // sortState: false,
             sortConfirmed: true,
             sortRecovered: false,
             sortDeaths: false,
@@ -13,22 +13,28 @@ export class StateTable extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (this.state.sortState !== prevState.sortState) {
-            if (this.state.sortState === true) {
-                let arr = this.state.stateData
-                arr.sort((x, y) => x.state > y.state ? 1 : x.state < y.state ? -1 : 0)
-                //Timeout is used to delay the process as it was giving unknown result
-                setTimeout(() => {
-                    this.setState({ stateData: arr })
-                }, 50)
+    componentDidMount() {
+        // let arr = [...this.state.stateData]
+        // arr.sort((x, y) => y.confirmed - x.confirmed)
+        // this.setState({ stateData: arr })
+    }
 
-            } else {
-                let arr = [...this.state.stateData]
-                arr.sort((x, y) => x.state < y.state ? 1 : x.state > y.state ? -1 : 0)
-                this.setState({ stateData: arr })
-            }
-        }
+    componentDidUpdate(prevProps, prevState) {
+        // if (this.state.sortState !== prevState.sortState) {
+        //     if (this.state.sortState === true) {
+        //         let arr = this.state.stateData
+        //         arr.sort((x, y) => x.state > y.state ? 1 : x.state < y.state ? -1 : 0)
+        //         //Timeout is used to delay the process as it was giving unknown result
+        //         setTimeout(() => {
+        //             this.setState({ stateData: arr })
+        //         }, 50)
+
+        //     } else {
+        //         let arr = [...this.state.stateData]
+        //         arr.sort((x, y) => x.state < y.state ? 1 : x.state > y.state ? -1 : 0)
+        //         this.setState({ stateData: arr })
+        //     }
+        // }
         if (this.state.sortConfirmed !== prevState.sortConfirmed) {
             if (this.state.sortConfirmed === true) {
                 let arr = [...this.state.stateData]
@@ -87,15 +93,15 @@ export class StateTable extends Component {
                         <tr style={{ backgroundColor: "rgb(141, 133, 211)", color: '#222' }}>
                             <th style={{ visibility: "hidden" }}></th>
                             <th onClick={() => this.setState({
-                                sortState: !this.state.sortState,
+                                // sortState: !this.state.sortState,
                                 sortConfirmed: false,
                                 sortActive: false,
                                 sortDeaths: false,
                                 sortRecovered: false
                             })}>STATE/UT
-                            <span class="material-icons" style={{ fontSize: '11px' }}>
+                            {/* <span class="material-icons" style={{ fontSize: '11px' }}>
                                     {this.state.sortState ? 'arrow_downward' : 'arrow_upward'}
-                                </span>
+                                </span> */}
                             </th>
                             <th onClick={() => this.setState({
                                 sortState: false,
@@ -147,8 +153,7 @@ export class StateTable extends Component {
                                 return (
                                     obj.confirmed !== 0 &&
                                     <tr key={obj.state}
-                                    // style={{ background: `${index % 2 !== 0 ? this.props.isDark ? '' : '#eee' : ''}` }}
-                                    // onMouseOver={() => console.log(err)}
+                                        style={{ background: `${index % 2 !== 0 ? this.props.isDark ? '' : '#eee' : ''}` }}
                                     >
                                         <td>></td>
                                         <td>{obj.state.toLowerCase().replace(/\b(\w)/g, x => { return (x.toUpperCase()) })}</td>
