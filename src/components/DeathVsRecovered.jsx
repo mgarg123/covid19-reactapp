@@ -3,10 +3,34 @@ import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
 
 export class DeathVsRecovered extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            toggleDeath: false,
+            toggleRecovered: false
+        }
+    }
+
+
+
+
     render() {
         return (
             <div className="death-rec-container">
+                <div id="death-rec-title" style={{
+                    textAlign: "center",
+                    color: `${this.props.isDark ? '#fff' : '#2d2d2d'}`,
+                    fontSize: '20px',
+                    fontWeight: 'bold'
+                }}>
+                    <span > Daily Deaths Vs Recovered</span>
+                </div>
                 <div className="death-vs-rec">
+                    <div className="buttons" style={{ marginTop: '10px' }}>
+                        <button onClick={() => this.setState({ toggleRecovered: !this.state.toggleRecovered })} id="week">Toggle Recovered</button>
+                        <button onClick={() => this.setState({ toggleDeath: !this.state.toggleDeath })} id="month">Toggle Death</button>
+                    </div>
                     <HighchartsReact
                         // ref={this.chartRef}
                         highcharts={Highcharts}
@@ -24,7 +48,7 @@ export class DeathVsRecovered extends Component {
                                 enabled: false
                             },
                             title: {
-                                text: 'Daily Deaths Vs Recovered',
+                                text: '',
                                 style: {
                                     color: `${this.props.isDark ? '#fff' : '#2d2d2d'}`,
                                     fontWeight: 'bold',
@@ -85,14 +109,14 @@ export class DeathVsRecovered extends Component {
                                 title: 'Deaths Vs Recovered',
                                 type: 'spline',
                                 yAxis: 1,
-                                data: this.props.recover,
+                                data: this.state.toggleRecovered ? [] : this.props.recover,
                                 color: `${this.props.isDark ? '#fff' : 'skyblue'}`,
                                 tooltip: {
                                     valueSuffix: ' recovered'
                                 },
                             }, {
                                 type: 'spline',
-                                data: this.props.deaths,
+                                data: this.state.toggleDeath ? [] : this.props.deaths,
                                 color: `${this.props.isDark ? '#10fbe5' : 'violet'}`,
                                 tooltip: {
                                     valueSuffix: ' deaths'
@@ -106,7 +130,7 @@ export class DeathVsRecovered extends Component {
                     />
                 </div>
 
-            </div>
+            </div >
         )
     }
 }

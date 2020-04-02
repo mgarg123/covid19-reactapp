@@ -25,12 +25,12 @@ export class Graphs extends Component {
         //Api Call for Graph
         let url = "https://api.covid19india.org/data.json"
         axios.get(url).then(response => {
-            let data = response.data
-
+            let data = response.data.cases_time_series
+            let filteredData = data.filter(x => (x.dailydeceased !== '0' || x.dailyrecovered !== '0'))
             //It's important to use Numeric Values dataset in order to plot the graph else the graph will be blank
-            let labels = data.cases_time_series.map(x => (x.dailyrecovered !== "0" || x.dailydeceased !== "0") && x.date).filter(x => x !== false)
-            let deaths = data.cases_time_series.map(x => x.dailydeceased !== "0" && parseInt(x.dailydeceased)).filter(x => x !== false)
-            let recover = data.cases_time_series.map(x => x.dailyrecovered !== "0" && parseInt(x.dailyrecovered)).filter(x => x !== false)
+            let labels = filteredData.map(x => x.date)
+            let deaths = filteredData.map(x => parseInt(x.dailydeceased))
+            let recover = filteredData.map(x => parseInt(x.dailyrecovered))
 
             this.setState({
                 labels: labels,

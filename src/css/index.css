@@ -208,23 +208,70 @@ body {
     width: 100%;
 }
 
+
+/* Footer CSS Starts*/
+
 .footer {
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
+    clear: both;
     width: 100vw;
     height: 50px;
     background: #1c1c1c;
     position: fixed;
     bottom: 0px;
     left: 0;
+}
+
+.footer-left {
+    float: left;
+    width: 50%;
+    margin-top: 12px;
+    color: #adadad;
+    font-size: 11px;
     text-align: center;
 }
 
-.footer h5 {
-    margin-top: 18px;
-    color: #adadad;
+.footer-right {
+    float: right;
+    cursor: pointer;
+    margin-top: 12px;
+    width: 50%;
+    font-size: 12px;
+    -webkit-tap-highlight-color: transparent;
+    text-align: center;
 }
+
+.navbar-footer {
+    display: none;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.navbar-footer li {
+    list-style-type: none;
+    display: inline-block;
+    color: #fff;
+}
+
+.navbar-footer li:nth-child(1) {
+    padding: 0px 12px;
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
+
+.footer-right span a {
+    color: #d1cfcf;
+    text-decoration: none;
+}
+
+.footer-right span a:hover {
+    text-decoration: underline;
+}
+
+
+/* Footer CSS Ends */
 
 .no-details-right {
     width: 100%;
@@ -311,5 +358,17 @@ body {
     }
     .last-updated-at {
         padding-left: 23px;
+    }
+}
+
+@media(max-width:600px) {
+    .navbar-footer {
+        display: block;
+    }
+    .footer-left {
+        margin-top: 0px;
+    }
+    .footer-right {
+        margin-top: 0px;
     }
 }
