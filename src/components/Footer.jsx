@@ -8,7 +8,7 @@ export class Footer extends Component {
                     width: '100%',
                     textAlign: "center"
                 }}>
-                    <li>Home</li>
+                    <Link to="/"><li>Home</li></Link>
                     <Link to="/about-corona"><li>About Corona</li></Link>
                 </ul>
                 <div className="footer-left">

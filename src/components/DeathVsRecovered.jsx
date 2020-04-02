@@ -102,7 +102,8 @@ export class DeathVsRecovered extends Component {
                                 verticalAlign: 'top',
                                 y: 20,
                                 floating: true,
-                                backgroundColor: `#eee`
+                                backgroundColor: `#eee`,
+                                enabled: false
                             },
 
                             series: [{

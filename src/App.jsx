@@ -112,7 +112,7 @@ function App() {
                 color: `${isDarkMode ? '#fff' : '#2d2d2d'}`
             }}>
                 <Header isDarkCallBack={isDarkModeActive} />
-                <HeaderTab tabClickedCallBack={whichTab} />
+                <HeaderTab tabs={["Current Statistics", "Data List", "Graphical Data"]} tabClickedCallBack={whichTab} />
                 {
                     isStatsClicked ? <CaseNumber isDark={isDarkMode} stats={stats} keyVals={keyValues} lastUpdated={lastUpdated} /> : isStatewiseClicked ? <StateTable
                         stateData={stateData}

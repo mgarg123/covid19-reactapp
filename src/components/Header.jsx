@@ -35,7 +35,7 @@ class Header extends Component {
                     </div>
                     <div id="switch-theme">
                         <ul class="navbar">
-                            <li>Home</li>
+                            <Link to="/"><li>Home</li></Link>
                             <Link to="/about-corona"><li>About Corona</li></Link>
                         </ul>
                         <span style={{ marginRight: "0px", paddingRight: "4px", fontSize: "15px" }}>Dark Mode</span>

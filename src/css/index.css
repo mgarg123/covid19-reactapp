@@ -76,6 +76,10 @@ body {
     align-items: center;
 }
 
+#heading span {
+    margin-left: 34px;
+}
+
 #switch-theme {
     float: right;
     width: 50%;
@@ -214,7 +218,7 @@ body {
 .footer {
     clear: both;
     width: 100vw;
-    height: 50px;
+    height: 55px;
     background: #1c1c1c;
     position: fixed;
     bottom: 0px;
@@ -362,6 +366,9 @@ a {
 }
 
 @media(max-width:600px) {
+    #heading span {
+        margin-left: 2px;
+    }
     .navbar-footer {
         display: block;
     }

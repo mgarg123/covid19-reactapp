@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Routing from './Routing.jsx';
+import AboutCorona from '../src/components/AboutCorona.jsx'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

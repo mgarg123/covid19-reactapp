@@ -107,10 +107,12 @@ class DailyTrends extends Component {
                 confirmedCases = parseInt(confirmedCases) + parseInt(data.dailyconfirmed);
             } else {
                 monthlyConfirmedCase.push(confirmedCases);
+                confirmedCases = 0;
                 previousMonth = month;
             }
             if (Count === apiData.cases_time_series.length) {
                 monthlyConfirmedCase.push(confirmedCases);
+                confirmedCases = 0;
             }
             if (month && monthlyLabel.indexOf(month) === -1) {
                 monthlyLabel.push(month);
@@ -161,11 +163,6 @@ class DailyTrends extends Component {
                             chart: {
                                 zoomType: 'xy',
                                 backgroundColor: `${this.props.isDark ? 'transparent' : '#fff'}`,
-                            },
-                            dateRangeGrouping: {
-                                dayFormat: { month: 'numeric', day: 'numeric', year: 'numeric' },
-                                weekFormat: { month: 'numeric', day: 'numeric', year: 'numeric' },
-                                monthFormat: { month: 'numeric', year: 'numeric' }
                             },
                             credits: {
                                 enabled: false
@@ -225,7 +222,8 @@ class DailyTrends extends Component {
                                 verticalAlign: 'top',
                                 y: 20,
                                 floating: true,
-                                backgroundColor: `#eee`
+                                backgroundColor: `#eee`,
+                                enabled: false
                             },
 
                             series: [{
