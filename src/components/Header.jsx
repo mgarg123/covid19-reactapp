@@ -34,7 +34,7 @@ class Header extends Component {
                         <span style={{ marginLeft: "5px" }}>nCov-India</span>
                     </div>
                     <div id="switch-theme">
-                        <ul class="navbar">
+                        <ul className="navbar">
                             <Link to="/"><li>Home</li></Link>
                             <Link to="/about-corona"><li>About Corona</li></Link>
                         </ul>

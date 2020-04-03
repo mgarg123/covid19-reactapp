@@ -177,7 +177,7 @@ class DailyTrends extends Component {
                             },
                             xAxis: [{
                                 // type: 'datetime',
-                                categories: this.state.labels,
+                                categories: this.props.labels === undefined ? this.state.labels : this.props.labels,
                                 //categories: categories,
                                 crosshair: true,
                                 labels: {
@@ -230,14 +230,14 @@ class DailyTrends extends Component {
                                 title: 'Confirmed Cases',
                                 type: `${this.state.toggledLine ? 'column' : 'spline'}`,
                                 yAxis: 1,
-                                data: this.state.confirmeds,
+                                data: this.props.confirmed === undefined ? this.state.confirmeds : this.props.confirmed,
                                 color: `${this.props.isDark ? '#fff' : 'skyblue'}`,
                                 tooltip: {
                                     valueSuffix: ' infected'
                                 },
                             }, {
                                 type: 'spline',
-                                data: this.state.confirmeds,
+                                data: this.props.confirmed === undefined ? this.state.confirmeds : this.props.confirmed,
                                 color: `${this.props.isDark ? '#10fbe5' : 'violet'}`,
                                 tooltip: {
                                     valueSuffix: ' infected'

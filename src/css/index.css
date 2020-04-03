@@ -248,16 +248,22 @@ body {
     display: none;
     margin-top: 4px;
     margin-bottom: 4px;
+    text-align: center;
 }
 
 .navbar-footer li {
     list-style-type: none;
     display: inline-block;
-    color: #fff;
+    color: rgb(255, 199, 199);
+    text-shadow: 2px 1px 3px rgb(160, 58, 27);
 }
 
-.navbar-footer li:nth-child(1) {
-    padding: 0px 12px;
+.navbar-footer a:nth-child(1) {
+    padding: 0px 13px;
+}
+
+.navbar-footer a:nth-child(2) {
+    padding-left: 13px;
 }
 
 a {

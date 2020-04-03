@@ -4,9 +4,8 @@ export class Footer extends Component {
     render() {
         return (
             <div className="footer" >
-                <ul class="navbar-footer" style={{
-                    width: '100%',
-                    textAlign: "center"
+                <ul className="navbar-footer" style={{
+                    width: '100%'
                 }}>
                     <Link to="/"><li>Home</li></Link>
                     <Link to="/about-corona"><li>About Corona</li></Link>

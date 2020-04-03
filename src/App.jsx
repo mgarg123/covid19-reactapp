@@ -91,7 +91,6 @@ function App() {
                 setLastUpdated("About " + Math.abs(currHour - parseInt(lastUpTime[0])) + " Hours")
             }
 
-            console.log(obj)
             setKeyValues(obj)
 
         }).catch(error => {
