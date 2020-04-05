@@ -129,7 +129,7 @@ function App() {
                             stateData={stateData}
                             affectedState={affectedState}
                             districtDatas={districtDatas}
-                            isDark={isDarkMode} /> : isGraphsClicked ? <Graphs isDark={isDarkMode} /> : <Predictions />
+                            isDark={isDarkMode} /> : isGraphsClicked ? <Graphs isDark={isDarkMode} /> : <Predictions isDark={isDarkMode} />
 
                 }
                 <Footer isDark={isDarkMode} />

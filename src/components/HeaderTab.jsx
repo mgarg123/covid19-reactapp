@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import '../css/header.css'
+import newFeature from '../img/new.svg'
 export class HeaderTab extends Component {
     constructor(props) {
         super(props)
@@ -60,7 +61,7 @@ export class HeaderTab extends Component {
                 <div className="tabs"
                     style={{
                         background: `${this.state.isPredictionClicked ? "rgb(50, 58, 70)" : ""}`,
-                        display: `${this.props.tabs[3] !== undefined ? 'none' : 'none'}`
+                        display: `${this.props.tabs[3] !== undefined ? 'flex' : 'none'}`
                     }}
                     onClick={() => this.setState({
                         isStatsClicked: false,
@@ -68,6 +69,15 @@ export class HeaderTab extends Component {
                         isGraphsClicked: false,
                         isPredictionClicked: true
                     })}>
+                    <img src={newFeature} width alt=""
+                        style={{
+                            width: `${window.screen.width < 600 ? '30px' : '42px'}`,
+                            height: `${window.screen.width < 600 ? '25px' : '42px'}`,
+                            position: 'absolute',
+                            right: '-2.5px',
+                            top: '0'
+                        }}
+                    />
                     <span>{this.props.tabs[3] !== undefined && this.props.tabs[3]}</span>
                 </div>
             </div>

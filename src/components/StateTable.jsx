@@ -219,7 +219,7 @@ export class StateTable extends Component {
                                                     {
                                                         this.props.districtDatas.filter(x =>
                                                             x.state.toLowerCase() === obj.state.toLowerCase()
-                                                        )[0].districtData.map(y => {
+                                                        )[0].districtData.sort((x, y) => y.confirmed - x.confirmed).map(y => {
                                                             return (
                                                                 <tr className="data-div" style={{ background: 'transparent' }}>
                                                                     <td style={{ color: `${this.props.isDark ? '#fff' : '#222'}` }}>
