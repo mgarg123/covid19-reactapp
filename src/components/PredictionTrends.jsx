@@ -28,7 +28,7 @@ export class PredictionTrends extends Component {
                         fontSize: '20px',
                         fontWeight: 'bold'
                     }}>Predicted Spread Trends</span>
-                    <div className="daily-trends" style={{ width: '50%' }}>
+                    <div className="daily-trends" style={{ width: `${window.screen.width < 600 ? '100%' : '50%'}` }}>
                         {/* <div className="buttons-left" style={{ border: '1px solid red' }}>
                         
                     </div> */}
