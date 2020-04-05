@@ -8,6 +8,7 @@ import StateTable from './components/StateTable'
 import axios from 'axios'
 import '../src/css/plot.css'
 import Graphs from './components/Graphs'
+import Predictions from './components/Predictions'
 
 
 
@@ -16,12 +17,13 @@ function App() {
     const [isDarkMode, setDarkMode] = useState(true)
     const [isStatsClicked, setStatsClicked] = useState(true)
     const [isStatewiseClicked, setStatewiseClicked] = useState(false)
-    // const [isGraphsClicked, setGraphsClicked] = useState(false)
+    const [isGraphsClicked, setGraphsClicked] = useState(false)
     const [stateData, setStateData] = useState([])
     const [affectedState, setAffectedState] = useState(0)
     const [stats, setStats] = useState({})
     const [keyValues, setKeyValues] = useState({})    //For Setting last updated and todays data
     const [lastUpdated, setLastUpdated] = useState("")
+    const [districtDatas, setDistrictDatas] = useState([])
 
 
     function isDarkModeActive(isDark) {
@@ -31,7 +33,7 @@ function App() {
     function whichTab(isStat, isState, isGraphs) {
         setStatsClicked(isStat)
         setStatewiseClicked(isState)
-        // setGraphsClicked(isGraphs)
+        setGraphsClicked(isGraphs)
     }
 
     useEffect(() => {
@@ -73,7 +75,7 @@ function App() {
         axios.get(url2).then(response => {
             let data = response.data
 
-            let obj = data.key_values[0]    //this obj has lastupdatedtime,deceaseddelta,confirmeddelta,reecovereddelta
+            let obj = data.statewise[0]    //this obj has lastupdatedtime,deceaseddelta,confirmeddelta,reecovereddelta
 
             //Setting up Last Updated Time
             let lastUpTime = obj.lastupdatedtime.split(" ")[1].split(":")
@@ -97,6 +99,15 @@ function App() {
             console.log(error.message)
         })
 
+        //API call for District wise  Data
+        let url3 = "https://api.covid19india.org/v2/state_district_wise.json"
+        axios.get(url3).then(response => {
+            let data = response.data
+            console.log(data);
+            setDistrictDatas(data)
+
+        }).catch(error => console.log(error.message))
+
 
         return () => {
 
@@ -111,13 +122,15 @@ function App() {
                 color: `${isDarkMode ? '#fff' : '#2d2d2d'}`
             }}>
                 <Header isDarkCallBack={isDarkModeActive} />
-                <HeaderTab tabs={["Current Statistics", "Data List", "Graphical Data"]} tabClickedCallBack={whichTab} />
+                <HeaderTab tabs={["Stats", "Lists", "Graphs", "Prediction"]} tabClickedCallBack={whichTab} />
                 {
-                    isStatsClicked ? <CaseNumber isDark={isDarkMode} stats={stats} keyVals={keyValues} lastUpdated={lastUpdated} /> : isStatewiseClicked ? <StateTable
-                        stateData={stateData}
-                        affectedState={affectedState}
-                        isDark={isDarkMode} /> :
-                        <Graphs isDark={isDarkMode} />
+                    isStatsClicked ? <CaseNumber isDark={isDarkMode} stats={stats} keyVals={keyValues} lastUpdated={lastUpdated} /> :
+                        isStatewiseClicked ? <StateTable
+                            stateData={stateData}
+                            affectedState={affectedState}
+                            districtDatas={districtDatas}
+                            isDark={isDarkMode} /> : isGraphsClicked ? <Graphs isDark={isDarkMode} /> : <Predictions />
+
                 }
                 <Footer isDark={isDarkMode} />
             </div>

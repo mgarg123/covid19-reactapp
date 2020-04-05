@@ -1,0 +1,30 @@
+.district-data-div,
+.district-data-div td {
+    width: 100% !important;
+}
+
+.internal-table {
+    width: 100%;
+    float: left;
+    text-align: left;
+}
+
+.label-div,
+.data-div {
+    text-align: left;
+    width: 100%;
+}
+
+.label-div th {
+    width: 150px !important;
+    padding-left: 20px !important;
+    text-align: left !important;
+}
+
+.data-div td {
+    width: 150px !important;
+    padding-left: 20px !important;
+    text-align: left !important;
+}
+
+@media (max-width:600px) {}

@@ -228,19 +228,23 @@ class DailyTrends extends Component {
 
                             series: [{
                                 title: 'Confirmed Cases',
+                                name: 'Infected',
+                                enableMouseTracking: this.state.toggledLine ? true : false,
                                 type: `${this.state.toggledLine ? 'column' : 'spline'}`,
                                 yAxis: 1,
                                 data: this.props.confirmed === undefined ? this.state.confirmeds : this.props.confirmed,
                                 color: `${this.props.isDark ? '#fff' : 'skyblue'}`,
                                 tooltip: {
-                                    valueSuffix: ' infected'
+                                    valueSuffix: ' Infected'
                                 },
                             }, {
                                 type: 'spline',
+                                enableMouseTracking: this.state.toggledLine ? false : true,
+                                name: 'Infected',
                                 data: this.props.confirmed === undefined ? this.state.confirmeds : this.props.confirmed,
                                 color: `${this.props.isDark ? '#10fbe5' : 'violet'}`,
                                 tooltip: {
-                                    valueSuffix: ' infected'
+                                    valueSuffix: ' Infected'
                                 }
                             }]
                         }}

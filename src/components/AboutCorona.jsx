@@ -30,7 +30,7 @@ export class AboutCorona extends Component {
             <Fragment>
                 <div className="site-holder" style={{
                     background: `${this.state.isDarkMode ? "#262626" : "#fff"}`,
-                    color: `${this.state.isDarkMode ? '#fff' : '#2d2d2d'}`
+                    color: `${this.state.isDarkMode ? '#fff' : '#000'}`
                 }}>
                     <Header isDarkCallBack={this.isDarkModeActive} />
                     <HeaderTab tabs={["Overview", "Symptoms", "Prevention"]} tabClickedCallBack={this.whichTab} />
@@ -80,9 +80,9 @@ export class AboutCorona extends Component {
                             <li>Refrain from smoking and other activities that weaken the lungs.<br /></li>
                             <li>Practice physical distancing by avoiding unnecessary travel and staying away from large groups of people.<br /><br /></li>
                         </ul>
-                        <p>&nbsp;</p>
-                        <p>&nbsp;</p>
-                        <p>&nbsp;</p>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Coronavirus_COVID-19_prevention.svg"
+                            alt="Covid-prevention"
+                        />
                     </div>
 
                     <Footer />
