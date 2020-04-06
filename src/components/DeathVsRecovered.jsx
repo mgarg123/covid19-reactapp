@@ -39,11 +39,6 @@ export class DeathVsRecovered extends Component {
                                 zoomType: 'xy',
                                 backgroundColor: `${this.props.isDark ? 'transparent' : '#fff'}`,
                             },
-                            dateRangeGrouping: {
-                                dayFormat: { month: 'numeric', day: 'numeric', year: 'numeric' },
-                                weekFormat: { month: 'numeric', day: 'numeric', year: 'numeric' },
-                                monthFormat: { month: 'numeric', year: 'numeric' }
-                            },
                             credits: {
                                 enabled: false
                             },
@@ -107,21 +102,19 @@ export class DeathVsRecovered extends Component {
                             },
 
                             series: [{
-                                title: 'Deaths Vs Recovered',
+                                title: 'Deaths',
+                                name: 'Recovered',
                                 type: 'spline',
                                 yAxis: 1,
                                 data: this.state.toggleRecovered ? [] : this.props.recover,
-                                color: `${this.props.isDark ? '#fff' : 'skyblue'}`,
-                                tooltip: {
-                                    valueSuffix: ' recovered'
-                                },
+                                color: `${this.props.isDark ? '#56d611' : 'green'}`,
+
                             }, {
                                 type: 'spline',
+                                name: 'Deaths',
                                 data: this.state.toggleDeath ? [] : this.props.deaths,
-                                color: `${this.props.isDark ? '#10fbe5' : 'violet'}`,
-                                tooltip: {
-                                    valueSuffix: ' deaths'
-                                }
+                                color: `${this.props.isDark ? '#d61111' : 'red'}`,
+
                             }]
                         }}
                         oneToOne={true}

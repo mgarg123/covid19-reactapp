@@ -30,9 +30,11 @@ class Header extends Component {
         return (
             <Fragment>
                 <div className="header" style={{ color: '#fff' }}>
-                    <div id="heading"><span><img src={logo} height="42px" width="42px" alt="" /></span>
-                        <span style={{ marginLeft: "5px" }}>nCov-India</span>
-                    </div>
+                    <Link to="/">
+                        <div id="heading"><span><img src={logo} height="42px" width="42px" alt="" /></span>
+                            <span style={{ marginLeft: "5px" }}>nCov-India</span>
+                        </div>
+                    </Link>
                     <div id="switch-theme">
                         <ul className="navbar">
                             <Link to="/"><li>Home</li></Link>
