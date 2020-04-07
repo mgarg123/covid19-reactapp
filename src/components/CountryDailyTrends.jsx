@@ -16,7 +16,7 @@ class CountryDailyTrends extends Component {
             toggledLine: true
         }
         // this.chartRef = createRef()
-    }    
+    }
 
     loadDayData = (event) => {
         let labels = this.props.labels;
@@ -31,7 +31,7 @@ class CountryDailyTrends extends Component {
     loadWeekData = (event) => {
         let thisVariable = this;
         let apiData = this.props.apiresponseData;
-        
+
         var weekCount = 0;
         var weekdata = 0;
         var weeklyDataSub = [];
@@ -48,11 +48,11 @@ class CountryDailyTrends extends Component {
             }
 
             previousCount = count - 1;
-            if( previousCount < 0 ){ previousCount = 0; }
-            count++;  
-            if( previousCount == 0 ){
+            if (previousCount < 0) { previousCount = 0; }
+            count++;
+            if (previousCount === 0) {
                 DailyConfirmedCases = data.confirmed;
-            }else{
+            } else {
                 DailyConfirmedCases = data.confirmed - apiData[previousCount].confirmed;
             }
             //console.log(DailyConfirmedCases);
@@ -66,8 +66,9 @@ class CountryDailyTrends extends Component {
                 weekCount = 0;
                 weekLabel = '';
             }
+            return null;
         });
-        
+
         thisVariable.setState({
             labels: weeklyLabel,
             confirmeds: weeklyDataSub
@@ -81,7 +82,6 @@ class CountryDailyTrends extends Component {
     }
 
     loadMonthData = (event) => {
-        let thisVariable = this;
         let apiData = this.props.apiresponseData;
 
         var monthlyConfirmedCase = [];
@@ -90,7 +90,7 @@ class CountryDailyTrends extends Component {
         var confirmedCases = 0;
         var previousMonth = '';
         var previousCount = 0;
-        var count=0;
+        var count = 0;
         apiData.map((data) => {
             Count++;
             var dated = data.date;
@@ -99,7 +99,7 @@ class CountryDailyTrends extends Component {
             var newdate = new Date(timestamp);
             newdate = newdate.toString("dd/MM");
             newdate = newdate.split(' ');
-            newdate = newdate[2]+' '+newdate[1];
+            newdate = newdate[2] + ' ' + newdate[1];
             //var newdated = new date('d M', strtotime(dated) );
             dated = newdate;
             var DailyConfirmedCases = 0;
@@ -111,11 +111,11 @@ class CountryDailyTrends extends Component {
             }
 
             previousCount = count - 1;
-            if( previousCount < 0 ){ previousCount = 0; }
-            count++;  
-            if( previousCount == 0 ){
+            if (previousCount < 0) { previousCount = 0; }
+            count++;
+            if (previousCount === 0) {
                 DailyConfirmedCases = data.confirmed;
-            }else{
+            } else {
                 DailyConfirmedCases = data.confirmed - apiData[previousCount].confirmed;
             }
 
@@ -133,7 +133,7 @@ class CountryDailyTrends extends Component {
             if (month && monthlyLabel.indexOf(month) === -1) {
                 monthlyLabel.push(month);
             }
-
+            return null;
         });
 
         this.setState({
@@ -150,15 +150,15 @@ class CountryDailyTrends extends Component {
     render() {
         //console.log(this.state.labels);
         //console.log(this);
-        
+
         let confirmedDatas = this.state.confirmeds;
         let labels = this.state.labels;
         //console.log(data);
-        if( confirmedDatas.length <= 0 ){
-            confirmedDatas = this.props.countryStateData.confirmed;
-            labels = this.props.countryStateData.labels;
+        if (confirmedDatas.length <= 0) {
+            confirmedDatas = this.props.confirmed;
+            labels = this.props.labels;
         }
-        
+
         return (
             <div className="daily-trend-container">
                 <span style={{

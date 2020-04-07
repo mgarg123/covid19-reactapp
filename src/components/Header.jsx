@@ -39,6 +39,7 @@ class Header extends Component {
                         <ul className="navbar">
                             <Link to="/"><li>Home</li></Link>
                             <Link to="/about-corona"><li>About Corona</li></Link>
+                            <Link to="/corona-patients-in-world"><li>World Data</li></Link>
                         </ul>
                         <span style={{ marginRight: "0px", paddingRight: "4px", fontSize: "15px" }}>Dark Mode</span>
                         <Switch onChange={this.toggleSwitch}

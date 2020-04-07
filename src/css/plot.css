@@ -81,12 +81,12 @@
             
             .status-name {
                 text-align: center;
-                padding: 6px 0px;
+                padding: 0px 0px;
             }
             
             .status-val {
                 text-align: center;
-                padding: 6px 0px;
+                padding: 0px 0px;
             }
             /* State Details Container End */
             /* TABLE CSS START */
@@ -153,9 +153,9 @@
             }
             
             .state-table thead tr:first-child {
-                background: rgb(50, 58, 70) !important;
+                /* background: rgb(50, 58, 70) !important; */
                 border-top-left-radius: 3px;
-                color: #fff !important;
+                /* color: #fff !important; */
             }
             
             .state-table thead tr th {

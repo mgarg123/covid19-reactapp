@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import '../css/table.css'
 
 export class StateTable extends Component {
@@ -14,7 +13,8 @@ export class StateTable extends Component {
             sortDeaths: false,
             sortActive: false,
             clickedState: "",
-            isDistrictOpen: false
+            isDistrictOpen: false,
+            sortDistrict: false
         }
     }
 
@@ -92,6 +92,7 @@ export class StateTable extends Component {
             if (this.state.clickedState !== prevState.clickedState && this.state.isDistrictOpen === false) {
                 document.getElementById("data-" + prevState.clickedState).style.display = "none"
                 document.getElementById("data-" + this.state.clickedState).style.display = "table-row"
+                this.setState({ isDistrictOpen: true })
             }
 
 
@@ -117,8 +118,8 @@ export class StateTable extends Component {
                 </div>
                 {/* <StateTable stateData={this.state.stateData} isDark={this.props.isDark} /> */}
                 <table className="state-table">
-                    <thead style={{ background: "#222" }}>
-                        <tr style={{ backgroundColor: "rgb(141, 133, 211)", color: '#222' }}>
+                    <thead style={{ background: `${this.props.isDark ? 'rgb(50, 58, 70)' : 'rgb(208, 206, 206)'}`, fontWeight: 'bold' }}>
+                        <tr>
                             <th style={{ visibility: "hidden" }}></th>
                             <th onClick={() => this.setState({
                                 // sortState: !this.state.sortState,
@@ -206,27 +207,51 @@ export class StateTable extends Component {
                                             className="district-data-div"
                                             style={{
                                                 background: `${this.props.isDark ? '#262626' : '#fff'}`,
-                                                display: "none"
+                                                display: "none",
+                                                WebkitTapHighlightColor: 'transparent'
                                             }}
                                             id={`data-${obj.state}`}
                                         >
                                             <td colSpan="5" className="full-width">
                                                 <table className="internal-table">
                                                     <tr className="label-div">
-                                                        <th>District Name</th>
-                                                        <th>Confirmed Cases</th>
+                                                        <th style={{ visibility: 'hidden' }}></th>
+                                                        <th style={{
+                                                            border: `0.4px solid ${this.props.isDark ? '#eee' : '#1c1c1c'}`,
+                                                            borderRight: 'none'
+                                                        }}>District Name</th>
+                                                        <th style={{
+                                                            border: `0.4px solid ${this.props.isDark ? '#eee' : '#1c1c1c'}`,
+                                                            // borderLeft: 'none'
+                                                        }}
+                                                            onClick={() => { this.setState({ sortDistrict: !this.state.sortDistrict }) }}
+                                                        >Confirmed Cases <i
+                                                            className={`fa ${this.state.sortDistrict ? 'fa-arrow-down' : 'fa-arrow-up'}`}></i>
+                                                        </th>
                                                     </tr>
                                                     {
                                                         this.props.districtDatas.filter(x =>
                                                             x.state.toLowerCase() === obj.state.toLowerCase()
-                                                        )[0].districtData.sort((x, y) => y.confirmed - x.confirmed).map(y => {
+                                                        )[0].districtData.sort((x, y) => this.state.sortDistrict ? x.confirmed - y.confirmed : y.confirmed - x.confirmed).map(y => {
                                                             return (
                                                                 <tr className="data-div" style={{ background: 'transparent' }}>
+                                                                    <td><i className="fa fa-angle-right"></i></td>
                                                                     <td style={{ color: `${this.props.isDark ? '#fff' : '#222'}` }}>
                                                                         {y.district}
                                                                     </td>
-                                                                    <td style={{ color: `${this.props.isDark ? '#fff' : '#222'}` }}>
-                                                                        {y.confirmed}
+                                                                    <td style={{
+                                                                        color: `${this.props.isDark ? '#fff' : '#222'}`
+                                                                    }}>
+                                                                        <span style={{
+                                                                        }}> <i style={{
+                                                                            color: 'red',
+                                                                            fontWeight: 'normal',
+                                                                            fontSize: '12px',
+                                                                            visibility: `${y.delta.confirmed > 0 ? 'visible' : 'hidden'}`
+                                                                        }} className="fa fa-arrow-up">
+                                                                                {y.delta.confirmed}</i>
+                                                                        </span>
+                                                                        <span style={{ paddingLeft: '10px' }}>{y.confirmed}</span>
                                                                     </td>
                                                                 </tr>
                                                             )

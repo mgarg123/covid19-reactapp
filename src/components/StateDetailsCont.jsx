@@ -12,20 +12,31 @@ export class StateDetailsCont extends Component {
             deaths: "",
             confirmed: "",
             active: "",
+            casesCounter: {},
             affectedState: 0
         }
     }
 
     componentDidMount() {
-        let url = "https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise"
+        let url = "https://api.covid19india.org/data.json"
         axios.get(url).then(response => {
-            let data = response.data.data
+            // let data = response.data.data
+            // this.setState({
+            //     stateData: data.statewise,
+            //     recovered: data.statewise[0].recovered,
+            //     confirmed: data.statewise[0].confirmed,
+            //     deaths: data.statewise[0].deaths,
+            //     active: data.statewise[0].active
+            // })
+
+            let data = response.data
             this.setState({
                 stateData: data.statewise,
-                recovered: data.statewise[0].recovered,
-                confirmed: data.statewise[0].confirmed,
-                deaths: data.statewise[0].deaths,
-                active: data.statewise[0].active
+                recovered: data.statewise[1].recovered,
+                confirmed: data.statewise[1].confirmed,
+                deaths: data.statewise[1].deaths,
+                active: data.statewise[1].active,
+                casesCounter: data.statewise[1]
             })
 
         }).catch(error => {
@@ -42,7 +53,8 @@ export class StateDetailsCont extends Component {
                         confirmed: this.state.stateData[i].confirmed,
                         recovered: this.state.stateData[i].recovered,
                         deaths: this.state.stateData[i].deaths,
-                        active: this.state.stateData[i].active
+                        active: this.state.stateData[i].active,
+                        casesCounter: this.state.stateData[i]
                     })
                 }
             }
@@ -71,9 +83,12 @@ export class StateDetailsCont extends Component {
                     </span>
                 </div>
                 <div className="state-details">
-                    <StateDetailsBox color={"rgb(1, 176, 230)"} title={"CNF"} val={this.state.confirmed} isDark={this.props.isDark} />
-                    <StateDetailsBox color={"rgb(42, 180, 7)"} title={"REC"} val={this.state.recovered} isDark={this.props.isDark} />
-                    <StateDetailsBox color={"red"} title={"DTH"} val={this.state.deaths} isDark={this.props.isDark} />
+                    <StateDetailsBox color={"rgb(1, 176, 230)"} title={"CNF"} val={this.state.confirmed}
+                        casesCounter={this.state.casesCounter.deltaconfirmed} isDark={this.props.isDark} />
+                    <StateDetailsBox color={"rgb(42, 180, 7)"} title={"REC"} val={this.state.recovered}
+                        casesCounter={this.state.casesCounter.deltarecovered} isDark={this.props.isDark} />
+                    <StateDetailsBox color={"red"} title={"DTH"} val={this.state.deaths}
+                        casesCounter={this.state.casesCounter.deltadeaths} isDark={this.props.isDark} />
                     <StateDetailsBox color={"rgb(196, 4, 221)"} title={"ACT"} val={this.state.active} isDark={this.props.isDark} />
                 </div>
             </div>

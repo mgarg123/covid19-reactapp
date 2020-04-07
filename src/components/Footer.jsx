@@ -9,6 +9,7 @@ export class Footer extends Component {
                 }}>
                     <Link to="/"><li>Home</li></Link>
                     <Link to="/about-corona"><li>About Corona</li></Link>
+                    <Link to="/corona-patients-in-world"><li>World Data</li></Link>
                 </ul>
                 <div className="footer-left">
                     <span>&copy;2020 All Rights Reserved</span>

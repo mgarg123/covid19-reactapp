@@ -9,6 +9,7 @@ import axios from 'axios'
 import '../src/css/plot.css'
 import Graphs from './components/Graphs'
 import Predictions from './components/Predictions'
+import SamplesTested from './components/SamplesTested'
 
 
 
@@ -124,7 +125,9 @@ function App() {
                 <Header isDarkCallBack={isDarkModeActive} />
                 <HeaderTab tabs={["Stats", "Lists", "Graphs", "Prediction"]} tabClickedCallBack={whichTab} />
                 {
-                    isStatsClicked ? <CaseNumber isDark={isDarkMode} stats={stats} keyVals={keyValues} lastUpdated={lastUpdated} /> :
+                    isStatsClicked ? <><CaseNumber isDark={isDarkMode}
+                        stats={stats} keyVals={keyValues}
+                        lastUpdated={lastUpdated} /><SamplesTested isDark={isDarkMode} /></> :
                         isStatewiseClicked ? <StateTable
                             stateData={stateData}
                             affectedState={affectedState}

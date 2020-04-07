@@ -5,9 +5,13 @@ export class StateDetailsBox extends Component {
         return (
             <div
                 className="state-det-1"
-                style={{ color: `${this.props.color}`, background: `${[this.props.isDark ? "#323A46" : "#fff"]}` }}>
-                <div className="status-name">{this.props.title}</div>
+                style={{ background: `${this.props.isDark ? "#323A46" : "#fff"}` }}>
+                <div className="status-name" style={{ color: `${this.props.color}` }}>{this.props.title}</div>
                 <div className="status-val" style={{ color: `${this.props.isDark ? "#fff" : "#2d2d2d"}` }}>{this.props.val}</div>
+                <div className="status-counter"
+                    style={{ color: `${this.props.isDark ? '#7dddbd' : 'rgb(42, 181, 135)'}`, fontSize: '10px', fontWeight: 'normal' }}>
+                    {this.props.casesCounter !== undefined && "+" + this.props.casesCounter + " today"}
+                </div>
             </div>
         )
     }

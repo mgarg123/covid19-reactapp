@@ -79,6 +79,7 @@ class DailyTrends extends Component {
                 weekCount = 0;
                 weekLabel = '';
             }
+            return null;
         });
 
         this.setState({
@@ -117,6 +118,7 @@ class DailyTrends extends Component {
             if (month && monthlyLabel.indexOf(month) === -1) {
                 monthlyLabel.push(month);
             }
+            return null;
 
         });
 

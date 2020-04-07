@@ -17,7 +17,7 @@ export class DeathVsRecovered extends Component {
 
     render() {
         return (
-            <div className="death-rec-container">
+            <div className="death-rec-container" style={{ marginBottom: `${this.props.margin ? this.props.margin : '0px'}` }}>
                 <div id="death-rec-title" style={{
                     textAlign: "center",
                     color: `${this.props.isDark ? '#fff' : '#2d2d2d'}`,
