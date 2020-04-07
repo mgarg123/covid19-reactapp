@@ -4,6 +4,7 @@ import DeathVsRecovered from './DeathVsRecovered'
 import Header from './Header'
 import Footer from './Footer'
 import axios from 'axios'
+import HeaderTab from './HeaderTab'
 
 class CountryData extends Component {
     constructor(props) {
@@ -24,6 +25,11 @@ class CountryData extends Component {
         }
     }
 
+    whichTab = (isStat, isState, isGraphs) => {
+        // setStatsClicked(isStat)
+        // setStatewiseClicked(isState)
+        // setGraphsClicked(isGraphs)
+    }
 
     isDarkModeActive = (isDark) => {
         this.setState({ isDark: isDark })
@@ -84,6 +90,7 @@ class CountryData extends Component {
         return (
             <Fragment>
                 <Header isDarkCallBack={this.isDarkModeActive} />
+                {/* <HeaderTab tabs={["Stats", "Graphs"]} tabClickedCallBack={this.whichTab} /> */}
                 <div className="country-data"
                     style={{
                         display: "flex",

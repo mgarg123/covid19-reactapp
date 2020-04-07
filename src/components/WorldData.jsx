@@ -37,6 +37,8 @@ class WorldData extends Component {
                 }
                 patData.push(obj)
             }
+            patData.sort((x, y) => y.confirmed - x.confirmed)
+            patData.map((y, index) => y.index = index + 1)
             this.setState({ showData: patData, showDataMain: patData })
         }
 
@@ -59,6 +61,8 @@ class WorldData extends Component {
                 }
                 patData.push(obj)
             }
+            patData.sort((x, y) => y.confirmed - x.confirmed)
+            patData.map((y, index) => y.index = index + 1)
             this.setState({ showData: patData, showDataMain: patData })
         }
 
@@ -66,7 +70,7 @@ class WorldData extends Component {
             if (this.state.countrySearchVal.length === 0) {
                 this.setState({ showData: this.state.showDataMain })
             } else {
-                let data = this.state.showDataMain.filter(x => x.country.includes(prevState.countrySearchVal))
+                let data = this.state.showDataMain.filter(x => x.country.toLowerCase().includes(prevState.countrySearchVal.toLowerCase()))
                 this.setState({ showData: data })
             }
 
@@ -141,6 +145,7 @@ class WorldData extends Component {
                                     height: '35px',
                                     padding: '8px 8px',
                                     border: 'none',
+                                    boxShadow: `1px 2px 3px 1px ${this.state.isDark ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0.2)'}`,
                                     borderRadius: '4px',
                                     fontSize: '17px'
                                 }}

@@ -12,6 +12,9 @@ export class CaseNumber extends Component {
         }
     }
 
+    componentDidMount() {
+        // this.props.history.push('/stats')
+    }
 
 
     render() {

@@ -9,6 +9,13 @@ body {
     /* color: #adb5bd; */
     overflow-x: hidden;
     font-family: sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+textarea:focus,
+input:focus {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 
 .site-holder {
@@ -266,7 +273,7 @@ body {
 }
 
 .navbar-footer a:nth-child(1) {
-    padding: 0px 12px;
+    padding: 0px 13px;
 }
 
 .navbar-footer a:nth-child(2) {

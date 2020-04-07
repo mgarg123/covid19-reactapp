@@ -18,24 +18,37 @@ export class WorldDataList extends Component {
                 alignItems: 'center',
                 padding: '15px 0px 10px 0px'
             }}>
-                <div><span style={{ fontSize: '11px' }}>*Click on the countries to know their stats</span></div>
+                <div><span style={{
+                    fontSize: '14px', color: `${this.props.isDark ? 'skyblue' : 'blue'}`,
+                    textTransform: 'uppercase',
+                    marginTop: '10px'
+                }}>
+                    {this.props.showData.length} Countries Affected</span>
+                </div>
+                <div><span style={{ fontSize: '11px' }}>*Click on the countries to know their detailed stats</span></div>
+
                 <table className="state-table" style={{ width: '340px' }}>
                     <thead style={{ display: 'table-row', transform: 'none' }}>
                         <tr >
-                            <th></th>
+                            <th style={{ width: '30px' }}></th>
                             <th style={{
-                                width: '160px', border: 'none',
-                                fontSize: '16px',
-                                border: '0.5px solid'
-                            }}>Country Name</th>
-                            <th style={{
-                                width: '160px', border: 'none',
-                                fontSize: '16px',
+                                width: '150px', border: 'none',
+                                fontSize: '14px',
                                 border: '0.5px solid',
-                                paddingRight: '8px'
+                                textAlign: 'left',
+                                fontWeight: 'bold',
+                                background: `${this.props.isDark ? '#1c1c1c' : '#ccc'}`
+                            }}>COUNTRY NAME</th>
+                            <th style={{
+                                width: '150px', border: 'none',
+                                fontSize: '14px',
+                                border: '0.4px solid',
+                                fontWeight: 'bold',
+                                background: `${this.props.isDark ? '#1c1c1c' : '#ccc'}`,
+                                textAlign: 'center'
                             }}
                                 onClick={() => this.setState({ sortCases: !this.state.sortCases })}
-                            >Confirmed Cases <i className={`fa ${this.state.sortCases ? 'fa-arrow-down' : 'fa-arrow-up'}`}></i></th>
+                            >INFECTED <i className={`fa ${this.state.sortCases ? 'fa-arrow-down' : 'fa-arrow-up'}`}></i></th>
                         </tr>
                     </thead>
                     <tbody style={{ display: 'table-row', transform: 'none' }}>
@@ -44,12 +57,20 @@ export class WorldDataList extends Component {
                                 parseInt(y.confirmed) - parseInt(x.confirmed)).map(
                                     (x, index) => {
                                         return (
+
                                             <tr key={x.country}
                                                 style={{ background: `${index % 2 !== 0 ? this.props.isDark ? '#1c1c1c' : '#eee' : ''}` }}>
-                                                <td>></td>
-                                                <td><Link to={`/world-data/${x.country}`}>{x.country}</Link></td>
-                                                <td>{x.confirmed}</td>
+                                                <td style={{ width: '30px' }}>{x.index}</td>
+
+                                                <td style={{ width: '170px', textAlign: 'left' }}>
+                                                    <Link to={`/world-data/${x.country}`}>{x.country}</Link>
+                                                </td>
+
+                                                <td style={{ width: '130px' }}>
+                                                    <Link to={`/world-data/${x.country}`}>{x.confirmed.toLocaleString('en-IN')}</Link>
+                                                </td>
                                             </tr>
+
                                         )
                                     }
                                 )

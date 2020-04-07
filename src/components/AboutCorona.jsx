@@ -82,6 +82,7 @@ export class AboutCorona extends Component {
                         </ul>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Coronavirus_COVID-19_prevention.svg"
                             alt="Covid-prevention"
+                            style={{ marginBottom: '20px' }}
                         />
                     </div>
 

@@ -27,7 +27,7 @@ export class HeaderTab extends Component {
 
     render() {
         return (
-            <div className="tabs-container" style={{ color: "#fff" }}>
+            <div className="tabs-container" style={{ color: "#fff", background: '#262626' }}>
                 <div className="tabs"
                     style={{ background: `${this.state.isStatsClicked ? "rgb(50, 58, 70)" : ""}` }}
                     onClick={() => this.setState({
@@ -39,24 +39,30 @@ export class HeaderTab extends Component {
                     <span>{this.props.tabs[0]}</span>
                 </div>
                 <div className="tabs"
-                    style={{ background: `${this.state.isStatewiseClicked ? "rgb(50, 58, 70)" : ""}` }}
+                    style={{
+                        background: `${this.state.isStatewiseClicked ? "rgb(50, 58, 70)" : ""}`,
+                        display: `${this.props.tabs[1] !== undefined ? 'flex' : 'none'}`
+                    }}
                     onClick={() => this.setState({
                         isStatsClicked: false,
                         isStatewiseClicked: true,
                         isGraphsClicked: false,
                         isPredictionClicked: false
                     })}>
-                    <span>{this.props.tabs[1]}</span>
+                    <span>{this.props.tabs[1] !== undefined && this.props.tabs[1]}</span>
                 </div>
                 <div className="tabs"
-                    style={{ background: `${this.state.isGraphsClicked ? "rgb(50, 58, 70)" : ""}` }}
+                    style={{
+                        background: `${this.state.isGraphsClicked ? "rgb(50, 58, 70)" : ""}`,
+                        display: `${this.props.tabs[2] !== undefined ? 'flex' : 'none'}`
+                    }}
                     onClick={() => this.setState({
                         isStatsClicked: false,
                         isStatewiseClicked: false,
                         isGraphsClicked: true,
                         isPredictionClicked: false
                     })}>
-                    <span>{this.props.tabs[2]}</span>
+                    <span>{this.props.tabs[2] !== undefined && this.props.tabs[2]}</span>
                 </div>
                 <div className="tabs"
                     style={{
@@ -71,10 +77,10 @@ export class HeaderTab extends Component {
                     })}>
                     <img src={newFeature} width alt=""
                         style={{
-                            width: `${window.screen.width < 600 ? '30px' : '42px'}`,
-                            height: `${window.screen.width < 600 ? '25px' : '42px'}`,
+                            width: `${window.screen.width < 600 ? '24px' : '42px'}`,
+                            height: `${window.screen.width < 600 ? '24px' : '42px'}`,
                             position: 'absolute',
-                            right: '-2.5px',
+                            right: '0px',
                             top: '0'
                         }}
                     />

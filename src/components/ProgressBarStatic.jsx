@@ -6,7 +6,7 @@ export default function ProgressBarStatic(props) {
             <div className="progress-bar">
                 <hr
                     className="prog-bar"
-                    style={{ border: `2.7px solid ${props.bgColor}`, borderRadius: 4 }}
+                    style={{ border: `2.7px solid ${props.bgColor}`, borderRadius: '4px' }}
                 />
             </div>
         </Fragment>

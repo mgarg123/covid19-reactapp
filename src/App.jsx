@@ -14,7 +14,7 @@ import SamplesTested from './components/SamplesTested'
 
 
 
-function App() {
+function App(props) {
     const [isDarkMode, setDarkMode] = useState(true)
     const [isStatsClicked, setStatsClicked] = useState(true)
     const [isStatewiseClicked, setStatewiseClicked] = useState(false)
@@ -104,7 +104,6 @@ function App() {
         let url3 = "https://api.covid19india.org/v2/state_district_wise.json"
         axios.get(url3).then(response => {
             let data = response.data
-            console.log(data);
             setDistrictDatas(data)
 
         }).catch(error => console.log(error.message))
@@ -114,6 +113,8 @@ function App() {
 
         }
     }, [])
+
+
 
 
     return (
