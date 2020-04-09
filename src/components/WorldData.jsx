@@ -4,7 +4,8 @@ import React, { Component, Fragment } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import WorldDataList from './WorldDataList'
-//import axios from 'axios'
+import '../css/world.css'
+import WorldCase from './WorldCase'
 
 class WorldData extends Component {
     constructor(props) {
@@ -15,11 +16,13 @@ class WorldData extends Component {
             countrySearchVal: '',
             patientsData: props.worldPatientsData,
             showData: [],
-            showDataMain: []
+            showDataMain: [],
+            indiaStat: {}
         }
     }
 
     componentDidMount() {
+
         if (this.state.patientsData !== undefined) {
             let allCountry = Object.keys(this.props.worldPatientsData).map(x => x)
 
@@ -29,7 +32,7 @@ class WorldData extends Component {
             for (let i in this.props.worldPatientsData) {
                 let obj = {}
                 let country = allCountry[cnt++]
-                let confirmed = this.props.worldPatientsData[country][this.props.worldPatientsData[country].length - 1].confirmed
+                let confirmed = (country === 'India' ? parseInt(this.props.indiaStat.confirmed) : this.props.worldPatientsData[country][this.props.worldPatientsData[country].length - 1].confirmed)
 
                 obj = {
                     country: country,
@@ -52,7 +55,7 @@ class WorldData extends Component {
             for (let i in this.props.worldPatientsData) {
                 let obj = {}
                 let country = allCountry[cnt++]
-                let confirmed = this.props.worldPatientsData[country][this.props.worldPatientsData[country].length - 1].confirmed
+                let confirmed = (country === 'India' ? parseInt(this.props.indiaStat.confirmed) : this.props.worldPatientsData[country][this.props.worldPatientsData[country].length - 1].confirmed)
 
 
                 obj = {
@@ -120,42 +123,45 @@ class WorldData extends Component {
         return (
             <Fragment>
                 <Header isDarkCallBack={this.isDarkModeActive} />
-                <div className="country-data"
-                    style={{
-                        display: "flex",
-                        flexDirection: `column`,
-                        marginBottom: '10px',
-                        marginTop: '-10px',
-                        background: `${this.state.isDark ? '#262626' : '#fff'}`,
-                        color: `${this.state.isDark ? '#fff' : '#222'}`
-                    }}
-                >
-                    <div className='search-country' style={{
-                        width: '100%',
-                        margin: '20px 0px 0px 0px'
-                    }}>
-                        <div style={{ width: 'fit-content', margin: '0 auto' }}>
-                            <input type="text"
-                                value={this.state.countrySearchVal}
-                                placeholder='Search Country'
-                                name="countryname"
-                                id="countryname"
-                                style={{
-                                    width: '230px',
-                                    height: '35px',
-                                    padding: '8px 8px',
-                                    border: 'none',
-                                    boxShadow: `1px 2px 3px 1px ${this.state.isDark ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0.2)'}`,
-                                    borderRadius: '4px',
-                                    fontSize: '17px'
-                                }}
-                                onChange={(event) => this.setState({ countrySearchVal: event.target.value })}
-                            />
-                        </div>
+                <div className="world-parent">
+                    <WorldCase />
+                    <div className="country-data"
+                        style={{
+                            display: "flex",
+                            flexDirection: `column`,
+                            marginBottom: '10px',
+                            background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`,
+                            color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#222'}`
+                        }}
+                    >
+                        <div className='search-country' style={{
+                            width: '100%',
+                            margin: '20px 0px 0px 0px'
+                        }}>
+                            <div style={{ width: 'fit-content', margin: '0 auto' }}>
+                                <input type="text"
+                                    value={this.state.countrySearchVal}
+                                    placeholder='Search Country'
+                                    name="countryname"
+                                    id="countryname"
+                                    style={{
+                                        width: '250px',
+                                        height: '35px',
+                                        padding: '8px 8px',
+                                        border: 'none',
+                                        boxShadow: `1px 2px 4px 2px ${localStorage.getItem('ncovindia_isDark') === 'true' ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0.4)'}`,
+                                        borderRadius: '4px',
+                                        fontSize: '17px'
+                                    }}
+                                    onChange={(event) => this.setState({ countrySearchVal: event.target.value })}
+                                />
+                            </div>
 
+                        </div>
+                        <WorldDataList showData={this.state.showData} isDark={this.state.isDark} />
                     </div>
-                    <WorldDataList showData={this.state.showData} isDark={this.state.isDark} />
                 </div>
+
                 <Footer isDark={this.state.isDark} />
             </Fragment >
         )

@@ -120,26 +120,26 @@ function App(props) {
     return (
         <Fragment>
             <div className="site-holder" style={{
-                background: `${isDarkMode ? "#262626" : "#fff"}`,
-                color: `${isDarkMode ? '#fff' : '#2d2d2d'}`
+                background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? "#262626" : "#fff"}`,
+                color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`
             }}>
                 <Header isDarkCallBack={isDarkModeActive} />
                 <HeaderTab tabs={["Stats", "Lists", "Graphs", "Prediction"]} tabClickedCallBack={whichTab} />
                 {
-                    isStatsClicked ? <><CaseNumber isDark={isDarkMode}
+                    isStatsClicked ? <><CaseNumber isDark={localStorage.getItem('ncovindia_isDark') === 'true'}
                         stats={stats} keyVals={keyValues}
-                        lastUpdated={lastUpdated} /><SamplesTested isDark={isDarkMode} /></> :
+                        lastUpdated={lastUpdated} /><SamplesTested isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /></> :
                         isStatewiseClicked ? <StateTable
                             stateData={stateData}
                             affectedState={affectedState}
                             districtDatas={districtDatas}
-                            isDark={isDarkMode} /> : isGraphsClicked ? <Graphs isDark={isDarkMode} /> : <Predictions isDark={isDarkMode} />
+                            isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /> : isGraphsClicked ? <Graphs isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /> : <Predictions isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />
 
                 }
-                <Footer isDark={isDarkMode} />
+                <Footer isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />
             </div>
         </Fragment>
     )
 }
 
-export default App;
+export default App

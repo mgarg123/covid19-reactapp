@@ -29,8 +29,8 @@ export class AboutCorona extends Component {
         return (
             <Fragment>
                 <div className="site-holder" style={{
-                    background: `${this.state.isDarkMode ? "#262626" : "#fff"}`,
-                    color: `${this.state.isDarkMode ? '#fff' : '#000'}`
+                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? "#262626" : "#fff"}`,
+                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#000'}`
                 }}>
                     <Header isDarkCallBack={this.isDarkModeActive} />
                     <HeaderTab tabs={["Overview", "Symptoms", "Prevention"]} tabClickedCallBack={this.whichTab} />

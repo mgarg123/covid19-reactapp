@@ -20,9 +20,19 @@ class Header extends Component {
         })
     }
 
+    componentDidMount() {
+        if (localStorage.getItem('ncovindia_isDark') === 'true') {
+            this.setState({ switched: true })
+        } else {
+            this.setState({ switched: false })
+        }
+    }
+
     componentDidUpdate(prevProps, prevState) {
         if (prevState.switched !== this.state.switched) {
-            this.props.isDarkCallBack(this.state.switched)
+            localStorage.setItem('ncovindia_isDark', '' + this.state.switched)      //To synchronize the theme between the pages
+            // alert(localStorage.getItem('ncovindia_isDark'))
+            this.props.isDarkCallBack(localStorage.getItem('ncovindia_isDark') === 'true')
         }
     }
 

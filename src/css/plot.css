@@ -53,7 +53,7 @@
             .state-name {
                 font-weight: bold;
                 font-family: sans-serif;
-                padding: 0px;
+                padding: 0px 5px;
                 font-size: 14px;
                 height: auto;
                 text-align: center;
@@ -66,7 +66,7 @@
                 align-items: center;
                 font-weight: bold;
                 padding-top: 5px;
-                /* margin-left: 5px; */
+                margin-left: 5px;
                 align-items: left;
             }
             
@@ -94,7 +94,9 @@
             .state-table-container {
                 width: 100%;
                 margin: 0px auto;
-                padding: 30px 0 50px 0;
+                padding: 30px 0 0px 0;
+                display: flex;
+                flex-direction: column;
             }
             
             .state-table-container .affectedDiv {
@@ -105,11 +107,16 @@
             
             .state-table-container table thead,
             .state-table-container table tbody {
-                display: inline-block;
                 font-size: 12px;
                 margin: 0 auto;
                 text-align: center;
-                transform: translateX(35%);
+            }
+            
+            .table-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
             }
             
             .state-table {
@@ -117,7 +124,6 @@
                 border-collapse: collapse;
                 border-radius: 5px;
                 margin: 5px 0px;
-                width: 100%;
             }
             
             .state-table td,
@@ -267,6 +273,9 @@
                 .state-table-container {
                     transform: none;
                     padding: 0;
+                }
+                .state-table {
+                    width: 100%;
                 }
                 .state-table-container table thead,
                 .state-table-container table tbody {

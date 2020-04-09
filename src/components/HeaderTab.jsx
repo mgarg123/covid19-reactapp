@@ -27,7 +27,7 @@ export class HeaderTab extends Component {
 
     render() {
         return (
-            <div className="tabs-container" style={{ color: "#fff", background: '#262626' }}>
+            <div className="tabs-container" style={{ color: "#fff" }}>
                 <div className="tabs"
                     style={{ background: `${this.state.isStatsClicked ? "rgb(50, 58, 70)" : ""}` }}
                     onClick={() => this.setState({
@@ -75,7 +75,7 @@ export class HeaderTab extends Component {
                         isGraphsClicked: false,
                         isPredictionClicked: true
                     })}>
-                    <img src={newFeature} width alt=""
+                    <img src={newFeature} alt=""
                         style={{
                             width: `${window.screen.width < 600 ? '24px' : '42px'}`,
                             height: `${window.screen.width < 600 ? '24px' : '42px'}`,

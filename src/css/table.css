@@ -3,6 +3,10 @@
     width: 100% !important;
 }
 
+th {
+    font-weight: bold !important;
+}
+
 .internal-table {
     width: 100%;
     float: left;
@@ -24,14 +28,19 @@
     width: 10px !important;
 }
 
-.label-div th {
-    width: fit-content !important;
-    /* padding-left: 20px !important; */
+.label-div th:nth-child(2) {
     text-align: left !important;
+    padding-left: 18px;
+}
+
+.label-div th {
+    width: 160px !important;
+    /* padding-left: 20px !important; */
+    text-align: center !important;
 }
 
 .data-div td {
-    width: 130px !important;
+    width: 160px !important;
     padding-left: 20px !important;
     font-weight: normal !important;
     text-align: left !important;
@@ -42,6 +51,6 @@
         width: 10px !important;
     }
     .data-div td {
-        width: 170px !important;
+        width: fit-content !important;
     }
 }

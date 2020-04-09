@@ -6,6 +6,8 @@ import AboutCorona from '../src/components/AboutCorona'
 import CountryData from '../src/components/CountryData'
 import WorldData from '../src/components/WorldData'
 import axios from 'axios'
+import ScrollMemory from 'react-router-scroll-memory'
+
 
 export class Routing extends Component {
 
@@ -17,11 +19,48 @@ export class Routing extends Component {
             // labels: [],
             // confirmed: [],
             // recover: [],
-            // deaths: []
+            // deaths: [],
+            indiaStat: {}
         }
     }
 
     componentDidMount() {
+        localStorage.setItem('ncovindia_isDark', 'true')        //Set theme initially to Dark Mode
+
+        axios.get('https://ipinfo.io?token=d67524c3026916').then(response => {
+            let data = response.data
+            let countryCode = data.country
+
+            //Country code to country name mapping
+            axios.get('https://restcountries.eu/rest/v2/alpha/' + countryCode).then(response => {
+                let countryName = response.data.name
+
+                sessionStorage.setItem('ncovindia_usersCountry', countryName)   //Setting User's Country Name to Session Storage
+
+            }).catch(error => console.log(error.message))
+
+        }).catch(error => console.log(error.message))
+
+        //Updating India Data in the list
+        let url1 = "https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise"
+        axios.get(url1).then(response => {
+            var data = response.data.data
+
+            let conf = data.total.confirmed
+            let rec = data.total.recovered
+            let death = data.total.deaths
+            let act = data.total.active
+
+            let stat = {
+                confirmed: conf,
+                recovered: rec,
+                deaths: death,
+                active: act
+            }
+            this.setState({ indiaStat: stat })
+        }).catch(error => console.log(error.message))
+
+
         let url = "https://pomber.github.io/covid19/timeseries.json"
 
         // var currentURL = window.location.href;
@@ -100,15 +139,18 @@ export class Routing extends Component {
         }).catch(error => console.log(error.message))
     }
 
+
     render() {
         //console.log('from routing');
         //console.log(this.state.worldData);
         return (
             <Router>
+                <ScrollMemory />        {/*Used to Restore Scroll */}
                 <Switch>
                     <Route exact path='/' component={App}></Route>
                     <Route exact path='/about-corona' component={AboutCorona}></Route>
-                    <Route exact path='/corona-patients-in-world'><WorldData worldPatientsData={this.state.worldPatientsData} /> </Route>
+                    <Route exact path='/corona-patients-in-world'><WorldData worldPatientsData={this.state.worldPatientsData}
+                        indiaStat={this.state.indiaStat} /> </Route>
                     {/* <Route exact path='/china-data'><CountryData country={"china"} countryStateData={this.state} /></Route>
                     <Route exact path='/spain-data'><CountryData country={"spain"} countryStateData={this.state} /></Route>
                     <Route exact path='/italy-data'><CountryData country={"italy"} countryStateData={this.state} /></Route> */}

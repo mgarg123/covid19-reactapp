@@ -19,7 +19,7 @@ export class WorldDataList extends Component {
                 padding: '15px 0px 10px 0px'
             }}>
                 <div><span style={{
-                    fontSize: '14px', color: `${this.props.isDark ? 'skyblue' : 'blue'}`,
+                    fontSize: '14px', color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? 'skyblue' : 'blue'}`,
                     textTransform: 'uppercase',
                     marginTop: '10px'
                 }}>
@@ -37,14 +37,14 @@ export class WorldDataList extends Component {
                                 border: '0.5px solid',
                                 textAlign: 'left',
                                 fontWeight: 'bold',
-                                background: `${this.props.isDark ? '#1c1c1c' : '#ccc'}`
+                                background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#1c1c1c' : '#ccc'}`
                             }}>COUNTRY NAME</th>
                             <th style={{
                                 width: '150px', border: 'none',
                                 fontSize: '14px',
                                 border: '0.4px solid',
                                 fontWeight: 'bold',
-                                background: `${this.props.isDark ? '#1c1c1c' : '#ccc'}`,
+                                background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#1c1c1c' : '#ccc'}`,
                                 textAlign: 'center'
                             }}
                                 onClick={() => this.setState({ sortCases: !this.state.sortCases })}
@@ -59,15 +59,24 @@ export class WorldDataList extends Component {
                                         return (
 
                                             <tr key={x.country}
-                                                style={{ background: `${index % 2 !== 0 ? this.props.isDark ? '#1c1c1c' : '#eee' : ''}` }}>
+                                                style={{
+                                                    background: `${sessionStorage.getItem('ncovindia_usersCountry') === x.country ?
+                                                        localStorage.getItem('ncovindia_isDark') === 'true' ? 'skyblue' : 'aqua' :
+                                                        index % 2 !== 0 ?
+                                                            localStorage.getItem('ncovindia_isDark') === 'true' ? '#1c1c1c' : '#eee' : ''}`
+                                                }}>
                                                 <td style={{ width: '30px' }}>{x.index}</td>
 
                                                 <td style={{ width: '170px', textAlign: 'left' }}>
-                                                    <Link to={`/world-data/${x.country}`}>{x.country}</Link>
+                                                    <Link to={`${x.country === 'India' ? '/' : `/world-data/${x.country}`}`}>
+                                                        {x.country}
+                                                    </Link>
                                                 </td>
 
                                                 <td style={{ width: '130px' }}>
-                                                    <Link to={`/world-data/${x.country}`}>{x.confirmed.toLocaleString('en-IN')}</Link>
+                                                    <Link to={`${x.country === 'India' ? '/' : `/world-data/${x.country}`}`}>
+                                                        {x.confirmed.toLocaleString('en-IN')}
+                                                    </Link>
                                                 </td>
                                             </tr>
 
