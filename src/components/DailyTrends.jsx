@@ -63,9 +63,13 @@ class DailyTrends extends Component {
         var weeklyDataSub = [];
         var weeklyLabel = [];
         var weekLabel = '';
+        //console.log('series count: '+apiData.cases_time_series.length);
+        var weeklySeriesCount = apiData.cases_time_series.length;
+        var weekLoopCount = 0;
         apiData.cases_time_series.map((data) => {
-            console.log(data);
+            //console.log(weekLoopCount);
             weekCount++;
+            weekLoopCount++;
             if (weekCount === 1) {
                 weekLabel = data.date;
             }
@@ -79,6 +83,17 @@ class DailyTrends extends Component {
                 weekCount = 0;
                 weekLabel = '';
             }
+
+            if( weeklySeriesCount % 7 != 0 && ( (weekLoopCount+1) ===  weeklySeriesCount ) ){
+                //console.log('asdasd');
+                weekLabel = weekLabel + ' - ' + data.date;
+                weeklyLabel.push(weekLabel);
+                weeklyDataSub.push(weekdata);
+                weekdata = 0;
+                weekCount = 0;
+                weekLabel = '';
+            }
+
             return null;
         });
 
