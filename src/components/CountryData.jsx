@@ -5,6 +5,7 @@ import Header from './Header'
 import Footer from './Footer'
 import axios from 'axios'
 import HeaderTab from './HeaderTab'
+import WorldCase from './WorldCase'
 
 class CountryData extends Component {
     constructor(props) {
@@ -21,7 +22,9 @@ class CountryData extends Component {
             labels: [],
             confirmed: [],
             recover: [],
-            deaths: []
+            deaths: [],
+            countryStat: {}
+
         }
     }
 
@@ -53,6 +56,20 @@ class CountryData extends Component {
 
             let labels = cData.map(x => x.date.split("-")[2] + " " + monthName[parseInt(x.date.split("-")[1]) - 1])
             let recover = cData.map(x => x.recovered)
+
+            //Setting up statistics
+            let cntryStat = {
+                confirmed: cData[cData.length - 1].confirmed,
+                deaths: cData[cData.length - 1].deaths,
+                recovered: cData[cData.length - 1].recovered,
+                active: cData[cData.length - 1].confirmed - (cData[cData.length - 1].deaths + cData[cData.length - 1].recovered),
+                deathRate: ((cData[cData.length - 1].deaths / cData[cData.length - 1].confirmed) * 100).toPrecision(3) + "%",
+                recoveryRate: ((cData[cData.length - 1].recovered / cData[cData.length - 1].confirmed) * 100).toPrecision(3) + "%",
+                activeRate: (((cData[cData.length - 1].confirmed - (cData[cData.length - 1].deaths + cData[cData.length - 1].recovered)) /
+                    cData[cData.length - 1].confirmed) * 100).toPrecision(3) + "%"
+            }
+
+            this.setState({ countryStat: cntryStat })
 
             cData.map((confirmedDatas) => {
                 previousCount = count - 1;
@@ -89,16 +106,34 @@ class CountryData extends Component {
 
         return (
             <Fragment>
-                <Header isDarkCallBack={this.isDarkModeActive} />
+                <Header isDarkCallBack={this.isDarkModeActive} isSwitched={localStorage.getItem('ncovindia_isDark') === 'true'} />
                 {/* <HeaderTab tabs={["Stats", "Graphs"]} tabClickedCallBack={this.whichTab} /> */}
+                <div className='cd-country-name' style={{
+                    marginTop: '-10px', width: '100%',
+                    textAlign: 'center',
+                    paddingBottom: '15px',
+                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`
+                }}>
+                    <span style={{
+                        color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#222'}`,
+                        fontSize: '23px',
+                        fontWeight: 'bold',
+                        letterSpacing: '0.6px',
+                        borderBottom: '3px solid skyblue',
+                        padding: '0px 7px'
+                    }}>
+                        {this.props.match.params.countryname.replace('-', ' ')}</span>
+                </div>
                 <div className="country-data"
                     style={{
                         display: "flex",
                         flexDirection: `${window.screen.width <= 767 ? 'column' : 'row'}`,
-                        marginBottom: '10px',
-                        background: `${this.state.isDark ? '#262626' : '#fff'}`
+                        width: '100%',
+                        marginBottom: '52px',
+                        background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`
                     }}
                 >
+                    <WorldCase countryStat={this.state.countryStat} />
                     <CountryDailyTrends
                         isDark={this.state.isDark}
                         labels={this.state.labels}

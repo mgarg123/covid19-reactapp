@@ -140,7 +140,7 @@ export class StateTable extends Component {
                                     sortDeaths: false,
                                     sortRecovered: false
                                 })}>INFECTED
-                            <span class="material-icons" style={{ fontSize: '11px' }}>
+                            <span className="material-icons" style={{ fontSize: '11px' }}>
                                         {this.state.sortConfirmed ? 'arrow_upward' : 'arrow_downward'}</span>
                                 </th>
                                 <th onClick={() => this.setState({

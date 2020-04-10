@@ -28,14 +28,36 @@ export class WorldCase extends Component {
             let currMin = currDate.getMinutes()
 
             if ((currHr - prevHr === 0) && (currMin - prevMin >= 0)) {
-                this.setState({ lastUpdated: (Math.abs(currMin - prevMin) + " Minutes") })
+                let uptime = Math.abs(currMin - prevMin)
+                if (uptime === 1) {
+                    let lastval = uptime + ' Minute'
+                    this.setState({ lastUpdated: lastval })
+                } else {
+                    let lastval = uptime + ' Minutes'
+                    this.setState({ lastUpdated: lastval })
+                }
+
             }
             else if ((currHr - prevHr !== 0) && (currMin < prevMin)) {
-                let uptime = 60 - Math.abs(currMin - prevMin) + " Minutes"
+                let uptime = 60 - Math.abs(currMin - prevMin)
+                if (uptime === 1) {
+                    let lastval = uptime + ' Minute'
+                    this.setState({ lastUpdated: lastval })
+                } else {
+                    let lastval = uptime + ' Minutes'
+                    this.setState({ lastUpdated: lastval })
+                }
                 this.setState({ lastUpdated: uptime })
             } else {
-                let uptime = "About " + Math.abs(currHr - prevHr) + " Hours"
-                this.setState({ lastUpdated: uptime })
+                let uptime = Math.abs(currHr - prevHr)
+                if (uptime === 1) {
+                    let lastval = uptime + ' Hour'
+                    this.setState({ lastUpdated: lastval })
+                } else {
+                    let lastval = 'About ' + uptime + ' Hours'
+                    this.setState({ lastUpdated: lastval })
+                }
+                // this.setState({ lastUpdated: uptime })
             }
 
             this.setState({ worldStats: data })
@@ -67,7 +89,9 @@ export class WorldCase extends Component {
                                                 trending_up</span></span>
                                         </div>
                                         <div className='wc-case-count'>
-                                            <span>{this.state.worldStats.cases.toLocaleString('en-IN')}</span>
+                                            <span>{this.props.countryStat !== undefined ?
+                                                this.props.countryStat.confirmed.toLocaleString('en-IN')
+                                                : this.state.worldStats.cases.toLocaleString('en-IN')}</span>
                                         </div>
                                     </Fragment>
 
@@ -83,10 +107,13 @@ export class WorldCase extends Component {
                                     <Fragment>
                                         <div className="wc-rate"><span style={{ background: 'rgb(42, 180, 7)' }}>
                                             <span className="material-icons wc-rate" style={{ fontSize: 10 }}>
-                                                trending_up</span>{((this.state.worldStats.recovered / this.state.worldStats.cases) * 100).toPrecision(3) + "%"}</span>
+                                                trending_up</span>{this.props.countryStat !== undefined ? this.props.countryStat.recoveryRate :
+                                                ((this.state.worldStats.recovered / this.state.worldStats.cases) * 100).toPrecision(3) + "%"}</span>
                                         </div>
                                         <div className='wc-case-count'>
-                                            <span>{this.state.worldStats.recovered.toLocaleString('en-IN')}</span>
+                                            <span>{this.props.countryStat !== undefined ?
+                                                this.props.countryStat.recovered.toLocaleString('en-IN')
+                                                : this.state.worldStats.recovered.toLocaleString('en-IN')}</span>
                                         </div>
                                     </Fragment>
 
@@ -101,10 +128,13 @@ export class WorldCase extends Component {
                                     <Fragment>
                                         <div className="wc-rate"><span style={{ background: 'rgb(255, 0, 0)' }}>
                                             <span className="material-icons wc-rate" style={{ fontSize: 10 }}>
-                                                trending_up</span>{((this.state.worldStats.deaths / this.state.worldStats.cases) * 100).toPrecision(3) + "%"}</span>
+                                                trending_up</span>{this.props.countryStat !== undefined ? this.props.countryStat.deathRate :
+                                                ((this.state.worldStats.deaths / this.state.worldStats.cases) * 100).toPrecision(3) + "%"}</span>
                                         </div>
                                         <div className='wc-case-count'>
-                                            <span>{this.state.worldStats.deaths.toLocaleString('en-IN')}</span>
+                                            <span>{this.props.countryStat !== undefined ?
+                                                this.props.countryStat.deaths.toLocaleString('en-IN')
+                                                : this.state.worldStats.deaths.toLocaleString('en-IN')}</span>
                                         </div>
                                     </Fragment>
 
@@ -119,10 +149,15 @@ export class WorldCase extends Component {
                                     <Fragment>
                                         <div className="wc-rate"><span style={{ background: "rgb(196, 4, 221)" }}>
                                             <span className="material-icons wc-rate" style={{ fontSize: 10 }}>
-                                                trending_up</span>{(((this.state.worldStats.cases - (this.state.worldStats.deaths + this.state.worldStats.recovered)) / this.state.worldStats.cases) * 100).toPrecision(3) + "%"}</span>
+                                                trending_up</span>{this.props.countryStat !== undefined ? this.props.countryStat.activeRate :
+                                                (((this.state.worldStats.cases - (this.state.worldStats.deaths +
+                                                    this.state.worldStats.recovered)) /
+                                                    this.state.worldStats.cases) * 100).toPrecision(3) + "%"}</span>
                                         </div>
                                         <div className='wc-case-count'>
-                                            <span>{(this.state.worldStats.cases - (this.state.worldStats.deaths + this.state.worldStats.recovered)).toLocaleString('en-IN')}
+                                            <span>{this.props.countryStat !== undefined ?
+                                                this.props.countryStat.active.toLocaleString('en-IN')
+                                                : (this.state.worldStats.cases - (this.state.worldStats.deaths + this.state.worldStats.recovered)).toLocaleString('en-IN')}
                                             </span>
                                         </div>
                                     </Fragment>

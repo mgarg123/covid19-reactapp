@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import '../css/header.css'
 import newFeature from '../img/new.svg'
+import ReactGA from 'react-ga'
+
 export class HeaderTab extends Component {
     constructor(props) {
         super(props)
@@ -22,6 +24,18 @@ export class HeaderTab extends Component {
                 this.state.isStatewiseClicked,
                 this.state.isGraphsClicked,
                 this.state.isPredictionClicked)
+        }
+        if (this.state.isStatsClicked !== prevState.isStatsClicked) {
+            ReactGA.ga('send', 'event', 'India Statistics', 'Stats', 'Stats tab clicked')
+        }
+        if (this.state.isStatewiseClicked !== prevState.isStatewiseClicked) {
+            ReactGA.ga('send', 'event', 'India Statistics', 'Lists', 'Lists tab clicked')
+        }
+        if (this.state.isGraphsClicked !== prevState.isGraphsClicked) {
+            ReactGA.ga('send', 'event', 'India Statistics', 'Graphs', 'Graphs tab clicked')
+        }
+        if (this.state.isPredictionClicked !== prevState.isPredictionClicked) {
+            ReactGA.ga('send', 'event', 'India Statistics', 'Predictions', 'Predictions tab clicked')
         }
     }
 

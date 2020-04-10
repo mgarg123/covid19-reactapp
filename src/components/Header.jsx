@@ -12,27 +12,23 @@ class Header extends Component {
             switched: true
         }
     }
-    toggleSwitch = () => {
-        this.setState(prevState => {
-            return {
-                switched: !prevState.switched
-            }
-        })
+    toggleSwitch = (switched) => {
+        this.setState({ switched: !this.state.switched })
+        localStorage.setItem('ncovindia_isDark', '' + switched)
+
+    }
+    componentDidMount() {
+
+
     }
 
-    componentDidMount() {
-        if (localStorage.getItem('ncovindia_isDark') === 'true') {
-            this.setState({ switched: true })
-        } else {
-            this.setState({ switched: false })
-        }
-    }
+
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.switched !== this.state.switched) {
             localStorage.setItem('ncovindia_isDark', '' + this.state.switched)      //To synchronize the theme between the pages
             // alert(localStorage.getItem('ncovindia_isDark'))
-            this.props.isDarkCallBack(localStorage.getItem('ncovindia_isDark') === 'true')
+            this.props.isDarkCallBack(this.state.switched)
         }
     }
 
@@ -53,7 +49,7 @@ class Header extends Component {
                         </ul>
                         <span style={{ marginRight: "0px", paddingRight: "4px", fontSize: "15px" }}>Dark Mode</span>
                         <Switch onChange={this.toggleSwitch}
-                            checked={this.state.switched}
+                            checked={this.state.switched && localStorage.getItem('ncovindia_isDark') === 'true'}
                             className="react-switch"
                             height={20}
                             width={40}

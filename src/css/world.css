@@ -6,11 +6,16 @@
 
 .world-cases {
     width: 50%;
+    padding-bottom: 10px;
 }
 
 .wc-container {
-    width: auto;
-    transform: translateY(25%);
+    width: 95%;
+    transform: translateY(15%);
+}
+
+.last-updated-wc {
+    margin-left: 50px;
 }
 
 .world-cases-main {
@@ -101,7 +106,8 @@
         transform: none;
     }
     .last-updated-wc {
-        padding-left: 25px;
+        /* padding-left: 25px; */
+        margin-left: 20px;
         margin-top: 8px;
         font-size: 14px;
         font-weight: bold;

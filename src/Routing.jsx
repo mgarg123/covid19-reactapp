@@ -7,6 +7,7 @@ import CountryData from '../src/components/CountryData'
 import WorldData from '../src/components/WorldData'
 import axios from 'axios'
 import ScrollMemory from 'react-router-scroll-memory'
+import ReactGA from 'react-ga'
 
 
 export class Routing extends Component {
@@ -20,13 +21,19 @@ export class Routing extends Component {
             // confirmed: [],
             // recover: [],
             // deaths: [],
-            indiaStat: {}
+            indiaStat: {},
+            indiaConfirmed: ''
         }
     }
 
     componentDidMount() {
+        //Initializing Google Analytics
+        ReactGA.initialize('UA-155988779-1')
+
+
         localStorage.setItem('ncovindia_isDark', 'true')        //Set theme initially to Dark Mode
 
+        //IP Address to Country Name using ipinfo API
         axios.get('https://ipinfo.io?token=d67524c3026916').then(response => {
             let data = response.data
             let countryCode = data.country
@@ -38,6 +45,15 @@ export class Routing extends Component {
                 sessionStorage.setItem('ncovindia_usersCountry', countryName)   //Setting User's Country Name to Session Storage
 
             }).catch(error => console.log(error.message))
+
+        }).catch(error => console.log(error.message))
+
+        //Fetching India's Confirmed for updating the cases in India with our API in the world list
+        axios.get('https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise').then(response => {
+            let data = response.data.data
+            let indiaConfirmed = data.total.confirmed
+
+            this.setState({ indiaConfirmed: indiaConfirmed })
 
         }).catch(error => console.log(error.message))
 
@@ -150,7 +166,7 @@ export class Routing extends Component {
                     <Route exact path='/' component={App}></Route>
                     <Route exact path='/about-corona' component={AboutCorona}></Route>
                     <Route exact path='/corona-patients-in-world'><WorldData worldPatientsData={this.state.worldPatientsData}
-                        indiaStat={this.state.indiaStat} /> </Route>
+                        indiaStat={this.state.indiaConfirmed} /> </Route>
                     {/* <Route exact path='/china-data'><CountryData country={"china"} countryStateData={this.state} /></Route>
                     <Route exact path='/spain-data'><CountryData country={"spain"} countryStateData={this.state} /></Route>
                     <Route exact path='/italy-data'><CountryData country={"italy"} countryStateData={this.state} /></Route> */}

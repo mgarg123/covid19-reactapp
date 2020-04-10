@@ -32,7 +32,8 @@ class WorldData extends Component {
             for (let i in this.props.worldPatientsData) {
                 let obj = {}
                 let country = allCountry[cnt++]
-                let confirmed = (country === 'India' ? parseInt(this.props.indiaStat.confirmed) : this.props.worldPatientsData[country][this.props.worldPatientsData[country].length - 1].confirmed)
+                let confirmed = (country === 'India' ? parseInt(this.props.indiaStat) :
+                    this.props.worldPatientsData[country][this.props.worldPatientsData[country].length - 1].confirmed)
 
                 obj = {
                     country: country,
@@ -55,7 +56,8 @@ class WorldData extends Component {
             for (let i in this.props.worldPatientsData) {
                 let obj = {}
                 let country = allCountry[cnt++]
-                let confirmed = (country === 'India' ? parseInt(this.props.indiaStat.confirmed) : this.props.worldPatientsData[country][this.props.worldPatientsData[country].length - 1].confirmed)
+                let confirmed = (country === 'India' ? parseInt(this.props.indiaStat) :
+                    this.props.worldPatientsData[country][this.props.worldPatientsData[country].length - 1].confirmed)
 
 
                 obj = {
@@ -149,7 +151,8 @@ class WorldData extends Component {
                                         height: '35px',
                                         padding: '8px 8px',
                                         border: 'none',
-                                        boxShadow: `1px 2px 4px 2px ${localStorage.getItem('ncovindia_isDark') === 'true' ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0.4)'}`,
+                                        boxShadow: `1px 2px 4px 2px ${localStorage.getItem('ncovindia_isDark') === 'true' ?
+                                            'rgba(0,0,0,1)' : 'rgba(0,0,0,0.4)'}`,
                                         borderRadius: '4px',
                                         fontSize: '17px'
                                     }}
