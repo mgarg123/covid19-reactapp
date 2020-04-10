@@ -89,7 +89,7 @@ export class WorldCase extends Component {
                                                 trending_up</span></span>
                                         </div>
                                         <div className='wc-case-count'>
-                                            <span>{this.props.countryStat !== undefined ?
+                                            <span>{this.props.countryStat.confirmed !== undefined ?
                                                 this.props.countryStat.confirmed.toLocaleString('en-IN')
                                                 : this.state.worldStats.cases.toLocaleString('en-IN')}</span>
                                         </div>
@@ -105,10 +105,11 @@ export class WorldCase extends Component {
                             {
                                 this.state.worldStats.cases === undefined ? <Loader /> :
                                     <Fragment>
-                                        <div className="wc-rate"><span style={{ background: 'rgb(42, 180, 7)' }}>
-                                            <span className="material-icons wc-rate" style={{ fontSize: 10 }}>
-                                                trending_up</span>{this.props.countryStat !== undefined ? this.props.countryStat.recoveryRate :
-                                                ((this.state.worldStats.recovered / this.state.worldStats.cases) * 100).toPrecision(3) + "%"}</span>
+                                        <div className="wc-rate">
+                                            <span style={{ background: 'rgb(42, 180, 7)' }}>
+                                                <span className="material-icons wc-rate" style={{ fontSize: 10 }}>
+                                                    trending_up</span>{this.props.countryStat !== undefined ? this.props.countryStat.recoveryRate :
+                                                    ((this.state.worldStats.recovered / this.state.worldStats.cases) * 100).toPrecision(3) + "%"}</span>
                                         </div>
                                         <div className='wc-case-count'>
                                             <span>{this.props.countryStat !== undefined ?

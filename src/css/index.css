@@ -362,10 +362,12 @@ a {
 .sample-tested-main {
     margin-bottom: 60px;
     width: 100%;
+    display: flex;
+    flex-direction: row;
 }
 
 .samples-tested-container {
-    width: 92%;
+    width: 50%;
     margin: 0 auto;
     text-align: center;
 }
@@ -375,6 +377,11 @@ a {
     font-weight: bold;
     font-size: 21px;
     letter-spacing: 0.2px;
+}
+
+.sample-tested-title span {
+    border-bottom: 3px solid #01b0e6;
+    padding-bottom: 2px;
 }
 
 .samples-tested {
@@ -387,7 +394,7 @@ a {
     width: 150px;
     height: 120px;
     background: #323a46;
-    margin: 10px 15px;
+    margin: 10px 10px;
 }
 
 .samples-tested>div div:nth-child(1) {
@@ -429,6 +436,74 @@ a {
 
 
 /* Samples Tested CSS Ends  */
+
+
+/* Top Five States  */
+
+.top-five-container {
+    width: 50%;
+    margin-top: 20px;
+}
+
+.top-five-main {
+    width: 92%;
+    margin: 12px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* border: 1px solid red; */
+}
+
+.tf-title {
+    text-align: center;
+    font-size: 19px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.tf-title span {
+    border-bottom: 3px solid skyblue;
+}
+
+.tfs-table {
+    border-collapse: collapse;
+    margin-top: 6px;
+    /* border: 0.7px solid #1c1c1c; */
+}
+
+.tfs-table thead,
+tbody {
+    width: 100%;
+}
+
+.tfs-table tr th:nth-child(1),
+.tfs-table tr td:nth-child(1) {
+    width: 30px;
+    text-align: center;
+    padding: 0;
+}
+
+.tfs-table tr th:nth-child(2),
+.tfs-table tr td:nth-child(2) {
+    text-align: left;
+    padding: 0;
+}
+
+.tfs-table tr th:nth-child(3),
+.tfs-table tr td:nth-child(3) {
+    text-align: center;
+    padding-right: 5px;
+}
+
+.tfs-table tr th,
+.tfs-table tr td {
+    width: 140px;
+    text-align: right;
+    padding: 4px;
+}
+
+
+/* Top Five States Ends  */
 
 @media(max-width:767px) {
     /*.tabs-container, .main-cont{ display: none !important;}
@@ -475,5 +550,21 @@ a {
     }
     .footer-right {
         margin-top: 0px;
+    }
+    .sample-tested-main {
+        flex-direction: column;
+    }
+    .samples-tested-container {
+        width: 100%;
+    }
+    .top-five-container {
+        width: 100%;
+    }
+    .top-five-main {
+        justify-content: center;
+    }
+    .tf-title {
+        text-align: center;
+        width: 100%;
     }
 }

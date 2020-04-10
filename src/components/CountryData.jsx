@@ -120,7 +120,7 @@ class CountryData extends Component {
                         fontWeight: 'bold',
                         letterSpacing: '0.6px',
                         borderBottom: '3px solid skyblue',
-                        padding: '0px 7px', 
+                        padding: '0px 7px',
                         margin: '10px 0 0 0'
                     }}>
                         Country name: {this.props.match.params.countryname.replace('-', ' ')}</span>
@@ -130,7 +130,6 @@ class CountryData extends Component {
                         display: "flex",
                         flexDirection: `${window.screen.width <= 767 ? 'column' : 'row'}`,
                         width: '100%',
-                        marginBottom: '52px',
                         background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`
                     }}
                 >
@@ -142,8 +141,15 @@ class CountryData extends Component {
                         apiresponseData={this.state.apiresponseData}
                     //updateStateGraphData={this._handleGraphData} 
                     />
+                </div>
+                <div className="cd-dvr" style={{
+                    width: '100%',
+                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`,
+                    display: 'flex',
+                    justifyContent: 'center'
+                }}>
                     <DeathVsRecovered isDark={this.state.isDark}
-                        margin={'60px'}
+                        margin={'52px'}
                         labels={this.state.labels}
                         deaths={this.state.deaths}
                         recover={this.state.recover} />

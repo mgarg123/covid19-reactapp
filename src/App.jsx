@@ -133,7 +133,9 @@ function App(props) {
                             stateData={stateData}
                             affectedState={affectedState}
                             districtDatas={districtDatas}
-                            isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /> : isGraphsClicked ? <Graphs isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /> : <Predictions isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />
+                            isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /> : isGraphsClicked ?
+                                <Graphs isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /> :
+                                <Predictions isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />
 
                 }
                 <Footer isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />

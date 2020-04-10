@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import TopFiveStates from './TopFiveStates'
 
 export class SamplesTested extends Component {
     constructor(props) {
@@ -29,11 +30,11 @@ export class SamplesTested extends Component {
                         <span>Samples Tested</span>
                     </div>
                     <div className='last-updated-time'
-                        style={{ fontSize: '12px', color: 'skyblue', textAlign: 'left', marginTop: '10px', fontWeight: 'bold' }}
+                        style={{ fontSize: '11px', color: 'skyblue', textAlign: 'center', marginTop: '10px', fontWeight: 'bold' }}
                     >Last Updated on {this.state.sampleData.updatetimestamp !== undefined &&
                         this.state.sampleData.updatetimestamp.split(" ")[0]
                         + " at " + this.state.sampleData.updatetimestamp.split(" ")[1]}</div>
-                    <div className="samples-tested" style={{ border: `0.4px solid ${this.props.isDark ? 'rgb(58, 58, 58)' : 'rgb(232, 230, 230)'}` }}>
+                    <div className="samples-tested" >
 
                         <div className="sample-box tested"
                             style={{ background: `${this.props.isDark ? '' : '#fff'}` }}>
@@ -54,7 +55,7 @@ export class SamplesTested extends Component {
                         </div>
                     </div>
                 </div>
-
+                <TopFiveStates />
             </div>
         )
     }
