@@ -43,8 +43,12 @@ export class PredictionTrends extends Component {
                             // ref={this.chartRef}
                             highcharts={Highcharts}
                             options={{
-                                chart: {
+                                /*chart: {
                                     zoomType: 'xy',
+                                    backgroundColor: `${this.props.isDark ? 'transparent' : '#fff'}`,
+                                },*/
+                                chart: {
+                                    type: 'column',
                                     backgroundColor: `${this.props.isDark ? 'transparent' : '#fff'}`,
                                 },
                                 credits: {
@@ -69,6 +73,20 @@ export class PredictionTrends extends Component {
                                         }
                                     }
                                 }],
+                                
+                                legend: {
+                                    shadow: false
+                                },
+                                tooltip: {
+                                    shared: true
+                                },
+                                plotOptions: {
+                                    column: {
+                                        grouping: false,
+                                        shadow: false,
+                                        borderWidth: 0
+                                    }
+                                },
                                 yAxis: [{ // Primary yAxis
                                     labels: {
                                         style: {
@@ -109,7 +127,7 @@ export class PredictionTrends extends Component {
                                     enabled: false
                                 },
 
-                                series: [{
+                                /*series: [{
                                     title: 'Confirmed Cases',
                                     name: 'Infected',
                                     type: `${this.state.toggledColumn ? 'spline' : 'column'}`,
@@ -127,7 +145,22 @@ export class PredictionTrends extends Component {
                                     tooltip: {
                                         valueSuffix: ' Infected'
                                     }
+                                }]*/
+
+                                series: [{
+                                    name: 'Infected',
+                                    color: `${this.props.isDark ? '#f1566b' : 'skyblue'}`,
+                                    data: [3972],
+                                    pointPadding: 0.3,
+                                    pointPlacement: -0.2
+                                }, {
+                                    name: 'Infection Predicted',
+                                    color: `${this.props.isDark ? '#10fbe5' : 'violet'}`,
+                                    data: this.state.isWeek ? this.state.weekConfirmedCases : this.state.monthConfirmedCases,
+                                    pointPadding: 0.4,
+                                    pointPlacement: -0.2
                                 }]
+
                             }}
                             oneToOne={true}
                             redraw={true}

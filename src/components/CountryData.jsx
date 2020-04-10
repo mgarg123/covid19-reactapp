@@ -102,7 +102,7 @@ class CountryData extends Component {
     }
 
     render() {
-        console.log(this);
+        //console.log(this.state);
 
         return (
             <Fragment>
@@ -120,9 +120,10 @@ class CountryData extends Component {
                         fontWeight: 'bold',
                         letterSpacing: '0.6px',
                         borderBottom: '3px solid skyblue',
-                        padding: '0px 7px'
+                        padding: '0px 7px', 
+                        margin: '10px 0 0 0'
                     }}>
-                        {this.props.match.params.countryname.replace('-', ' ')}</span>
+                        Country name: {this.props.match.params.countryname.replace('-', ' ')}</span>
                 </div>
                 <div className="country-data"
                     style={{
@@ -141,11 +142,11 @@ class CountryData extends Component {
                         apiresponseData={this.state.apiresponseData}
                     //updateStateGraphData={this._handleGraphData} 
                     />
-                    {/* <DeathVsRecovered isDark={this.state.isDark}
+                    <DeathVsRecovered isDark={this.state.isDark}
                         margin={'60px'}
                         labels={this.state.labels}
                         deaths={this.state.deaths}
-                        recover={this.state.recover} /> */}
+                        recover={this.state.recover} />
                 </div>
                 <Footer isDark={this.state.isDark} />
             </Fragment>
