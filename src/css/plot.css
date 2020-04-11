@@ -2,6 +2,7 @@
                 width: 50%;
                 /* margin: 0 auto; */
                 display: inline-block;
+                padding-left: 20px;
                 flex-direction: row;
                 flex-wrap: wrap;
                 /* float: left; */
@@ -25,7 +26,8 @@
             }
             
             .plot-cont-heading span {
-                padding: 10px 0px;
+                padding: 3px 0px;
+                border-bottom: 3px solid #01b0e6;
             }
             
             .path-region:hover {
@@ -40,7 +42,7 @@
             /* State Details Container */
             
             .state-details-cont {
-                padding-bottom: 20px;
+                /* padding-bottom: 20px; */
                 width: 120px;
                 height: 370px;
                 float: left;
@@ -234,8 +236,9 @@
             
             @media(max-width:767px) {
                 .plot-cont {
-                    margin: 0;
+                    margin: 0 auto;
                     width: auto;
+                    padding: 0px 4px;
                     max-width: 100%;
                 }
                 .state-table-container {

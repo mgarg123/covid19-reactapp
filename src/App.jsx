@@ -128,7 +128,7 @@ function App(props) {
                 {
                     isStatsClicked ? <><CaseNumber isDark={localStorage.getItem('ncovindia_isDark') === 'true'}
                         stats={stats} keyVals={keyValues}
-                        lastUpdated={lastUpdated} /><SamplesTested isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /></> :
+                        lastUpdated={lastUpdated} /></> :
                         isStatewiseClicked ? <StateTable
                             stateData={stateData}
                             affectedState={affectedState}

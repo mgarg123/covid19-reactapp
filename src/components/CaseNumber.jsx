@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react'
 import CaseBox from './CaseBox'
 import '../css/index.css'
 import StatewiseMap from './StatewiseMap'
+import SamplesTested from './SamplesTested'
+import TopFiveStates from './TopFiveStates'
 
 export class CaseNumber extends Component {
     constructor(props) {
@@ -56,7 +58,13 @@ export class CaseNumber extends Component {
                                 isDark={this.props.isDark} />
                         </div>
                     </div>
-                    <StatewiseMap isDark={this.props.isDark} />
+
+                    <SamplesTested isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />
+                    <div className="map-and-tf-container" style={{ display: 'flex', flexWrap: 'wrap', width: '100%' }}>
+                        <StatewiseMap isDark={this.props.isDark} />
+                        <TopFiveStates />
+                    </div>
+
                 </div>
 
             </Fragment>

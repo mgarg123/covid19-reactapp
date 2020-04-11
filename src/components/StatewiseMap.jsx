@@ -24,17 +24,20 @@ export class StatewiseMap extends Component {
     render() {
         return (
             <div className="plot-cont">
-                <div className="plot-cont-heading">
-                    <span>Statewise Statistics</span>
+                <div className="plot-cont-main" >
+                    <div className="plot-cont-heading">
+                        <span>Statewise Statistics</span>
+                    </div>
+                    <StateDetailsCont stateName={this.state.stateName} stateDataCallBack={this.stateDataCall} isDark={this.props.isDark} />
+                    <div className="map-container">
+                        <IndiaSvg callBack={this.callBackFun} isDark={this.props.isDark} />
+                    </div>
                 </div>
-                <StateDetailsCont stateName={this.state.stateName} stateDataCallBack={this.stateDataCall} isDark={this.props.isDark} />
-                <div className="map-container">
-                    <IndiaSvg callBack={this.callBackFun} isDark={this.props.isDark} />
-                </div>
+
                 {/* <AgeGroupChart isDark={this.props.isDark} /> */}
 
 
-            </div>
+            </div >
 
         )
     }

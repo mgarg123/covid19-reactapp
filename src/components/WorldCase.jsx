@@ -89,7 +89,7 @@ export class WorldCase extends Component {
                                                 trending_up</span></span>
                                         </div>
                                         <div className='wc-case-count'>
-                                            <span>{this.props.countryStat.confirmed !== undefined ?
+                                            <span>{this.props.countryStat !== undefined ?
                                                 this.props.countryStat.confirmed.toLocaleString('en-IN')
                                                 : this.state.worldStats.cases.toLocaleString('en-IN')}</span>
                                         </div>

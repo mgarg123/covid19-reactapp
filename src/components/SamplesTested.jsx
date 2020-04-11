@@ -55,7 +55,7 @@ export class SamplesTested extends Component {
                         </div>
                     </div>
                 </div>
-                <TopFiveStates />
+                {/* <TopFiveStates /> */}
             </div>
         )
     }
