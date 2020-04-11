@@ -284,6 +284,12 @@ input:focus {
     padding-left: 30px;
 }
 
+.navbar-footer a:hover {
+    transition-delay: 0.2s;
+    color: rgb(164, 255, 243);
+    transition-timing-function: ease-in-out;
+}
+
 a {
     text-decoration: none;
     color: unset;
@@ -458,6 +464,7 @@ a {
 .tf-title {
     text-align: center;
     font-size: 19px;
+    margin-bottom: 15px;
     font-family: sans-serif;
     font-weight: bold;
 }

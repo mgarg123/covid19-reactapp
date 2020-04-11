@@ -4,6 +4,7 @@ import AgeGroupChart from './AgeGroupChart'
 import DailyTrends from './DailyTrends'
 import axios from 'axios'
 import DeathVsRecovered from './DeathVsRecovered'
+import StateCaseChart from './StateCaseChart'
 
 export class Graphs extends Component {
     constructor(props) {
@@ -50,6 +51,7 @@ export class Graphs extends Component {
                 <DailyTrends isDark={this.props.isDark} />
                 <AgeGroupChart isDark={this.props.isDark} />
                 <DeathVsRecovered isDark={this.props.isDark} deaths={this.state.deaths} labels={this.state.labels} recover={this.state.recovered} />
+                <StateCaseChart />
             </div>
         )
     }

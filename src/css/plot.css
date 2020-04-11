@@ -202,9 +202,10 @@
             
             .graph-container {
                 width: 50%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            }
+            
+            .affected-age-group {
+                width: 100%;
             }
             
             .death-rec-container {
@@ -233,6 +234,15 @@
             .daily-trends {
                 width: 100%;
             }
+            /* State Case Chart  */
+            
+            .state-case-chart-cont {
+                width: 50%;
+            }
+            
+            .scc-main {
+                width: 100%;
+            }
             
             @media(max-width:767px) {
                 .plot-cont {
@@ -253,7 +263,10 @@
                     flex-direction: column;
                 }
                 .graph-container {
-                    margin: 0 auto 50px auto;
+                    margin: 10px auto 20px auto;
+                    width: 100%;
+                }
+                .affected-age-group {
                     width: 100%;
                 }
                 .daily-trend-container {
@@ -322,5 +335,11 @@
                     text-align: right;
                     padding: 6px 0px;
                     width: 100vw;
+                }
+                .state-case-chart-cont {
+                    width: 100%;
+                }
+                .scc-main {
+                    width: 100%;
                 }
             }

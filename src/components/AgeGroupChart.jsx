@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { Pie } from 'react-chartjs-2'
 import axios from 'axios'
+import HighchartsReact from 'highcharts-react-official'
+import Highcharts from 'highcharts'
 import '../css/plot.css'
 
 export class AgeGroupChart extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            ageData: [],
+            // ageData: [],
             data: {}
         }
     }
@@ -23,33 +25,45 @@ export class AgeGroupChart extends Component {
             let age60 = patData.filter(x => x.ageEstimate >= 60).length
 
             let ageData = [age0_12, age13_25, age26_40, age41_59, age60]
-            this.setState({ ageData: ageData })
+            let labels = ['0-12', '13-25', '26-40', '40-59', '60+']
 
-            let newData = {
-                labels: ['0-12', '13-25', '26-40',
-                    '40-59', '60+'],
-                datasets: [
-                    {
-                        label: 'Age',
-                        backgroundColor: [
-                            '#B21F00',
-                            '#C9DE00',
-                            '#2FDE00',
-                            '#00A6B4',
-                            '#6800B4'
-                        ],
-                        hoverBackgroundColor: [
-                            '#501800',
-                            '#4B5000',
-                            '#175000',
-                            '#003350',
-                            '#35014F'
-                        ],
-                        data: this.state.ageData,
-                    }
-                ]
+            let newArr = []
+            for (let i in ageData) {
+                let obj = {
+                    name: labels[i],
+                    y: ageData[i]
+                }
+                newArr.push(obj)
             }
-            this.setState({ data: newData })
+
+            // this.setState({ ageData: ageData })
+            this.setState({ data: newArr })
+
+            // let newData = {
+            //     labels: ['0-12', '13-25', '26-40',
+            //         '40-59', '60+'],
+            //     datasets: [
+            //         {
+            //             label: 'Age',
+            //             backgroundColor: [
+            //                 '#B21F00',
+            //                 '#C9DE00',
+            //                 '#2FDE00',
+            //                 '#00A6B4',
+            //                 '#6800B4'
+            //             ],
+            //             hoverBackgroundColor: [
+            //                 '#501800',
+            //                 '#4B5000',
+            //                 '#175000',
+            //                 '#003350',
+            //                 '#35014F'
+            //             ],
+            //             data: this.state.ageData,
+            //         }
+            //     ]
+            // }
+            // this.setState({ data: newData })
 
         }).catch(error => console.log(error.message))
     }
@@ -65,27 +79,60 @@ export class AgeGroupChart extends Component {
     render() {
         return (
             <div className="graph-container">
-                <Pie
-                    data={this.state.data}
-                    options={{
-                        title: {
-                            display: true,
-                            text: 'Affected Age Groups',
-                            fontSize: 20,
-                            fontColor: `${this.props.isDark ? '#fff' : '#2d2d2d'}`,
-                            position: "top"
-                        },
-                        legend: {
-                            display: true,
-                            position: `${window.screen.width <= 767 ? 'right' : 'bottom'}`,
-                            labels: {
-                                fontColor: `${this.props.isDark ? '#fff' : '#2d2d2d'}`
-                            }
-                        },
-                        responsive: true
-                    }}
+                <div className="affected-age-group">
+                    <HighchartsReact
+                        highcharts={Highcharts}
+                        options={{
+                            chart: {
+                                plotBackgroundColor: '#262626',
+                                plotBorderWidth: null,
+                                plotShadow: false,
+                                type: 'pie',
+                                backgroundColor: `${localStorage.getItem('ncovindia_isDark') === 'true' ? 'transparent' : '#fff'}`
+                            },
+                            credits: {
+                                enabled: false
+                            },
+                            title: {
+                                text: 'Affected Age Groups',
+                                style: {
+                                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`,
+                                    fontWeight: 'bold',
+                                    fontSize: '20px'
+                                }
 
-                />
+                            },
+                            tooltip: {
+                                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                            },
+                            legend: {
+                                itemStyle: {
+                                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`
+                                }
+                            },
+                            accessibility: {
+                                point: {
+                                    valueSuffix: '%'
+                                }
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: false
+                                    },
+                                    showInLegend: true
+                                }
+                            },
+                            series: [{
+                                name: 'Age',
+                                colorByPoint: true,
+                                data: this.state.data
+                            }]
+                        }}
+                    />
+                </div>
             </div>
         )
     }
