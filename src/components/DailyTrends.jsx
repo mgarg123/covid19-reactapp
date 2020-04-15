@@ -84,7 +84,7 @@ class DailyTrends extends Component {
                 weekLabel = '';
             }
 
-            if( weeklySeriesCount % 7 != 0 && ( (weekLoopCount+1) ===  weeklySeriesCount ) ){
+            if (weeklySeriesCount % 7 !== 0 && ((weekLoopCount + 1) === weeklySeriesCount)) {
                 //console.log('asdasd');
                 weekLabel = weekLabel + ' - ' + data.date;
                 weeklyLabel.push(weekLabel);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import TopFiveStates from './TopFiveStates'
+
 
 export class SamplesTested extends Component {
     constructor(props) {
@@ -16,8 +16,7 @@ export class SamplesTested extends Component {
         axios.get(url).then(response => {
             let data = response.data
 
-            let obj = data.tested[data.tested.length - 1]
-            this.setState({ sampleData: obj })
+            this.setState({ sampleData: data.tested[data.tested.length - 1] })
 
         }).catch(error => console.log(error.message))
     }

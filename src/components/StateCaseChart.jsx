@@ -86,7 +86,7 @@ export class StateCaseChart extends Component {
                         highcharts={Highcharts}
                         options={{
                             chart: {
-                                plotBackgroundColor: '#262626',
+                                plotBackgroundColor: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`,
                                 plotBorderWidth: null,
                                 plotShadow: false,
                                 type: 'pie',

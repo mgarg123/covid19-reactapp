@@ -7,6 +7,7 @@ export class StateTable extends Component {
 
         this.state = {
             stateData: props.stateData,
+            stateDataMain: props.stateData,         //For Filtering States
             // sortState: false,
             sortConfirmed: true,
             sortRecovered: false,
@@ -14,12 +15,13 @@ export class StateTable extends Component {
             sortActive: false,
             clickedState: "",
             isDistrictOpen: false,
-            sortDistrict: false
+            sortDistrict: false,
+            stateSearchVal: ""
         }
     }
 
     componentDidMount() {
-        console.log(this.props.stateData);
+
 
     }
 
@@ -86,7 +88,8 @@ export class StateTable extends Component {
 
         if (this.state.clickedState !== prevState.clickedState) {
             if (prevState.clickedState !== "") {
-                document.getElementById("data-" + prevState.clickedState).style.display = "none"
+                if (document.getElementById("data-" + prevState.clickedState) !== null)
+                    document.getElementById("data-" + prevState.clickedState).style.display = "none"
             }
 
             if (this.state.clickedState !== prevState.clickedState && this.state.isDistrictOpen === false) {
@@ -98,19 +101,53 @@ export class StateTable extends Component {
 
         }
         if (this.state.isDistrictOpen !== prevState.isDistrictOpen) {
-            if (this.state.isDistrictOpen === true) {
-                document.getElementById("data-" + this.state.clickedState).style.display = "table-row"
-            } else {
-                document.getElementById("data-" + prevState.clickedState).style.display = "none"
+            if (document.getElementById("data-" + this.state.clickedState) !== null) {
+                if (this.state.isDistrictOpen === true) {
+                    document.getElementById("data-" + this.state.clickedState).style.display = "table-row"
+                } else {
+                    document.getElementById("data-" + prevState.clickedState).style.display = "none"
+                }
             }
+
         }
 
+        //State Search Logic
+        if (this.state.stateSearchVal !== prevState.stateSearchVal) {
+            let mainData = [...this.state.stateDataMain]
+            let arr = mainData.filter(x => x.state.toLowerCase().includes(this.state.stateSearchVal.toLowerCase()))
+            this.setState({ stateData: arr })
+        }
 
     }
 
     render() {
         return (
             <div className="state-table-container">
+                <div className='search-country' style={{
+                    width: '100%',
+                    margin: '20px 0px 0px 0px'
+                }}>
+                    <div style={{ width: 'fit-content', margin: '0 auto' }}>
+                        <input type="text"
+                            value={this.state.countrySearchVal}
+                            placeholder='Search State or UT'
+                            name="countryname"
+                            id="countryname"
+                            style={{
+                                width: '250px',
+                                height: '35px',
+                                padding: '8px 8px',
+                                border: 'none',
+                                boxShadow: `1px 2px 4px 2px ${localStorage.getItem('ncovindia_isDark') === 'true' ?
+                                    'rgba(0,0,0,1)' : 'rgba(0,0,0,0.4)'}`,
+                                borderRadius: '4px',
+                                fontSize: '17px'
+                            }}
+                            onChange={(event) => this.setState({ stateSearchVal: event.target.value })}
+                        />
+                    </div>
+
+                </div>
                 <div className="affectedDiv" >
                     <span>{this.props.affectedState} STATES/UTS AFFECTED</span>
                 </div><div className="feature-notice" style={{ fontSize: '10px', textAlign: 'center', marginTop: '10px' }} >
@@ -150,7 +187,7 @@ export class StateTable extends Component {
                                     sortDeaths: false,
                                     sortRecovered: !this.state.sortRecovered
                                 })}>RECOVERED
-                            <span class="material-icons" style={{ fontSize: '11px' }}>
+                            <span className="material-icons" style={{ fontSize: '11px' }}>
                                         {this.state.sortRecovered ? 'arrow_downward' : 'arrow_upward'}</span>
                                 </th>
                                 <th onClick={() => this.setState({
@@ -160,7 +197,7 @@ export class StateTable extends Component {
                                     sortDeaths: !this.state.sortDeaths,
                                     sortRecovered: false
                                 })}>DEATHS
-                            <span class="material-icons" style={{ fontSize: '11px' }}>
+                            <span className="material-icons" style={{ fontSize: '11px' }}>
                                         {this.state.sortDeaths ? 'arrow_downward' : 'arrow_upward'}
                                     </span>
                                 </th>
@@ -171,7 +208,7 @@ export class StateTable extends Component {
                                     sortDeaths: false,
                                     sortRecovered: false
                                 })}>ACTIVE
-                            <span class="material-icons" style={{ fontSize: '11px' }}>
+                            <span className="material-icons" style={{ fontSize: '11px' }}>
                                         {this.state.sortActive ? 'arrow_downward' : 'arrow_upward'}
                                     </span>
                                 </th>
@@ -183,7 +220,7 @@ export class StateTable extends Component {
                                     return (
                                         obj.confirmed !== 0 &&
                                         <>
-                                            <tr key={obj.state}
+                                            <tr key={obj.state + "" + obj.confirmed}
                                                 style={{ background: `${index % 2 !== 0 ? this.props.isDark ? '#1c1c1c' : '#eee' : ''}` }}
                                                 onClick={() => { this.setState({ clickedState: obj.state, isDistrictOpen: !this.state.isDistrictOpen }) }}
                                             >
@@ -215,55 +252,61 @@ export class StateTable extends Component {
                                             >
                                                 <td colSpan="5" className="full-width">
                                                     <table className="internal-table">
-                                                        <tr className="label-div">
-                                                            <th style={{ visibility: 'hidden' }}></th>
-                                                            <th style={{
-                                                                border: `0.4px solid ${this.props.isDark ? '#eee' : '#1c1c1c'}`,
-                                                                borderRight: 'none'
-                                                            }}>District Name</th>
-                                                            <th style={{
-                                                                border: `0.4px solid ${this.props.isDark ? '#eee' : '#1c1c1c'}`,
-                                                                // borderLeft: 'none'
-                                                            }}
-                                                                onClick={() => { this.setState({ sortDistrict: !this.state.sortDistrict }) }}
-                                                            >Infected <i
-                                                                className={`fa ${this.state.sortDistrict ? 'fa-arrow-down' : 'fa-arrow-up'}`}></i>
-                                                            </th>
-                                                        </tr>
-                                                        {
-                                                            this.props.districtDatas.filter(x =>
-                                                                x.state.toLowerCase() === obj.state.toLowerCase()
-                                                            )[0].districtData.sort((x, y) => this.state.sortDistrict ? x.confirmed - y.confirmed : y.confirmed - x.confirmed).map(y => {
-                                                                return (
-                                                                    <tr className="data-div" style={{ background: 'transparent' }}>
-                                                                        <td><i className="fa fa-angle-right"></i></td>
-                                                                        <td style={{ color: `${this.props.isDark ? '#fff' : '#222'}` }}>
-                                                                            {y.district}
-                                                                        </td>
-                                                                        <td style={{
-                                                                            color: `${this.props.isDark ? '#fff' : '#222'}`
-                                                                        }}
-                                                                        >
-                                                                            <span style={{
-                                                                            }}> <i style={{
-                                                                                color: 'red',
-                                                                                fontWeight: 'normal',
-                                                                                fontSize: '12px',
-                                                                                visibility: `${y.delta.confirmed > 0 ? 'visible' : 'hidden'}`,
-                                                                            }} className="fa fa-arrow-up">
-                                                                                    {y.delta.confirmed}</i>
-                                                                            </span>
-                                                                            <span
-                                                                                style={{
-                                                                                    paddingLeft: `${y.delta.confirmed < 9 ? '30px' :
-                                                                                        y.delta.confirmed > 9 && y.delta.confirmed < 99 ? '20px' : '17px'}`
-                                                                                }}>
-                                                                                {y.confirmed}</span>
-                                                                        </td>
-                                                                    </tr>
-                                                                )
-                                                            })
-                                                        }
+                                                        <thead>
+                                                            <tr className="label-div">
+                                                                <th style={{ visibility: 'hidden' }}></th>
+                                                                <th style={{
+                                                                    border: `0.4px solid ${this.props.isDark ? '#eee' : '#1c1c1c'}`,
+                                                                    borderRight: 'none'
+                                                                }}>District Name</th>
+                                                                <th style={{
+                                                                    border: `0.4px solid ${this.props.isDark ? '#eee' : '#1c1c1c'}`,
+                                                                    // borderLeft: 'none'
+                                                                }}
+                                                                    onClick={() => { this.setState({ sortDistrict: !this.state.sortDistrict }) }}
+                                                                >Infected <i
+                                                                    className={`fa ${this.state.sortDistrict ? 'fa-arrow-down' : 'fa-arrow-up'}`}></i>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {
+                                                                this.props.districtDatas.filter(x =>
+                                                                    x.state.toLowerCase() === obj.state.toLowerCase()
+                                                                )[0].districtData.sort((x, y) => this.state.sortDistrict ? x.confirmed - y.confirmed : y.confirmed - x.confirmed).map(y => {
+                                                                    return (
+                                                                        <tr key={y.district + "" + y.confirmed} className="data-div" style={{ background: 'transparent' }}>
+                                                                            <td><i className="fa fa-angle-right"></i></td>
+                                                                            <td style={{ color: `${this.props.isDark ? '#fff' : '#222'}` }}>
+                                                                                {y.district}
+                                                                            </td>
+                                                                            <td style={{
+                                                                                color: `${this.props.isDark ? '#fff' : '#222'}`
+                                                                            }}
+                                                                            >
+                                                                                <span style={{
+                                                                                }}> <i style={{
+                                                                                    color: 'red',
+                                                                                    fontWeight: 'normal',
+                                                                                    fontSize: '12px',
+                                                                                    visibility: `${y.delta.confirmed > 0 ? 'visible' : 'hidden'}`,
+                                                                                }} className="fa fa-arrow-up">
+                                                                                        {y.delta.confirmed}</i>
+                                                                                </span>
+                                                                                <span
+                                                                                    style={{
+                                                                                        paddingLeft: `${y.delta.confirmed < 9 ? '30px' :
+                                                                                            y.delta.confirmed > 9 && y.delta.confirmed < 99 ? '20px' : '17px'}`
+                                                                                    }}>
+                                                                                    {y.confirmed}</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </tbody>
+
+
 
                                                     </table>
                                                 </td>

@@ -8,6 +8,7 @@ import WorldData from '../src/components/WorldData'
 import axios from 'axios'
 import ScrollMemory from 'react-router-scroll-memory'
 import ReactGA from 'react-ga'
+import Donate from './components/Donate'
 
 
 export class Routing extends Component {
@@ -172,6 +173,7 @@ export class Routing extends Component {
                     <Route exact path='/spain-data'><CountryData country={"spain"} countryStateData={this.state} /></Route>
                     <Route exact path='/italy-data'><CountryData country={"italy"} countryStateData={this.state} /></Route> */}
                     <Route path='/world-data/:countryname' component={CountryData}></Route>
+                    <Route path='/donate'><Donate /></Route>
                     <Route component={Error404}></Route>
                 </Switch>
             </Router>

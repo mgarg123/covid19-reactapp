@@ -232,7 +232,7 @@ input:focus {
 .footer {
     clear: both;
     width: 100vw;
-    height: 55px;
+    height: 54px;
     background: #1c1c1c;
     position: fixed;
     bottom: 0px;
@@ -268,20 +268,9 @@ input:focus {
 .navbar-footer li {
     list-style-type: none;
     display: inline-block;
+    padding: 0px 10px;
     color: rgb(255, 199, 199);
     text-shadow: 2px 1px 3px rgb(160, 58, 27);
-}
-
-.navbar-footer a:nth-child(1) {
-    padding: 0px 13px;
-}
-
-.navbar-footer a:nth-child(2) {
-    padding-left: 18px;
-}
-
-.navbar-footer a:nth-child(3) {
-    padding-left: 30px;
 }
 
 .navbar-footer a:hover {
@@ -513,6 +502,105 @@ tbody {
 
 /* Top Five States Ends  */
 
+
+/* Donation CSS Starts  */
+
+.donation-container {
+    width: 100%;
+    margin-top: -10px;
+}
+
+.donation-subcontainer {
+    width: 100%;
+    padding-top: 1px;
+}
+
+.taglines-container {
+    width: 100%;
+    margin: 0 auto;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    box-shadow: 1px 2px 3px 1px #00000073;
+    letter-spacing: 0.5px;
+    font-size: 15px;
+    /* background: linear-gradient(to right, #283048, #859398); */
+    padding-top: 12px;
+    color: #fff;
+    height: 50px;
+    text-align: center;
+}
+
+.donate-now {
+    margin-top: 30px;
+    width: 100%;
+}
+
+.donate-now-title {
+    width: 93%;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.donate-now-title p {
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+    margin-top: 8px;
+}
+
+
+/* .donate-now-title span {
+    border: 0.6px solid #ccc;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 3px;
+    box-shadow: 1px 2px 3px 1px rgba(78, 48, 48, 0.445);
+} */
+
+.donate-using-upi {
+    margin: 10px 0px;
+    width: 100%;
+}
+
+.donate-using-upi div {
+    width: 93%;
+    margin: 0 auto;
+}
+
+.donate-using-upi div:nth-child(1) {
+    text-align: center;
+    padding: 10px 0px 6px 0px;
+}
+
+.donate-using-upi div:nth-child(2) {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+#donate-btn {
+    border: none;
+    height: 42px;
+    padding: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #fff;
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+    background: linear-gradient(to right, #DA22FF, #9733EE);
+    outline: none;
+}
+
+#bank-details {
+    padding: 20px;
+    font-size: 12px;
+}
+
+.bnk-title {
+    font-weight: bold;
+    font-size: 13px;
+}
+
 @media(max-width:767px) {
     /*.tabs-container, .main-cont{ display: none !important;}
     html, body, #root, .site-holder{ width:100%; float: left; display: inline-block;}
@@ -542,7 +630,7 @@ tbody {
         justify-content: center;
     }
     .last-updated-at {
-        padding-left: 23px;
+        padding-left: 41px;
     }
 }
 

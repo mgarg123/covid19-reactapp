@@ -78,10 +78,6 @@ export class PredictionTrends extends Component {
                                         }
                                     }
                                 }],
-
-                                legend: {
-                                    shadow: false
-                                },
                                 tooltip: {
                                     shared: true
                                 },
@@ -118,9 +114,6 @@ export class PredictionTrends extends Component {
                                     },
                                     opposite: true
                                 }],
-                                tooltip: {
-                                    shared: true
-                                },
                                 legend: {
                                     layout: 'vertical',
                                     align: 'left',
@@ -129,7 +122,8 @@ export class PredictionTrends extends Component {
                                     y: 20,
                                     floating: true,
                                     backgroundColor: `#eee`,
-                                    enabled: false
+                                    enabled: false,
+                                    shadow: false
                                 },
 
                                 /*series: [{

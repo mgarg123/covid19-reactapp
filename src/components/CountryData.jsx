@@ -4,7 +4,6 @@ import DeathVsRecovered from './DeathVsRecovered'
 import Header from './Header'
 import Footer from './Footer'
 import axios from 'axios'
-import HeaderTab from './HeaderTab'
 import WorldCase from './WorldCase'
 
 class CountryData extends Component {

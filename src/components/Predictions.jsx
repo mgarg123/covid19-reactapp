@@ -13,10 +13,6 @@ export class Predictions extends Component {
 
     componentDidMount() {
 
-        // const container = this.chartRef.current.container.current;
-        // container.style.height = "100%"
-        // container.style.width = "100%"
-        // this.chartRef.current.chart.reflow()
 
         //Api Call for Graph
         let url = "https://api.covid19india.org/data.json"
@@ -48,7 +44,7 @@ export class Predictions extends Component {
         var weeklyDataSub = [];
         var weeklyLabel = [];
         var weekLabel = '';
-        //console.log('series count: '+apiData.cases_time_series.length);
+        // console.log(apiData.cases_time_series);
         var weeklySeriesCount = apiData.cases_time_series.length;
         var weekLoopCount = 0;
         apiData.cases_time_series.map((data) => {
@@ -69,7 +65,7 @@ export class Predictions extends Component {
                 weekLabel = '';
             }
 
-            if (weeklySeriesCount % 7 != 0 && ((weekLoopCount + 1) === weeklySeriesCount)) {
+            if (weeklySeriesCount % 7 !== 0 && ((weekLoopCount) === weeklySeriesCount)) {
                 //console.log('asdasd');
                 weekLabel = weekLabel + ' - ' + data.date;
                 weeklyLabel.push(weekLabel);
@@ -92,7 +88,8 @@ export class Predictions extends Component {
             weekLabels: weeklyLabel,
             weekConfirmeds: weekDataUpdated
         });
-        console.log(this.state)
+
+        // console.log(this.state)
     }
 
     loadMonthData = (data) => {

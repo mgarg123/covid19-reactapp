@@ -26,7 +26,8 @@ export class CaseNumber extends Component {
 
                     <div className="current-number-container">
                         <div className='last-updated-at' style={{
-                            color: `${this.props.isDark ? 'skyblue' : 'red'}`
+                            color: `${this.props.isDark ? 'skyblue' : 'red'}`,
+                            fontSize: '13px'
                         }}><span>Last Updated {this.props.lastUpdated} Ago</span></div>
                         <div className="current-cont">
                             <CaseBox title={"Infected"}

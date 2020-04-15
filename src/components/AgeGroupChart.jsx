@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Pie } from 'react-chartjs-2'
 import axios from 'axios'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
@@ -36,34 +35,8 @@ export class AgeGroupChart extends Component {
                 newArr.push(obj)
             }
 
-            // this.setState({ ageData: ageData })
             this.setState({ data: newArr })
 
-            // let newData = {
-            //     labels: ['0-12', '13-25', '26-40',
-            //         '40-59', '60+'],
-            //     datasets: [
-            //         {
-            //             label: 'Age',
-            //             backgroundColor: [
-            //                 '#B21F00',
-            //                 '#C9DE00',
-            //                 '#2FDE00',
-            //                 '#00A6B4',
-            //                 '#6800B4'
-            //             ],
-            //             hoverBackgroundColor: [
-            //                 '#501800',
-            //                 '#4B5000',
-            //                 '#175000',
-            //                 '#003350',
-            //                 '#35014F'
-            //             ],
-            //             data: this.state.ageData,
-            //         }
-            //     ]
-            // }
-            // this.setState({ data: newData })
 
         }).catch(error => console.log(error.message))
     }
@@ -84,11 +57,11 @@ export class AgeGroupChart extends Component {
                         highcharts={Highcharts}
                         options={{
                             chart: {
-                                plotBackgroundColor: '#262626',
+                                plotBackgroundColor: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`,
                                 plotBorderWidth: null,
                                 plotShadow: false,
                                 type: 'pie',
-                                backgroundColor: `${localStorage.getItem('ncovindia_isDark') === 'true' ? 'transparent' : '#fff'}`
+                                backgroundColor: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`
                             },
                             credits: {
                                 enabled: false
