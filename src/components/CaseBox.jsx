@@ -22,7 +22,7 @@ export class CaseBox extends Component {
                     <div className="number-details">
                         <div id="number-details-heading">{this.props.title}</div>
                         {
-                            this.props.val !== "" ? <CaseBoxDetails
+                            this.props.val !== "" || this.props.val !== undefined ? <CaseBoxDetails
                                 bgColor={this.props.bgColor}
                                 title={this.props.title}
                                 val={this.props.val}

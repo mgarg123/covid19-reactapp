@@ -1,6 +1,6 @@
 {
     "short_name": "Covid19 Tracker",
-    "name": "nCovIndia Covid19 Tracker",
+    "name": "NCOV-INDIA",
     "icons": [{
             "src": "logo.ico",
             "sizes": "64x64 32x32 24x24 16x16",
@@ -20,5 +20,5 @@
     "start_url": "/",
     "display": "standalone",
     "theme_color": "#2e97d3",
-    "background_color": "#ffffff"
+    "background_color": "#eee"
 }

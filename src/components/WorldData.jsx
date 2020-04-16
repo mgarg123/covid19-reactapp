@@ -29,6 +29,7 @@ class WorldData extends Component {
             console.log(this.props.worldPatientsData);
             let patData = []
             let cnt = 0
+            //eslint-disable-next-line
             for (let i in this.props.worldPatientsData) {
                 let obj = {}
                 let country = allCountry[cnt++]
@@ -53,6 +54,7 @@ class WorldData extends Component {
             let allCountry = Object.keys(this.props.worldPatientsData).map(x => x)
             let patData = []
             let cnt = 0
+            //eslint-disable-next-line
             for (let i in this.props.worldPatientsData) {
                 let obj = {}
                 let country = allCountry[cnt++]

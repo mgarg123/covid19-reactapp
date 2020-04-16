@@ -236,10 +236,21 @@ export class StateTable extends Component {
                                                     ></i>
                                                 </td>
                                                 <td>{obj.state.toLowerCase().replace(/\b(\w)/g, x => { return (x.toUpperCase()) })}</td>
-                                                <td>{obj.confirmed}</td>
-                                                <td>{obj.recovered}</td>
-                                                <td>{obj.deaths}</td>
-                                                <td>{obj.active}</td>
+                                                <td>
+                                                    <span style={{
+                                                    }}> <i style={{
+                                                        color: 'red',
+                                                        fontWeight: 'normal',
+                                                        fontSize: '12px',
+                                                        visibility: `${parseInt(obj.deltaconfirmed) > 0 ? 'visible' : 'hidden'}`,
+                                                    }} className="fa fa-arrow-up">
+                                                        </i>
+                                                    </span>
+                                                    {parseInt(obj.confirmed).toLocaleString('en-IN')}
+                                                </td>
+                                                <td>{parseInt(obj.recovered).toLocaleString('en-IN')}</td>
+                                                <td>{parseInt(obj.deaths).toLocaleString('en-IN')}</td>
+                                                <td>{parseInt(obj.active).toLocaleString('en-In')}</td>
                                             </tr>
                                             <tr
                                                 className="district-data-div"
@@ -251,6 +262,10 @@ export class StateTable extends Component {
                                                 id={`data-${obj.state}`}
                                             >
                                                 <td colSpan="5" className="full-width">
+                                                    <div style={{
+                                                        fontSize: '12px',
+                                                        color: `${this.props.isDark ? 'lightgreen' : 'green'}`
+                                                    }}>Last Updated at {obj.lastupdatedtime}</div>
                                                     <table className="internal-table">
                                                         <thead>
                                                             <tr className="label-div">
@@ -298,17 +313,16 @@ export class StateTable extends Component {
                                                                                         paddingLeft: `${y.delta.confirmed < 9 ? '30px' :
                                                                                             y.delta.confirmed > 9 && y.delta.confirmed < 99 ? '20px' : '17px'}`
                                                                                     }}>
-                                                                                    {y.confirmed}</span>
+                                                                                    {y.confirmed.toLocaleString('en-IN')}</span>
                                                                             </td>
                                                                         </tr>
+
                                                                     )
                                                                 })
                                                             }
                                                         </tbody>
-
-
-
                                                     </table>
+                                                    <div style={{ color: 'skyblue' }}>*Details awaited for Unknown</div>
                                                 </td>
                                             </tr>
                                         </>

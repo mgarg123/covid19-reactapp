@@ -1,0 +1,40 @@
+[debug] [2020-04-16T16:37:40.600Z] ----------------------------------------------------------------------
+[debug] [2020-04-16T16:37:40.637Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Garg's PC\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-04-16T16:37:40.638Z] CLI Version:   7.13.1
+[debug] [2020-04-16T16:37:40.638Z] Platform:      win32
+[debug] [2020-04-16T16:37:40.639Z] Node Version:  v10.15.3
+[debug] [2020-04-16T16:37:40.998Z] Time:          Thu Apr 16 2020 22:07:40 GMT+0530 (India Standard Time)
+[debug] [2020-04-16T16:37:40.998Z] ----------------------------------------------------------------------
+[debug] [2020-04-16T16:37:40.999Z] 
+[debug] [2020-04-16T16:37:41.131Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-16T16:37:41.134Z] > authorizing via signed-in user
+[debug] [2020-04-16T16:37:41.135Z] [iam] checking project ncovindias for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-04-16T16:37:41.144Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-04-16T16:37:41.145Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-04-16T16:37:55.017Z] [iam] error while checking permissions, command may fail: FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2020-04-16T16:37:55.021Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-04-16T16:37:55.021Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-04-16T16:37:55.556Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-16T16:37:55.597Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/ncovindias  
+ 
+[debug] [2020-04-16T16:37:56.620Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'ncovindias'...
+[info] 
+[info] i  deploying hosting
+[debug] [2020-04-16T16:37:56.637Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/ncovindias/versions  
+
+[debug] [2020-04-16T16:37:59.806Z] <<< HTTP RESPONSE 200
+[info] i  hosting[ncovindias]: beginning deploy...
+[info] i  hosting[ncovindias]: found 19 files in build
+[debug] [2020-04-16T16:38:01.198Z] [hosting] hash cache [YnVpbGQ] stored for 19 files
+[debug] [2020-04-16T16:38:01.210Z] [hosting][hash queue][FINAL]
+[debug] [2020-04-16T16:38:01.211Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/ncovindias/versions/2131f064dc5afebf:populateFiles  
+ <request body omitted>
+[debug] [2020-04-16T16:38:04.079Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-16T16:38:04.107Z] [hosting][populate queue][FINAL]
+[debug] [2020-04-16T16:38:04.107Z] [hosting] uploads queued: 6

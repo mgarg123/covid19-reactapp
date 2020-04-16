@@ -9,12 +9,13 @@ import axios from 'axios'
 import '../src/css/plot.css'
 import Graphs from './components/Graphs'
 import Predictions from './components/Predictions'
-import SamplesTested from './components/SamplesTested'
+// import SamplesTested from './components/SamplesTested'
 
 
 
 
 function App(props) {
+    //eslint-disable-next-line
     const [isDarkMode, setDarkMode] = useState(true)
     const [isStatsClicked, setStatsClicked] = useState(true)
     const [isStatewiseClicked, setStatewiseClicked] = useState(false)
@@ -39,14 +40,21 @@ function App(props) {
 
     useEffect(() => {
         //API call for Stats
-        let url = "https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise"
+        // let url = "https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise"
+        let url = "https://api.covid19india.org/data.json"
         axios.get(url).then(response => {
-            var data = response.data.data
+            // var data = response.data.data
+            let data = response.data
 
-            let conf = data.total.confirmed
-            let rec = data.total.recovered
-            let death = data.total.deaths
-            let act = data.total.active
+            // let conf = data.total.confirmed
+            // let rec = data.total.recovered
+            // let death = data.total.deaths
+            // let act = data.total.active
+
+            let conf = data.statewise[0].confirmed
+            let rec = data.statewise[0].recovered
+            let death = data.statewise[0].deaths
+            let act = data.statewise[0].active
 
             let stat = {
                 confirmed: conf,
@@ -54,17 +62,36 @@ function App(props) {
                 deaths: death,
                 active: act
             }
-            setStats(stat)
 
+            let statesData = []
             let count = 0
             for (let i in data.statewise) {
-                if (data.statewise[i].confirmed !== 0) {
+                if (data.statewise[i].statecode !== 'TT') {
+                    let obj = {
+                        active: parseInt(data.statewise[i].active),
+                        confirmed: parseInt(data.statewise[i].confirmed),
+                        deaths: parseInt(data.statewise[i].deaths),
+                        deltaconfirmed: parseInt(data.statewise[i].deltaconfirmed),
+                        deltadeaths: parseInt(data.statewise[i].deltadeaths),
+                        deltarecovered: parseInt(data.statewise[i].deltarecovered),
+                        lastupdatedtime: "16/04/2020 20:33:49",
+                        recovered: parseInt(data.statewise[i].recovered),
+                        state: data.statewise[i].state,
+                        statecode: data.statewise[i].statecode,
+                        statenotes: data.statewise[i].statenotes
+                    }
+                    statesData.push(obj)
+                }
+
+                if (parseInt(data.statewise[i].confirmed) !== 0 && data.statewise[i].statecode !== 'TT') {
                     count++
                 }
             }
 
+
+            setStats(stat)
             setAffectedState(count)
-            setStateData(data.statewise)
+            setStateData(statesData)
 
 
         }).catch(error => {

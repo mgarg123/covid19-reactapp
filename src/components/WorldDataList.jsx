@@ -34,6 +34,7 @@ export class WorldDataList extends Component {
                             <th style={{
                                 width: '150px', border: 'none',
                                 fontSize: '14px',
+                                //eslint-disable-next-line
                                 border: '0.5px solid',
                                 textAlign: 'left',
                                 fontWeight: 'bold',
@@ -42,6 +43,7 @@ export class WorldDataList extends Component {
                             <th style={{
                                 width: '150px', border: 'none',
                                 fontSize: '14px',
+                                //eslint-disable-next-line
                                 border: '0.4px solid',
                                 fontWeight: 'bold',
                                 background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#1c1c1c' : '#ccc'}`,

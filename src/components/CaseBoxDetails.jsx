@@ -15,10 +15,14 @@ export class CaseBoxDetails extends Component {
                         {this.props.title !== "Infected" && ((parseInt(this.props.val) / parseInt(this.props.conf)) * 100).toPrecision(3) + "%"}
                     </div>
                 </div>
-                <div className="no-details-right"><CountUp
-                    start={parseInt(this.props.val) - 20}
-                    duration={1.8}
-                    end={parseInt(this.props.val)} /></div>
+                <div className="no-details-right">
+                    <CountUp
+                        start={parseInt(this.props.val) - 26}
+                        duration={1.8}
+                        end={parseInt(this.props.val)}
+                        formattingFn={(n) => n.toLocaleString('en-IN')}
+                    />
+                </div>
                 <div className="today-delta"
                     style={{
                         color: `${this.props.isDark ? 'rgb(125, 221, 189)' : 'rgb(34, 143, 106)'}`

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment, createRef } from 'react'
 import Switch from 'react-switch'
 import logo from '../img/Logo.png'
 import { Link } from 'react-router-dom'
@@ -11,6 +11,7 @@ class Header extends Component {
         this.state = {
             switched: true
         }
+        this.btnRef = createRef()
     }
     toggleSwitch = (switched) => {
         this.setState({ switched: !this.state.switched })
@@ -18,10 +19,28 @@ class Header extends Component {
 
     }
     componentDidMount() {
+        let btn = document.getElementById("add-to-homescreen")
+        window.addEventListener('beforeinstallprompt', (event) => {
+            btn.addEventListener('click', () => {
+                event.prompt()
+                event.userChoice().then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        btn.style.display = 'none'
+                        console.log('User accepted the A2HS prompt');
+                    } else {
+                        console.log('User dismissed the A2HS prompt');
+                    }
+                    event = null;
+                });
+            });
+        });
 
+        //Check if A2HS is Installed
+        window.addEventListener('appinstalled', (evt) => {
+            btn.style.display = 'none'
+        });
 
     }
-
 
 
     componentDidUpdate(prevProps, prevState) {
@@ -48,13 +67,34 @@ class Header extends Component {
                             <Link to="/corona-patients-in-world"><li>World Data</li></Link>
                             <Link to="/donate"><li>Donate</li></Link>
                         </ul>
-                        <span style={{ marginRight: "0px", paddingRight: "4px", fontSize: "15px" }}>Dark Mode</span>
-                        <Switch onChange={this.toggleSwitch}
+                        <ul className='navbar-2'>
+                            <li>
+                                <span style={{ paddingRight: '8px', cursor: 'pointer' }}
+                                    className="material-icons"
+                                    id="add-to-homescreen"
+                                    ref={this.btnRef}
+                                >
+                                    add_to_home_screen
+                                    </span>
+                            </li>
+                            <li><span style={{ marginRight: "0px", paddingRight: "4px", paddingBottom: '15px', fontSize: "15px" }}>Dark Mode</span></li>
+                            <li>
+                                <Switch onChange={this.toggleSwitch}
+                                    checked={this.state.switched && localStorage.getItem('ncovindia_isDark') === 'true'}
+                                    className="react-switch"
+                                    height={21}
+                                    width={40}
+                                />
+                            </li>
+                        </ul>
+
+
+                        {/* <Switch onChange={this.toggleSwitch}
                             checked={this.state.switched && localStorage.getItem('ncovindia_isDark') === 'true'}
                             className="react-switch"
                             height={20}
                             width={40}
-                        />
+                        /> */}
                     </div>
                 </div>
             </Fragment>

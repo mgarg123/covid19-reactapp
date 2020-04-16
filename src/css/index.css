@@ -94,14 +94,24 @@ input:focus {
     margin-left: 34px;
 }
 
+.navbar-2 {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-2 li {
+    display: inline-block;
+}
+
 #switch-theme {
     float: right;
     width: 50%;
     height: 60px;
     display: flex;
-    padding-left: 25px;
+    /* padding-left: 25px; */
     justify-content: center;
-    align-items: center
+    align-items: center;
 }
 
 .current-number-container {
