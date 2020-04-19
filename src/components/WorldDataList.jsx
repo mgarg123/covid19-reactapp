@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 export class WorldDataList extends Component {
     constructor(props) {
         super(props)
@@ -7,6 +8,23 @@ export class WorldDataList extends Component {
         this.state = {
             sortCases: false
         }
+    }
+
+    componentDidMount() {
+        //IP Address to Country Name using ipinfo API
+        axios.get('https://ipinfo.io?token=d67524c3026916').then(response => {
+            let data = response.data
+            let countryCode = data.country
+
+            //Country code to country name mapping
+            axios.get('https://restcountries.eu/rest/v2/alpha/' + countryCode).then(response => {
+                let countryName = response.data.name
+
+                sessionStorage.setItem('ncovindia_usersCountry', countryName)   //Setting User's Country Name to Session Storage
+
+            }).catch(error => console.log(error.message))
+
+        }).catch(error => console.log(error.message))
     }
 
     render() {

@@ -36,20 +36,20 @@ export class Routing extends Component {
 
         localStorage.setItem('ncovindia_isDark', 'true')        //Set theme initially to Dark Mode
 
-        //IP Address to Country Name using ipinfo API
-        axios.get('https://ipinfo.io?token=d67524c3026916').then(response => {
-            let data = response.data
-            let countryCode = data.country
+        // //IP Address to Country Name using ipinfo API
+        // axios.get('https://ipinfo.io?token=d67524c3026916').then(response => {
+        //     let data = response.data
+        //     let countryCode = data.country
 
-            //Country code to country name mapping
-            axios.get('https://restcountries.eu/rest/v2/alpha/' + countryCode).then(response => {
-                let countryName = response.data.name
+        //     //Country code to country name mapping
+        //     axios.get('https://restcountries.eu/rest/v2/alpha/' + countryCode).then(response => {
+        //         let countryName = response.data.name
 
-                sessionStorage.setItem('ncovindia_usersCountry', countryName)   //Setting User's Country Name to Session Storage
+        //         sessionStorage.setItem('ncovindia_usersCountry', countryName)   //Setting User's Country Name to Session Storage
 
-            }).catch(error => console.log(error.message))
+        //     }).catch(error => console.log(error.message))
 
-        }).catch(error => console.log(error.message))
+        // }).catch(error => console.log(error.message))
 
         //Fetching India's Confirmed for updating the cases in India with our API in the world list
         axios.get('https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise').then(response => {
@@ -166,7 +166,10 @@ export class Routing extends Component {
             <Router>
                 <ScrollMemory />        {/*Used to Restore Scroll */}
                 <Switch>
-                    <Route exact path='/' component={App}></Route>
+                    <Route exact path='/' component={App}
+                        render={(props) => <App />}
+                    >
+                    </Route>     {/* Use render props in react router to pass props down the comp.*/}
                     <Route exact path='/about-corona' component={AboutCorona}></Route>
                     <Route exact path='/corona-patients-in-world'><WorldData worldPatientsData={this.state.worldPatientsData}
                         indiaStat={this.state.indiaConfirmed} /> </Route>
