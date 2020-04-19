@@ -16,13 +16,15 @@
     "react-bootstrap": "^1.0.0",
     "react-countup": "^4.3.3",
     "react-dom": "^16.13.1",
+    "react-focus-lock": "^2.3.1",
     "react-ga": "^2.7.0",
     "react-router-dom": "^5.1.2",
     "react-router-scroll-memory": "^2.0.5",
     "react-scripts": "3.4.1",
     "react-switch": "^5.0.1",
     "react-toggle-switch": "^3.0.4",
-    "react-transition-group": "^4.3.0"
+    "react-transition-group": "^4.3.0",
+    "styled-components": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

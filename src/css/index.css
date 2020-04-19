@@ -28,7 +28,7 @@ input:focus {
     display: block;
     float: left;
     height: 100%;
-    padding: 30px 0 5px 0;
+    padding: 30px 50px;
 }
 
 .header {
@@ -75,19 +75,11 @@ input:focus {
     margin-right: 0px;
 }
 
+.container { width: 100%; max-width: 1366px;  display: inline-block;  padding: 0 0px; }
+
 #heading {
-    color: #fff;
-    float: left;
-    width: 50%;
-    font-weight: bold;
-    font-size: 1em;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    padding: 0px 10px;
-    height: 60px;
-    display: flex;
-    justify-content: left;
-    align-items: center;
+    color: #fff; float: left; width: 50%; font-weight: bold; font-size: 1em; text-transform: uppercase;
+    letter-spacing: 0.8px; height: 60px; display: flex;  justify-content: left;  align-items: center;
 }
 
 #heading span {
@@ -101,8 +93,9 @@ input:focus {
 }
 
 .navbar-2 li {
-    display: inline-block;
+    display: inline-block; margin-right:15px;
 }
+.navbar-2 li .react-switch{ top:5px; }
 
 #switch-theme {
     float: right;
@@ -117,14 +110,12 @@ input:focus {
 .current-number-container {
     float: left;
     margin: 0 auto;
-    width: 50%;
+    margin-bottom:20px;
 }
 
 .last-updated-at {
     width: 100%;
     text-align: left;
-    padding-left: 55px;
-    padding-top: 0px;
     font-family: 'Roboto', sans-serif;
     font-weight: 600;
     animation: animate-last-up ease-in-out 1.2s;
@@ -140,7 +131,7 @@ input:focus {
 }
 
 .current-cont {
-    display: flex;
+    display: inline-block;
     justify-content: center;
     flex-wrap: wrap;
     flex-direction: row;
@@ -149,8 +140,8 @@ input:focus {
 .total-numbers {
     /* width: 40%; */
     float: left;
-    padding: 15px;
-    margin: 10px 10px;
+    padding: 18px;
+    margin: 10px 20px 10px 0;
     box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.5);
     /* animation: animate-box ease-in-out 1s; */
 }
@@ -242,7 +233,7 @@ input:focus {
 .footer {
     clear: both;
     width: 100vw;
-    height: 54px;
+    height: 40px;
     background: #1c1c1c;
     position: fixed;
     bottom: 0px;
@@ -365,43 +356,54 @@ a {
 /* Samples Tested CSS Starts */
 
 .sample-tested-main {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 50%;
-    display: flex;
+    width: 44%; float: left;
     flex-direction: row;
 }
 
-.samples-tested-container {
-    width: 50%;
-    margin: 0 auto;
-    text-align: center;
-}
+#MobileMenu{ width:280px; max-width: 280px !important;}
+#MobileMenu ul li, #MobileMenu ul a{ width:100%; margin-bottom:15px; display: inline-block; }
 
-.sample-tested-title {
+.samples-tested-container .last-updated-time{ display:none; }
+
+.samples-tested-container { width: 50%; text-align: center;  display: inline; }
+.daily-trends .buttons{ padding: 5px 40px; }
+.sample-tested-title, .title {
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 21px;
+    font-size: 18px;
     letter-spacing: 0.2px;
+    text-align: left;
+    display: inline-block;
+    width: 100%;
+    clear: both;
 }
 
 .sample-tested-title span {
-    border-bottom: 3px solid #01b0e6;
     padding-bottom: 2px;
 }
 
 .samples-tested {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+    display: inline-block;
+    width: 100%;
+    text-align: left;
 }
 
 .sample-box {
-    width: 140px;
-    height: 120px;
+    min-width: 130px;
+    min-height: 178px;
     background: #323a46;
-    margin: 10px 10px;
+    margin: 5px 20px 0 0;
+    padding: 20px;
+    display: inline-block;
+    text-align: center;
 }
+
+.main-cont .left{ width: inline-block; width:60%; float: left;}
+.main-cont .right{ width: inline-block; width:40%; float: left;}
+
+
+
+.map-and-tf-container{  display: inline-block;   width: 60%; }
 
 .samples-tested>div div:nth-child(1) {
     height: 40px;
@@ -448,13 +450,13 @@ a {
 
 .top-five-container {
     width: 50%;
-    margin-top: 20px;
+    float: left;
 }
 
 .top-five-main {
-    width: 92%;
+    width: 100%;
     margin: 0px auto 50px auto;
-    display: flex;
+    display: inline-block;
     flex-wrap: wrap;
     justify-content: center;
     /* border: 1px solid red; */
@@ -476,6 +478,7 @@ a {
     border-collapse: collapse;
     margin-top: 6px;
     /* border: 0.7px solid #1c1c1c; */
+    width: 80%;
 }
 
 .tfs-table thead,
@@ -682,3 +685,21 @@ tbody {
         display: none;
     }
 } */
+.navbar .mobileMode{ display: none;}
+.navbar-2 .desktopMode{ display: block }
+.logoimg{ float: left;}
+.logotitle{ margin-left: 5px;float: left;margin-top: 12px; }
+
+@media screen and (max-width: 767px ){
+    .main-cont{ padding: 15px; }
+    .main-cont .left, .main-cont .right{ width:100%; }
+    .last-updated-at { padding-left: 0; }
+    .current-cont{ justify-content: left;}
+
+    .sample-tested-main{ margin-bottom: 20px; }
+    .navbar .mobileMode{ display: block; }
+    .navbar-2 .desktopMode{ display: none; }
+    #MobileMenu .navbar { display: block; }
+    #MobileMenu .navbar a, #MobileMenu .navbar span{ text-align: left; font-size: 14px; color: #000; }
+    .footer{ line-height: 40px;}
+}

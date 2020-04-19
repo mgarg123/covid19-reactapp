@@ -1,18 +1,22 @@
-import React, { Fragment, useEffect, Suspense } from 'react'
+import React, { Fragment, useEffect, Suspense, useState, useRef } from 'react'
 import CaseNumber from './components/CaseNumber'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import { useState } from 'react'
 import HeaderTab from './components/HeaderTab'
 import StateTable from './components/StateTable'
 import axios from 'axios'
 import '../src/css/plot.css'
 import Graphs from './components/Graphs'
 import Predictions from './components/Predictions'
-import Loader from './components/Loader'
+import Loader from './components/Loader';
 // import SamplesTested from './components/SamplesTested'
 
-
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyles } from './components/MobileMenu/global';
+import { theme } from './components/MobileMenu/theme';
+import { Burger, Menu } from './components/MobileMenu';
+import { useOnClickOutside } from './hooks';
+import FocusLock from 'react-focus-lock'; 
 
 
 function App(props) {
@@ -27,6 +31,12 @@ function App(props) {
     const [keyValues, setKeyValues] = useState({})    //For Setting last updated and todays data
     const [lastUpdated, setLastUpdated] = useState("")
     const [districtDatas, setDistrictDatas] = useState([])
+
+    const [open, setOpen] = useState(false);
+    const node = useRef();
+    const menuId = "main-menu";
+
+    useOnClickOutside(node, () => setOpen(false));
 
 
     function isDarkModeActive(isDark) {
@@ -144,6 +154,18 @@ function App(props) {
                     color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`
                 }}>
                     <Header isDarkCallBack={isDarkModeActive} />
+                    <div className="MobileMenu">
+                        <ThemeProvider theme={theme}>
+                            <GlobalStyles />
+                            
+                                <FocusLock disabled={!open}>
+                                    <Burger open={open} setOpen={setOpen} aria-controls="MobileMenu" />
+                                    <Menu open={open} setOpen={setOpen} id="MobileMenu" />
+                                </FocusLock>
+                            
+                        </ThemeProvider>
+                    </div>
+
                     <HeaderTab tabs={["Stats", "Lists", "Graphs", "Prediction"]} tabClickedCallBack={whichTab} />
                     {
                         isStatsClicked ? <><CaseNumber isDark={localStorage.getItem('ncovindia_isDark') === 'true'}

@@ -1,8 +1,7 @@
             .plot-cont {
-                width: 50%;
+                width: 60%;
                 /* margin: 0 auto; */
                 display: inline-block;
-                padding-left: 20px;
                 flex-direction: row;
                 flex-wrap: wrap;
                 /* float: left; */
@@ -16,19 +15,6 @@
                 float: left;
             }
             
-            .plot-cont-heading {
-                width: 100%;
-                /* color: #fff; */
-                font-weight: bold;
-                text-align: center;
-                margin: 8px auto;
-                font-size: 1.3em;
-            }
-            
-            .plot-cont-heading span {
-                padding: 3px 0px;
-                border-bottom: 3px solid #01b0e6;
-            }
             
             .path-region:hover {
                 stroke: rgb(255, 0, 119);
@@ -43,7 +29,7 @@
             
             .state-details-cont {
                 /* padding-bottom: 20px; */
-                width: 120px;
+                width: 100px;
                 height: 370px;
                 float: left;
                 display: flex;
@@ -55,20 +41,21 @@
             .state-name {
                 font-weight: bold;
                 font-family: sans-serif;
-                padding: 0px 5px;
+                padding: 0px;
                 font-size: 14px;
-                height: auto;
-                text-align: center;
+                height: 40px;
+                text-align: left;
+                line-height: 18px;
+                font-weight: 100;
             }
             
             .state-details {
-                display: flex;
+                display: inline-block;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 font-weight: bold;
                 padding-top: 5px;
-                margin-left: 5px;
                 align-items: left;
             }
             
@@ -197,7 +184,7 @@
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
-                padding: 30px 0 50px 0;
+                padding: 30px 50px;
             }
             
             .graph-container {
@@ -209,8 +196,9 @@
             }
             
             .death-rec-container {
-                width: 50%;
+                width: 50%; margin-top:30px;
             }
+            .death-rec-container .buttons{ padding: 5px 30px; }
             
             #death-rec-title {
                 width: 100%;
@@ -237,8 +225,11 @@
             /* State Case Chart  */
             
             .state-case-chart-cont {
-                width: 50%;
+                width: 50%; margin-top:30px;
             }
+            .state-case-chart-cont .title{ text-align: center;}
+            .state-case-chart-cont .scc-main .buttons{ text-align: center;}
+            .state-case-chart-cont .scc-main .buttons select{width: 100%; max-width: 270px; height: 30px;}
             
             .scc-main {
                 width: 100%;

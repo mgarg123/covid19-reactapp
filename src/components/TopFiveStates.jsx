@@ -25,9 +25,16 @@ export class TopFiveStates extends Component {
     }
 
     render() {
+        let separator = '/';
+        let newDate = new Date()
+        let date = newDate.getDate();
+        let month = newDate.getMonth() + 1;
+        let year = newDate.getFullYear();
+
+        var currentDate = `${date}${separator}${month<10?`0${month}`:`${month}`}${separator}${year}`;
         return (
             <div className='top-five-container'>
-                <div className="tf-title"><span>Top 5 Affected States (Daily)</span></div>
+                <div className="title"><span>Top 5 Affected States ({currentDate})</span></div>
                 <div className="top-five-main">
                     <table className='tfs-table'>
                         <thead style={{

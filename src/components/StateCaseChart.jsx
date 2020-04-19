@@ -59,11 +59,8 @@ export class StateCaseChart extends Component {
     render() {
         return (
             <div className='state-case-chart-cont'>
-                <div id="death-rec-title" style={{
-                    textAlign: "center",
-                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`,
-                    fontSize: '20px',
-                    fontWeight: 'bold'
+                <div id="death-rec-title" className="title" style={{
+                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`                    
                 }}>
                     <span > Districtwise Cases Distribution</span>
                 </div>

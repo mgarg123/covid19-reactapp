@@ -33,14 +33,6 @@
     transition-timing-function: ease-in-out;
 }
 
-.navbar li:nth-child(1) {
-    padding-right: 40px;
-}
-
-.navbar li:nth-child(2) {
-    padding: 0px 13px;
-}
-
 .tabs:hover {
     cursor: pointer;
 }
