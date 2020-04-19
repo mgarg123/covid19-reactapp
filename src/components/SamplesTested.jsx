@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import axios from 'axios'
 import CountUp from 'react-countup'
 
 
-export class SamplesTested extends Component {
+export class SamplesTested extends PureComponent {
     constructor(props) {
         super(props)
 
@@ -43,10 +43,11 @@ export class SamplesTested extends Component {
                                 {this.state.sampleData.totalsamplestested !== undefined &&
                                     <CountUp
                                         start={this.state.sampleData.totalsamplestested - 20}
-                                        end={this.state.sampleData.totalsamplestested}
+                                        end={parseInt(this.state.sampleData.totalsamplestested)}
                                         delay={0.5}
                                         formattingFn={(n) => n.toLocaleString('en-IN')}
                                     />
+
                                 }
                             </div>
                             <div><hr /></div>
@@ -55,12 +56,14 @@ export class SamplesTested extends Component {
                             <div style={{ color: '#01b0e6' }}>Positive</div>
                             <div style={{ color: `${this.props.isDark ? '#fff' : '#000'}` }}>
                                 {this.state.sampleData.totalpositivecases !== undefined &&
-                                    <CountUp
-                                        start={this.state.sampleData.totalpositivecases - 20}
-                                        end={this.state.sampleData.totalpositivecases}
-                                        delay={0.5}
-                                        formattingFn={(n) => n.toLocaleString('en-IN')}
-                                    />
+                                    // <CountUp
+                                    //     start={this.state.sampleData.totalpositivecases - 20}
+                                    //     end={parseInt(this.state.sampleData.totalpositivecases)}
+                                    //     delay={0.5}
+                                    //     formattingFn={(n) => n.toLocaleString('en-IN')}
+                                    // />
+                                    this.state.sampleData.totalpositivecases
+
                                 }
                             </div>
                             <div><hr /></div>

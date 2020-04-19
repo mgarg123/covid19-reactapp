@@ -264,6 +264,7 @@ export class StateTable extends Component {
                                                 <td colSpan="5" className="full-width">
                                                     <div style={{
                                                         fontSize: '12px',
+                                                        textAlign: 'left', marginLeft: '18px',
                                                         color: `${this.props.isDark ? 'lightgreen' : 'green'}`
                                                     }}>Last Updated at {obj.lastupdatedtime}</div>
                                                     <table className="internal-table">
@@ -322,7 +323,12 @@ export class StateTable extends Component {
                                                             }
                                                         </tbody>
                                                     </table>
-                                                    <div style={{ color: 'skyblue' }}>*Details awaited for Unknown</div>
+                                                    <div style={{
+                                                        color: 'skyblue',
+                                                        textAlign: 'left',
+                                                        marginLeft: '18px',
+                                                        fontSize: '11px'
+                                                    }}>*Details awaited for Unknown</div>
                                                 </td>
                                             </tr>
                                         </>

@@ -60,24 +60,24 @@ export class Routing extends Component {
 
         }).catch(error => console.log(error.message))
 
-        //Updating India Data in the list
-        let url1 = "https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise"
-        axios.get(url1).then(response => {
-            var data = response.data.data
+        // //Updating India Data in the list
+        // let url1 = "https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise"
+        // axios.get(url1).then(response => {
+        //     var data = response.data.data
 
-            let conf = data.total.confirmed
-            let rec = data.total.recovered
-            let death = data.total.deaths
-            let act = data.total.active
+        //     let conf = data.total.confirmed
+        //     let rec = data.total.recovered
+        //     let death = data.total.deaths
+        //     let act = data.total.active
 
-            let stat = {
-                confirmed: conf,
-                recovered: rec,
-                deaths: death,
-                active: act
-            }
-            this.setState({ indiaStat: stat })
-        }).catch(error => console.log(error.message))
+        //     let stat = {
+        //         confirmed: conf,
+        //         recovered: rec,
+        //         deaths: death,
+        //         active: act
+        //     }
+        //     this.setState({ indiaStat: stat })
+        // }).catch(error => console.log(error.message))
 
 
         let url = "https://pomber.github.io/covid19/timeseries.json"

@@ -675,3 +675,10 @@ tbody {
         width: 100%;
     }
 }
+
+
+/* @media all and(display-mode:standalone) {
+    #add-to-homescreen {
+        display: none;
+    }
+} */

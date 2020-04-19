@@ -9,7 +9,8 @@ class Header extends Component {
         super(props)
 
         this.state = {
-            switched: true
+            switched: true,
+            isStandalone: false
         }
         this.btnRef = createRef()
     }
@@ -23,7 +24,7 @@ class Header extends Component {
         window.addEventListener('beforeinstallprompt', (event) => {
             btn.addEventListener('click', () => {
                 event.prompt()
-                event.userChoice().then((choiceResult) => {
+                event.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
                         btn.style.display = 'none'
                         console.log('User accepted the A2HS prompt');
@@ -35,10 +36,17 @@ class Header extends Component {
             });
         });
 
-        //Check if A2HS is Installed
-        window.addEventListener('appinstalled', (evt) => {
-            btn.style.display = 'none'
-        });
+        //Check if A2HS is Installed and show hide icon accordingly from the app
+        if (window.matchMedia('(display-mode:standalone)').matches || window.navigator.standalone === true) {
+            this.setState({ isStandalone: true })
+        } else {
+            this.setState({ isStandalone: false })
+        }
+
+        //Check if A2HS is installed
+        window.addEventListener('appinstalled', () => {
+            this.setState({ isStandalone: true })
+        })
 
     }
 
@@ -73,6 +81,8 @@ class Header extends Component {
                                     className="material-icons"
                                     id="add-to-homescreen"
                                     ref={this.btnRef}
+                                    //eslint-disable-next-line
+                                    style={{ display: `${this.state.isStandalone ? 'none' : 'inline-block'}` }}
                                 >
                                     add_to_home_screen
                                     </span>
@@ -97,7 +107,7 @@ class Header extends Component {
                         /> */}
                     </div>
                 </div>
-            </Fragment>
+            </Fragment >
         )
     }
 }

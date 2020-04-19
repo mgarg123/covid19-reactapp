@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, Suspense } from 'react'
 import CaseNumber from './components/CaseNumber'
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -9,6 +9,7 @@ import axios from 'axios'
 import '../src/css/plot.css'
 import Graphs from './components/Graphs'
 import Predictions from './components/Predictions'
+import Loader from './components/Loader'
 // import SamplesTested from './components/SamplesTested'
 
 
@@ -74,7 +75,7 @@ function App(props) {
                         deltaconfirmed: parseInt(data.statewise[i].deltaconfirmed),
                         deltadeaths: parseInt(data.statewise[i].deltadeaths),
                         deltarecovered: parseInt(data.statewise[i].deltarecovered),
-                        lastupdatedtime: "16/04/2020 20:33:49",
+                        lastupdatedtime: data.statewise[i].lastupdatedtime,
                         recovered: parseInt(data.statewise[i].recovered),
                         state: data.statewise[i].state,
                         statecode: data.statewise[i].statecode,
@@ -87,21 +88,6 @@ function App(props) {
                     count++
                 }
             }
-
-
-            setStats(stat)
-            setAffectedState(count)
-            setStateData(statesData)
-
-
-        }).catch(error => {
-            console.log(error.message)
-        })
-
-        // API call for LastUpdated time and Daily Increase of Cases
-        let url2 = "https://api.covid19india.org/data.json"
-        axios.get(url2).then(response => {
-            let data = response.data
 
             let obj = data.statewise[0]    //this obj has lastupdatedtime,deceaseddelta,confirmeddelta,reecovereddelta
 
@@ -121,7 +107,13 @@ function App(props) {
                 setLastUpdated("About " + Math.abs(currHour - parseInt(lastUpTime[0])) + " Hours")
             }
 
-            setKeyValues(obj)
+            setKeyValues(obj)       //Daily Confirmed,deaths and recovred data
+
+
+            setStats(stat)
+            setAffectedState(count)
+            setStateData(statesData)
+
 
         }).catch(error => {
             console.log(error.message)
@@ -146,27 +138,30 @@ function App(props) {
 
     return (
         <Fragment>
-            <div className="site-holder" style={{
-                background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? "#262626" : "#fff"}`,
-                color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`
-            }}>
-                <Header isDarkCallBack={isDarkModeActive} />
-                <HeaderTab tabs={["Stats", "Lists", "Graphs", "Prediction"]} tabClickedCallBack={whichTab} />
-                {
-                    isStatsClicked ? <><CaseNumber isDark={localStorage.getItem('ncovindia_isDark') === 'true'}
-                        stats={stats} keyVals={keyValues}
-                        lastUpdated={lastUpdated} /></> :
-                        isStatewiseClicked ? <StateTable
-                            stateData={stateData}
-                            affectedState={affectedState}
-                            districtDatas={districtDatas}
-                            isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /> : isGraphsClicked ?
-                                <Graphs isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /> :
-                                <Predictions isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />
+            <Suspense fallback={Loader}>
+                <div className="site-holder" style={{
+                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? "#262626" : "#fff"}`,
+                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`
+                }}>
+                    <Header isDarkCallBack={isDarkModeActive} />
+                    <HeaderTab tabs={["Stats", "Lists", "Graphs", "Prediction"]} tabClickedCallBack={whichTab} />
+                    {
+                        isStatsClicked ? <><CaseNumber isDark={localStorage.getItem('ncovindia_isDark') === 'true'}
+                            stats={stats} keyVals={keyValues}
+                            lastUpdated={lastUpdated} /></> :
+                            isStatewiseClicked ? <StateTable
+                                stateData={stateData}
+                                affectedState={affectedState}
+                                districtDatas={districtDatas}
+                                isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /> : isGraphsClicked ?
+                                    <Graphs isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /> :
+                                    <Predictions isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />
 
-                }
-                <Footer isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />
-            </div>
+                    }
+                    <Footer isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />
+                </div>
+            </Suspense>
+
         </Fragment>
     )
 }
