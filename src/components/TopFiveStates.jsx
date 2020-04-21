@@ -6,7 +6,8 @@ export class TopFiveStates extends Component {
         super(props)
 
         this.state = {
-            topFiveStates: []
+            topFiveStates: [],
+            date: ''
         }
     }
     componentDidMount() {
@@ -21,20 +22,19 @@ export class TopFiveStates extends Component {
 
             this.setState({ topFiveStates: topFiveStates })
 
-        }).catch(error => console.log(error.message))
+        }).catch(error => console.log(error.message));
+
+        let date = new Date()
+        let currdate = date.getDate().toString().length === 1 ? '0' + date.getDate() : date.getDate()
+        let month = date.getMonth().toString().length === 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
+        let todayDate = currdate + "/" + month + "/" + date.getFullYear()
+        this.setState({ date: todayDate })
     }
 
     render() {
-        let separator = '/';
-        let newDate = new Date()
-        let date = newDate.getDate();
-        let month = newDate.getMonth() + 1;
-        let year = newDate.getFullYear();
-
-        var currentDate = `${date}${separator}${month<10?`0${month}`:`${month}`}${separator}${year}`;
         return (
             <div className='top-five-container'>
-                <div className="title"><span>Top 5 Affected States ({currentDate})</span></div>
+                <div className="tf-title"><span>Top 5 Affected States ({this.state.date})</span></div>
                 <div className="top-five-main">
                     <table className='tfs-table'>
                         <thead style={{

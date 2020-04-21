@@ -1,21 +1,29 @@
-import React, { Component, Fragment, createRef  } from 'react'
+import React, { Component, Fragment, createRef } from 'react'
 import Switch from 'react-switch'
 import logo from '../img/Logo.png'
 import { Link } from 'react-router-dom'
 import '../css/header.css'
 
+import styled from 'styled-components';
+
+
 
 class Header extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             switched: true,
-            isStandalone: false
+            isStandalone: false,
+            open: false
         }
         this.btnRef = createRef()
-        
     }
+
+
+    // transform: ${ this.state.open ? 'translateX(-100%)' : 'translateX(0%)' };
+
+
 
     toggleSwitch = (switched) => {
         this.setState({ switched: !this.state.switched })
@@ -23,7 +31,6 @@ class Header extends Component {
 
     }
     componentDidMount() {
-            
         let btn = document.getElementById("add-to-homescreen")
         window.addEventListener('beforeinstallprompt', (event) => {
             btn.addEventListener('click', () => {
@@ -64,33 +71,118 @@ class Header extends Component {
     }
 
     render() {
-        
+
+        let StyledBurger = styled.button`
+  
+  top: 3%;
+  right: 2rem;
+  outline:0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+  span {
+    width: 2rem;
+    height: 0.25rem;
+    background: #fff;
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+    :first-child {
+      transform: ${this.state.open ? 'rotate(45deg)' : 'rotate(0)'};
+    }
+    :nth-child(2) {
+      opacity: ${this.state.open ? '0' : '1'};
+      transform: ${this.state.open ? 'translateX(20px)' : 'translateX(0)'};
+    }
+    :nth-child(3) {
+      transform: ${this.state.open ? 'rotate(-45deg)' : 'rotate(0)'};
+    }
+  }`;
+
+        let StyledMenu = styled.nav`
+  flex-direction: column;
+  justify-content: center;
+  display:${this.state.open ? 'block' : 'none'};
+  background: ${this.state.switched ? '#1c1c1c' : '#2e97d3'};
+  z-index:9;
+  transform:${this.state.open ? 'translateX(0%)' : 'translateX(100%)'};
+  height: 100vh;
+  text-align: left;
+  padding: 15% 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: transform 0.3s ease-in-out;
+  @media (max-width: 767px) {
+      width: 80%;
+      padding:50% 10px;
+     
+    }
+  a {
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 0px 20px;
+    font-weight: bold;
+    letter-spacing: 2.5px;
+    display:flex;
+    align-items:center;
+    justify-content:end;
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s linear;
+    animation: slideright 0.3s ease-in-out;
+    @media (max-width: 767px) {
+      font-size: 1rem;
+    }
+    @keyframes slideright{
+        0%{
+            transform:translateX(50%);
+            opacity:0.4;
+        }
+        100%{
+            transform:translateX(0%);
+            opacity:1;
+        }
+    }
+    &:hover {
+      color: rgb(136, 248, 224);
+    }
+  }
+`;
+
         return (
             <Fragment>
                 <div className="header" style={{ color: '#fff' }}>
-                        <div id="heading">
-                            <Link to="/">
-                                <span className="logoimg" ><img src={logo} height="42px" width="42px" alt="" /></span>
-                                <span className="logotitle" >nCov-India</span>
-                            </Link>
+                    <Link to="/">
+                        <div id="heading"><span><img src={logo} height="42px" width="42px" alt="" /></span>
+                            <span style={{ marginLeft: "5px" }}>nCov-India</span>
                         </div>
+                    </Link>
+                    <div id="switch-theme">
 
-                        <div id="switch-theme">
-                            
+                        <div id='mobileMenu'>
                             <ul className='navbar-2'>
-                                <li>
+                                <li style={{ paddingRight: "25px" }}>
                                     <span style={{ paddingRight: '8px', cursor: 'pointer' }}
                                         className="material-icons"
                                         id="add-to-homescreen"
                                         ref={this.btnRef}
                                         //eslint-disable-next-line
-                                        style={{ display: `${this.state.isStandalone ? 'none' : 'inline-block'}` }}
+                                        style={{ display: `${this.state.isStandalone ? 'none' : 'inline-block'}`, fontSize: '30px' }}
                                     >
                                         add_to_home_screen
-                                        </span>
+                                    </span>
                                 </li>
-                                <li className="desktopMode">
-                                    <span style={{ marginRight: "0px", paddingRight: "4px", paddingBottom: '15px', fontSize: "15px" }}>Dark Mode</span>
+                                <li id="pc-dark-mode" style={{ paddingRight: "30px" }}>
+                                    <span style={{ marginRight: "0px", fontSize: "15px" }}>Dark Mode</span>
                                     <Switch onChange={this.toggleSwitch}
                                         checked={this.state.switched && localStorage.getItem('ncovindia_isDark') === 'true'}
                                         className="react-switch"
@@ -98,19 +190,74 @@ class Header extends Component {
                                         width={40}
                                     />
                                 </li>
+
                             </ul>
-
-
-                            {/* <Switch onChange={this.toggleSwitch}
-                                checked={this.state.switched && localStorage.getItem('ncovindia_isDark') === 'true'}
-                                className="react-switch"
-                                height={20}
-                                width={40}
-                            /> */}
-                            
+                            <StyledBurger aria-label="Toggle menu" aria-expanded={this.state.open} open={this.state.open} onClick={() => this.setState({ open: !this.state.open })}>
+                                <span />
+                                <span />
+                                <span />
+                            </StyledBurger>
                         </div>
-                        
-                    
+
+
+
+                        {/* <Switch onChange={this.toggleSwitch}
+                            checked={this.state.switched && localStorage.getItem('ncovindia_isDark') === 'true'}
+                            className="react-switch"
+                            height={20}
+                            width={40}
+                        /> */}
+                    </div>
+                    <StyledMenu open={this.state.open} >
+                        <ul className="navbar">
+                            <li><Link to="/"><span
+                                // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
+                                className="material-icons navbar-icons">
+                                home</span><span> Home</span></Link></li>
+                            <li><Link to="/about-corona"><span
+                                // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
+                                className="material-icons navbar-icons">
+                                info
+                            </span><span> About Corona</span> </Link></li>
+                            <li>
+                                <Link to="/corona-patients-in-world"><span
+                                    // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
+                                    className="material-icons navbar-icons">
+                                    language
+                            </span><span> World Data</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/compare-corona-records-of-different-countries"><span
+                                    // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
+                                    className="material-icons navbar-icons">
+                                    compare
+                            </span><span> Compare Data</span>
+                                </Link>
+                            </li>
+                            <li> <Link to="/donate"><span
+                                // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
+                                className="material-icons navbar-icons">
+                                account_balance_wallet
+                            </span><span>  Donate</span> </Link></li>
+                            <li id="mob-dark-mode">
+                                <span style={{
+                                    marginRight: "0px", paddingRight: "4px",
+                                    color: '#fff',
+                                    fontSize: "15px"
+                                }}>Dark Mode</span>
+                                <Switch onChange={this.toggleSwitch}
+                                    checked={this.state.switched && localStorage.getItem('ncovindia_isDark') === 'true'}
+                                    className="react-switch"
+                                    height={21}
+                                    width={40}
+                                />
+
+                            </li>
+
+                        </ul>
+                    </StyledMenu>
+
                 </div>
             </Fragment >
         )

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import '../css/table.css'
 
 export class StateTable extends Component {
@@ -158,14 +158,18 @@ export class StateTable extends Component {
                     <table className="state-table">
                         <thead style={{ background: `${this.props.isDark ? 'rgb(50, 58, 70)' : 'rgb(208, 206, 206)'}`, fontWeight: 'bold' }}>
                             <tr>
-                                <th style={{ visibility: "hidden" }}></th>
+                                <th style={{
+                                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`,
+                                    height: '32px'
+                                }}></th>
                                 <th onClick={() => this.setState({
                                     // sortState: !this.state.sortState,
                                     sortConfirmed: false,
                                     sortActive: false,
                                     sortDeaths: false,
                                     sortRecovered: false
-                                })}>STATE/UT
+                                })}
+                                >STATE/UT
                             {/* <span class="material-icons" style={{ fontSize: '11px' }}>
                                     {this.state.sortState ? 'arrow_downward' : 'arrow_upward'}
                                 </span> */}
@@ -176,9 +180,12 @@ export class StateTable extends Component {
                                     sortActive: false,
                                     sortDeaths: false,
                                     sortRecovered: false
-                                })}>INFECTED
+                                })}><span>
+                                        INFCTD
                             <span className="material-icons" style={{ fontSize: '11px' }}>
-                                        {this.state.sortConfirmed ? 'arrow_upward' : 'arrow_downward'}</span>
+                                            {this.state.sortConfirmed ? 'arrow_upward' : 'arrow_downward'}</span>
+                                    </span>
+
                                 </th>
                                 <th onClick={() => this.setState({
                                     sortState: false,
@@ -186,7 +193,7 @@ export class StateTable extends Component {
                                     sortActive: false,
                                     sortDeaths: false,
                                     sortRecovered: !this.state.sortRecovered
-                                })}>RECOVERED
+                                })}>RECVRD
                             <span className="material-icons" style={{ fontSize: '11px' }}>
                                         {this.state.sortRecovered ? 'arrow_downward' : 'arrow_upward'}</span>
                                 </th>
@@ -196,7 +203,7 @@ export class StateTable extends Component {
                                     sortActive: false,
                                     sortDeaths: !this.state.sortDeaths,
                                     sortRecovered: false
-                                })}>DEATHS
+                                })}>DTHS
                             <span className="material-icons" style={{ fontSize: '11px' }}>
                                         {this.state.sortDeaths ? 'arrow_downward' : 'arrow_upward'}
                                     </span>
@@ -207,7 +214,7 @@ export class StateTable extends Component {
                                     sortActive: !this.state.sortActive,
                                     sortDeaths: false,
                                     sortRecovered: false
-                                })}>ACTIVE
+                                })}>ACTV
                             <span className="material-icons" style={{ fontSize: '11px' }}>
                                         {this.state.sortActive ? 'arrow_downward' : 'arrow_upward'}
                                     </span>
@@ -219,8 +226,8 @@ export class StateTable extends Component {
                                 this.state.stateData.map((obj, index) => {
                                     return (
                                         obj.confirmed !== 0 &&
-                                        <>
-                                            <tr key={obj.state + "" + obj.confirmed}
+                                        <Fragment key={obj.state + "" + obj.confirmed}>
+                                            <tr
                                                 style={{ background: `${index % 2 !== 0 ? this.props.isDark ? '#1c1c1c' : '#eee' : ''}` }}
                                                 onClick={() => { this.setState({ clickedState: obj.state, isDistrictOpen: !this.state.isDistrictOpen }) }}
                                             >
@@ -239,7 +246,7 @@ export class StateTable extends Component {
                                                 <td>
                                                     <span style={{
                                                     }}> <i style={{
-                                                        color: 'red',
+                                                        color: '#00b5ff',
                                                         fontWeight: 'normal',
                                                         fontSize: '12px',
                                                         visibility: `${parseInt(obj.deltaconfirmed) > 0 ? 'visible' : 'hidden'}`,
@@ -248,8 +255,29 @@ export class StateTable extends Component {
                                                     </span>
                                                     {parseInt(obj.confirmed).toLocaleString('en-IN')}
                                                 </td>
-                                                <td>{parseInt(obj.recovered).toLocaleString('en-IN')}</td>
-                                                <td>{parseInt(obj.deaths).toLocaleString('en-IN')}</td>
+                                                <td>
+                                                    <span style={{
+                                                    }}> <i style={{
+                                                        color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? 'lightgreen' : 'green'}`,
+                                                        fontWeight: 'normal',
+                                                        fontSize: '12px',
+                                                        visibility: `${parseInt(obj.deltarecovered) > 0 ? 'visible' : 'hidden'}`,
+                                                    }} className="fa fa-arrow-up">
+                                                        </i>
+                                                    </span>
+                                                    {parseInt(obj.recovered).toLocaleString('en-IN')}</td>
+                                                <td>
+                                                    <span style={{
+
+                                                    }}> <i style={{
+                                                        color: 'red',
+                                                        fontWeight: 'normal',
+                                                        fontSize: '12px',
+                                                        visibility: `${parseInt(obj.deltadeaths) > 0 ? 'visible' : 'hidden'}`,
+                                                    }} className="fa fa-arrow-up">
+                                                        </i>
+                                                    </span>
+                                                    {parseInt(obj.deaths).toLocaleString('en-IN')}</td>
                                                 <td>{parseInt(obj.active).toLocaleString('en-In')}</td>
                                             </tr>
                                             <tr
@@ -331,7 +359,7 @@ export class StateTable extends Component {
                                                     }}>*Details awaited for Unknown</div>
                                                 </td>
                                             </tr>
-                                        </>
+                                        </Fragment>
 
                                     )
                                 })

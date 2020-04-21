@@ -9,6 +9,7 @@ import axios from 'axios'
 import ScrollMemory from 'react-router-scroll-memory'
 import ReactGA from 'react-ga'
 import Donate from './components/Donate'
+import CompareRecords from './components/CompareRecords'
 
 
 export class Routing extends Component {
@@ -166,7 +167,7 @@ export class Routing extends Component {
             <Router>
                 <ScrollMemory />        {/*Used to Restore Scroll */}
                 <Switch>
-                    <Route exact path='/' component={App}
+                    <Route exact path='/'
                         render={(props) => <App />}
                     >
                     </Route>     {/* Use render props in react router to pass props down the comp.*/}
@@ -177,6 +178,8 @@ export class Routing extends Component {
                     <Route exact path='/spain-data'><CountryData country={"spain"} countryStateData={this.state} /></Route>
                     <Route exact path='/italy-data'><CountryData country={"italy"} countryStateData={this.state} /></Route> */}
                     <Route path='/world-data/:countryname' component={CountryData}></Route>
+                    <Route path='/compare-corona-records-of-different-countries'
+                        render={(props) => <CompareRecords data={this.state.worldPatientsData} />}></Route>
                     <Route path='/donate'><Donate /></Route>
                     <Route component={Error404}></Route>
                 </Switch>

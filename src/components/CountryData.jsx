@@ -93,8 +93,8 @@ class CountryData extends Component {
                 apiresponseData: cData,
                 recover: recover
             })
-            console.log(this.state);
-            ///console.log(this.state.labels);
+            // console.log(this.state.confirmed);
+            // console.log(this.state.labels);
 
         }).catch(error => console.log(error.message))
 

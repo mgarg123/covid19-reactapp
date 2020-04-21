@@ -29,7 +29,6 @@ class CountryDailyTrends extends Component {
     }
 
     loadWeekData = (event) => {
-        let thisVariable = this;
         let apiData = this.props.apiresponseData;
 
         var weekCount = 0;
@@ -69,7 +68,7 @@ class CountryDailyTrends extends Component {
             return null;
         });
 
-        thisVariable.setState({
+        this.setState({
             labels: weeklyLabel,
             confirmeds: weeklyDataSub
         });
@@ -167,7 +166,7 @@ class CountryDailyTrends extends Component {
                     paddingTop: '-8px',
                     fontSize: '20px',
                     fontWeight: 'bold'
-                }}>Daily Spread Trends</span>
+                }}>{this.props.country !== undefined ? this.props.country : 'Daily Spread Trends'} </span>
                 <div className="daily-trends">
                     {/* <div className="buttons-left" style={{ border: '1px solid red' }}>
                         
@@ -176,7 +175,9 @@ class CountryDailyTrends extends Component {
                         <button onClick={this.toggleLine} id="toggle-line"
                             style={{ float: 'left', marginLeft: '2px' }}>Toggle Column
                         </button>
-                        <button onClick={this.loadDayData} id="day">Day</button>
+                        <button
+                            style={{ display: `${this.props.comparision ? 'none' : 'inline-block'}` }}
+                            onClick={this.loadDayData} id="day">Day</button>
                         <button onClick={this.loadWeekData} id="week">Week</button>
                         <button onClick={this.loadMonthData} id="month">Month</button>
                     </div>

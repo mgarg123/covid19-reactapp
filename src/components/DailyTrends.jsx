@@ -153,8 +153,14 @@ class DailyTrends extends Component {
         //console.log(this.state.confirmeds);
 
         return (
-            <div className="daily-trend-container">
-                <div className="title"><span>Daily Spread Trends</span></div>
+            <div className="daily-trend-container" style={{ width: `${this.props.width !== undefined && this.props.width}` }}>
+                <span style={{
+                    textAlign: 'center',
+                    color: `${this.props.isDark ? '#fff' : '#2d2d2d'}`,
+                    paddingTop: '-8px',
+                    fontSize: '20px',
+                    fontWeight: 'bold'
+                }}>Daily Spread Trends</span>
                 <div className="daily-trends">
                     {/* <div className="buttons-left" style={{ border: '1px solid red' }}>
                         

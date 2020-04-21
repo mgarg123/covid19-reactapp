@@ -8,13 +8,20 @@ export class HeaderTab extends Component {
         super(props)
 
         this.state = {
-            isStatsClicked: true,
+            isStatsClicked: false,
             isStatewiseClicked: false,
             isGraphsClicked: false,
             isPredictionClicked: false
         }
     }
-
+    // UNSAFE_componentWillReceiveProps(props) {
+    //     this.state = {
+    //         isStatsClicked: props.statsSwiped,
+    //         isStatewiseClicked: props.statewiseSwiped,
+    //         isGraphsClicked: props.graphsSwiped,
+    //         isPredictionClicked: props.statsSwiped === false && props.statewiseSwiped === false && props.graphsSwiped === false ? true : false
+    //     }
+    // }
     componentDidUpdate(prevProps, prevState) {
         if (this.state.isStatsClicked !== prevState.isStatsClicked ||
             this.state.isStatewiseClicked !== prevState.isStatewiseClicked ||
@@ -37,13 +44,16 @@ export class HeaderTab extends Component {
         if (this.state.isPredictionClicked !== prevState.isPredictionClicked) {
             ReactGA.ga('send', 'event', 'India Statistics', 'Predictions', 'Predictions tab clicked')
         }
+
+
+
     }
 
     render() {
         return (
             <div className="tabs-container" style={{ color: "#fff" }}>
                 <div className="tabs"
-                    style={{ background: `${this.state.isStatsClicked ? "rgb(50, 58, 70)" : ""}` }}
+                    style={{ background: `${this.state.isStatsClicked || this.props.statsSwiped ? "rgb(50, 58, 70)" : ""}` }}
                     onClick={() => this.setState({
                         isStatsClicked: true,
                         isStatewiseClicked: false,
@@ -54,7 +64,7 @@ export class HeaderTab extends Component {
                 </div>
                 <div className="tabs"
                     style={{
-                        background: `${this.state.isStatewiseClicked ? "rgb(50, 58, 70)" : ""}`,
+                        background: `${this.state.isStatewiseClicked || this.props.statewiseSwiped ? "rgb(50, 58, 70)" : ""}`,
                         display: `${this.props.tabs[1] !== undefined ? 'flex' : 'none'}`
                     }}
                     onClick={() => this.setState({
@@ -67,7 +77,7 @@ export class HeaderTab extends Component {
                 </div>
                 <div className="tabs"
                     style={{
-                        background: `${this.state.isGraphsClicked ? "rgb(50, 58, 70)" : ""}`,
+                        background: `${this.state.isGraphsClicked || this.props.graphsSwiped ? "rgb(50, 58, 70)" : ""}`,
                         display: `${this.props.tabs[2] !== undefined ? 'flex' : 'none'}`
                     }}
                     onClick={() => this.setState({
@@ -80,7 +90,9 @@ export class HeaderTab extends Component {
                 </div>
                 <div className="tabs"
                     style={{
-                        background: `${this.state.isPredictionClicked ? "rgb(50, 58, 70)" : ""}`,
+                        background: `${this.state.isPredictionClicked || (this.props.graphsSwiped === false &&
+                            this.props.statsSwiped === false && this.props.statewiseSwiped === false
+                        ) ? "rgb(50, 58, 70)" : ""}`,
                         display: `${this.props.tabs[3] !== undefined ? 'flex' : 'none'}`
                     }}
                     onClick={() => this.setState({

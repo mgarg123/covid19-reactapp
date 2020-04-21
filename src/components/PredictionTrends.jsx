@@ -22,7 +22,6 @@ export class PredictionTrends extends Component {
 
 
     render() {
-        console.log(this.props);
         return (
             <div>
                 <div className="daily-trend-container" style={{ width: '100%', margin: '0 auto' }}>
@@ -38,9 +37,6 @@ export class PredictionTrends extends Component {
                         
                     </div> */}
                         <div className="buttons" style={{ marginTop: '10px' }}>
-                            <button onClick={() => { this.setState({ toggledColumn: !this.state.toggledColumn }) }} id="toggle-line"
-                                style={{ float: 'left', marginLeft: '2px' }}>Toggle Column
-                        </button>
                             <button onClick={() => this.setState({ isWeek: true })} id="week">Week</button>
                             <button onClick={() => this.setState({ isWeek: false })} id="month">Month</button>
                         </div>

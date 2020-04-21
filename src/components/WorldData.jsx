@@ -26,7 +26,7 @@ class WorldData extends Component {
         if (this.state.patientsData !== undefined) {
             let allCountry = Object.keys(this.props.worldPatientsData).map(x => x)
 
-            console.log(this.props.worldPatientsData);
+            // console.log(this.props.worldPatientsData);
             let patData = []
             let cnt = 0
             //eslint-disable-next-line
@@ -153,7 +153,7 @@ class WorldData extends Component {
                                         height: '35px',
                                         padding: '8px 8px',
                                         border: 'none',
-                                        boxShadow: `1px 2px 4px 2px ${localStorage.getItem('ncovindia_isDark') === 'true' ?
+                                        boxShadow: `1px 2px 8px 3px ${localStorage.getItem('ncovindia_isDark') === 'true' ?
                                             'rgba(0,0,0,1)' : 'rgba(0,0,0,0.4)'}`,
                                         borderRadius: '4px',
                                         fontSize: '17px'

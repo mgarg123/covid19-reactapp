@@ -16,22 +16,21 @@
     border-top-right-radius: 8px;
 }
 
-.navbar {
-    display: block;
-}
+.navbar {}
 
 .navbar li {
-    display: inline-block;
     list-style-type: none;
-    transform: scale(1);
 }
 
 .navbar li:hover {
     transition-delay: 0.25s;
-    color: rgb(92, 252, 217);
-    transform: scale(1.08);
+    color: rgb(136, 248, 224);
     transition-timing-function: ease-in-out;
 }
+
+.navbar li:nth-child(1) {}
+
+.navbar li:nth-child(2) {}
 
 .tabs:hover {
     cursor: pointer;
@@ -41,7 +40,7 @@
     .tabs-container {
         margin: 15px 5px 0 5px;
     }
-    .navbar {
+    /* .navbar {
         display: none;
-    }
+    } */
 }

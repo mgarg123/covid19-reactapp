@@ -48,10 +48,13 @@ export class Graphs extends Component {
         return (
             <div className="graphs-main-cont">
                 {/* <DailyTrendGraph isDark={this.props.isDark} /> */}
-                <DailyTrends isDark={this.props.isDark} />
-                <AgeGroupChart isDark={this.props.isDark} />
-                <DeathVsRecovered isDark={this.props.isDark} deaths={this.state.deaths} labels={this.state.labels} recover={this.state.recovered} />
-                <StateCaseChart />
+                <div className="graphs-holder">
+                    <DailyTrends isDark={this.props.isDark} />
+                    <AgeGroupChart isDark={this.props.isDark} />
+                    <DeathVsRecovered isDark={this.props.isDark} deaths={this.state.deaths} labels={this.state.labels} recover={this.state.recovered} />
+                    <StateCaseChart />
+                </div>
+
             </div>
         )
     }

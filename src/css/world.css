@@ -12,6 +12,7 @@
 .wc-container {
     width: 95%;
     transform: translateY(15%);
+    margin: 0 auto;
 }
 
 .last-updated-wc {
@@ -92,7 +93,7 @@
         flex-direction: column;
     }
     .world-case-cont {
-        width: 143px;
+        width: 135px;
         height: 150px;
     }
     .world-cases-main {
@@ -112,5 +113,102 @@
         font-size: 14px;
         font-weight: bold;
         margin-bottom: -5px;
+    }
+}
+
+
+/* Compare Countries CSS Start  */
+
+.compare-title {
+    text-align: center;
+    font-size: 21px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.comp-country-list {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.comp-country {
+    width: 33.3%;
+}
+
+.comp-country div:nth-child(1) {
+    margin-top: 10px;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.countries-graph-holder {
+    margin-bottom: 35px;
+    margin-top: 10px;
+}
+
+.countries-graphs {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 7px 0px;
+    margin: 0 auto;
+    width: 99%;
+}
+
+.country-graph {
+    width: 33%;
+    padding: 5px 5px;
+}
+
+.country-graph:nth-child(2) {
+    border-left: 1px solid rgb(189, 189, 189);
+    border-right: 1px solid rgb(189, 189, 189);
+}
+
+.comp-dropdown {
+    height: 30px;
+    outline: none;
+    margin-top: 10px;
+    background: #fff;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.5);
+}
+
+.select-country-to-comp {
+    height: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-country-to-comp {
+    border: 0.5px solid rgb(189, 189, 189);
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+
+/* Compare Countries CSS ENDs  */
+
+@media(max-width:768px) {
+    .country-graph {
+        width: 100%;
+    }
+    .country-graph:nth-child(2) {
+        border-top: 1px solid rgb(189, 189, 189);
+        border-bottom: 1px solid rgb(189, 189, 189);
+        border-left: none;
+        border-right: none;
+    }
+    .comp-country {
+        width: 100%;
+    }
+    .sctc2,
+    .sctc3 {
+        display: none;
     }
 }

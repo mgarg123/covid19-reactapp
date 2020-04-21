@@ -25,7 +25,7 @@ export class StatewiseMap extends Component {
         return (
             <div className="plot-cont">
                 <div className="plot-cont-main" >
-                    <div className="title">
+                    <div className="plot-cont-heading">
                         <span>Statewise Statistics</span>
                     </div>
                     <StateDetailsCont stateName={this.state.stateName} stateDataCallBack={this.stateDataCall} isDark={this.props.isDark} />

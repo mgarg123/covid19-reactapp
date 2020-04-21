@@ -1,7 +1,8 @@
             .plot-cont {
-                width: 60%;
+                width: 50%;
                 /* margin: 0 auto; */
                 display: inline-block;
+                padding-left: 20px;
                 flex-direction: row;
                 flex-wrap: wrap;
                 /* float: left; */
@@ -15,6 +16,19 @@
                 float: left;
             }
             
+            .plot-cont-heading {
+                width: 100%;
+                /* color: #fff; */
+                font-weight: bold;
+                text-align: center;
+                margin: 5px auto;
+                font-size: 1.3em;
+            }
+            
+            .plot-cont-heading span {
+                /* padding: 3px 0px;
+                border-bottom: 3px solid #01b0e6; */
+            }
             
             .path-region:hover {
                 stroke: rgb(255, 0, 119);
@@ -29,7 +43,7 @@
             
             .state-details-cont {
                 /* padding-bottom: 20px; */
-                width: 100px;
+                width: 120px;
                 height: 370px;
                 float: left;
                 display: flex;
@@ -41,21 +55,20 @@
             .state-name {
                 font-weight: bold;
                 font-family: sans-serif;
-                padding: 0px;
+                padding: 0px 5px;
                 font-size: 14px;
-                height: 40px;
-                text-align: left;
-                line-height: 18px;
-                font-weight: 100;
+                height: auto;
+                text-align: center;
             }
             
             .state-details {
-                display: inline-block;
+                display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 font-weight: bold;
                 padding-top: 5px;
+                margin-left: 5px;
                 align-items: left;
             }
             
@@ -181,10 +194,16 @@
             /* Pie Chart AFFECTED AGE GROUP START */
             
             .graphs-main-cont {
+                width: 100%;
+            }
+            
+            .graphs-holder {
+                width: 92.5%;
+                margin: 0 auto;
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
-                padding: 30px 50px;
+                padding: 30px 0 50px 0;
             }
             
             .graph-container {
@@ -196,9 +215,8 @@
             }
             
             .death-rec-container {
-                width: 50%; margin-top:30px;
+                width: 50%;
             }
-            .death-rec-container .buttons{ padding: 5px 30px; }
             
             #death-rec-title {
                 width: 100%;
@@ -211,7 +229,6 @@
             .chartjs-render-monitor {}
             
             .daily-trend-container {
-                width: 50%;
                 display: flex;
                 justify-content: center;
                 flex-direction: column;
@@ -225,11 +242,8 @@
             /* State Case Chart  */
             
             .state-case-chart-cont {
-                width: 50%; margin-top:30px;
+                width: 50%;
             }
-            .state-case-chart-cont .title{ text-align: center;}
-            .state-case-chart-cont .scc-main .buttons{ text-align: center;}
-            .state-case-chart-cont .scc-main .buttons select{width: 100%; max-width: 270px; height: 30px;}
             
             .scc-main {
                 width: 100%;
@@ -252,6 +266,9 @@
                 }
                 .graphs-main-cont {
                     flex-direction: column;
+                }
+                .graphs-holder {
+                    width: 98%;
                 }
                 .graph-container {
                     margin: 10px auto 20px auto;
@@ -299,7 +316,8 @@
                 }
                 .state-table thead tr th {
                     font-size: 11px;
-                    border-right: 0.5px solid rgb(160, 31, 31);
+                    text-align: center;
+                    /* border-right: 0.5px solid rgb(160, 31, 31); */
                 }
                 .state-table thead tr {
                     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -308,24 +326,33 @@
                 }
                 .state-table thead tr th:nth-child(1) {
                     width: 5%;
+                    /* padding-left: 20px; */
                     border-right: none;
+                    /* background: #262626; */
                 }
                 .state-table thead tr th:nth-child(2) {
-                    width: 24%;
-                    padding-left: 6px;
+                    width: 32%;
+                    padding-left: 4px;
                     text-align: left;
                 }
-                .state-table thead tr th:nth-last-child(1) {
+                /* .state-table thead tr th:nth-last-child(1) {
                     padding-right: 2px;
                     text-align: right;
+                } */
+                .state-table tbody tr td:nth-child(1) {
+                    width: 5%;
+                }
+                .state-table tbody tr td:nth-child(2) {
+                    width: 32%;
                 }
                 .state-table tbody tr td {
                     text-align: center;
                 }
                 .state-table thead tr th {
                     text-align: right;
-                    padding: 6px 0px;
+                    padding: 4px 0px;
                     width: 100vw;
+                    height: 38px;
                 }
                 .state-case-chart-cont {
                     width: 100%;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
 import axios from 'axios'
@@ -59,20 +59,23 @@ export class StateCaseChart extends Component {
     render() {
         return (
             <div className='state-case-chart-cont'>
-                <div id="death-rec-title" className="title" style={{
-                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`                    
+                <div id="death-rec-title" style={{
+                    textAlign: "center",
+                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`,
+                    fontSize: '20px',
+                    fontWeight: 'bold'
                 }}>
                     <span > Districtwise Cases Distribution</span>
                 </div>
                 <div className="scc-main">
                     <div className="buttons" style={{ marginTop: '10px' }}>
-                        <select onChange={this.selectedState}>
+                        <select onChange={this.selectedState} defaultValue={'Andaman and Nicobar Islands'}>
                             {
                                 this.state.statesList.sort((x, y) => x.localeCompare(y)).map((x, index) => {
                                     return (
-                                        <>
-                                            <option selected={index === 0 ? true : false} value={x}>{x}</option>
-                                        </>
+                                        <Fragment key={x}>
+                                            <option value={x}>{x}</option>
+                                        </Fragment>
                                     )
                                 })
                             }
