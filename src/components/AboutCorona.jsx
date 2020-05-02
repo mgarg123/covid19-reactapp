@@ -3,6 +3,7 @@ import Header from './Header'
 import Footer from './Footer'
 import HeaderTab from './HeaderTab'
 import '../css/about.css'
+import { connect } from 'react-redux'
 
 
 export class AboutCorona extends Component {
@@ -29,8 +30,8 @@ export class AboutCorona extends Component {
         return (
             <Fragment>
                 <div className="site-holder" style={{
-                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? "#262626" : "#fff"}`,
-                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#000'}`
+                    background: `${this.props.isDark ? "#1e1d21" : "#ebebeb"}`,
+                    color: `${this.props.isDark ? '#fff' : '#000'}`
                 }}>
                     <Header isDarkCallBack={this.isDarkModeActive} />
                     <HeaderTab tabs={["Overview", "Symptoms", "Prevention"]} tabClickedCallBack={this.whichTab} />
@@ -93,4 +94,10 @@ export class AboutCorona extends Component {
     }
 }
 
-export default AboutCorona
+const mapStateToProps = state => {
+    return {
+        isDark: state.theme.isDark
+    }
+}
+
+export default connect(mapStateToProps, null)(AboutCorona)

@@ -42,7 +42,10 @@ export class SamplesTested extends PureComponent {
                     <div className="samples-tested" >
 
                         <div className="sample-box tested"
-                            style={{ background: `${this.props.isDark ? '' : '#fff'}` }}>
+                            style={{
+                                background: `${this.props.isDark ? '#262529' : '#fff'}`,
+                                boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.4' : '0.16'})`
+                            }}>
                             <div style={{ color: '#2ab407' }}>Tested</div>
                             <div className="test-rate">
                                 <div
@@ -54,10 +57,15 @@ export class SamplesTested extends PureComponent {
                                 </div>
                             </div>
                             <div style={{ color: `${this.props.isDark ? '#fff' : '#000'}` }}>
-                                {this.state.sampleData.totalsamplestested !== undefined &&
+                                {this.props.testData === undefined ? this.state.sampleData.totalsamplestested !== undefined &&
                                     <CountUp
                                         start={this.state.sampleData.totalsamplestested - 20}
                                         end={parseInt(this.state.sampleData.totalsamplestested)}
+                                        delay={0.5}
+                                        formattingFn={(n) => n.toLocaleString('en-IN')}
+                                    /> : <CountUp
+                                        start={parseInt(this.props.testData.totaltested - 20)}
+                                        end={parseInt(this.props.testData.totaltested)}
                                         delay={0.5}
                                         formattingFn={(n) => n.toLocaleString('en-IN')}
                                     />
@@ -66,7 +74,10 @@ export class SamplesTested extends PureComponent {
                             </div>
                             <div><hr /></div>
                         </div>
-                        <div className="sample-box positive" style={{ background: `${this.props.isDark ? '' : '#fff'}` }}>
+                        <div className="sample-box positive" style={{
+                            background: `${this.props.isDark ? '#262529' : '#fff'}`,
+                            boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.4' : '0.16'})`
+                        }}>
                             <div style={{ color: '#01b0e6' }}>Positive</div>
                             <div className="test-rate">
                                 <div
@@ -75,14 +86,23 @@ export class SamplesTested extends PureComponent {
                                 >
                                     <span className="material-icons" style={{ fontSize: '10px' }}>
                                         trending_up</span>
-                                    {this.state.sampleData.totalpositivecases !== "" ? ((parseInt(this.state.sampleData.totalpositivecases) / parseInt(this.state.sampleData.totalsamplestested)) * 100).toPrecision(3) + "%" : '4.37%'}
+                                    {this.props.testData === undefined ? this.state.sampleData.totalpositivecases !== "" ?
+                                        ((parseInt(this.state.sampleData.totalpositivecases) / parseInt(this.state.sampleData.totalsamplestested))
+                                            * 100).toPrecision(3) + "%" : '4.37%' :
+                                        ((parseInt(this.props.testData.positive) / parseInt(this.props.testData.totaltested))
+                                            * 100).toPrecision(3) + "%"}
                                 </div>
                             </div>
                             <div style={{ color: `${this.props.isDark ? '#fff' : '#000'}` }}>
-                                {this.state.sampleData.totalpositivecases !== undefined &&
+                                {this.props.testData === undefined ? this.state.sampleData.totalpositivecases !== undefined &&
                                     <CountUp
                                         start={this.state.sampleData.totalpositivecases - 20}
                                         end={parseInt(this.state.sampleData.totalpositivecases)}
+                                        delay={0.5}
+                                        formattingFn={(n) => n.toLocaleString('en-IN')}
+                                    /> : <CountUp
+                                        start={parseInt(this.props.testData.positive - 20)}
+                                        end={parseInt(this.props.testData.positive)}
                                         delay={0.5}
                                         formattingFn={(n) => n.toLocaleString('en-IN')}
                                     />

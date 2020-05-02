@@ -16,8 +16,9 @@ export class CaseBox extends Component {
             <Fragment>
                 <div className={`total-numbers ${this.props.cls}`}
                     style={{
-                        background: `${this.props.isDark ? '#323A46' : '#fff'}`,
-                        color: `${this.props.isDark ? '#fff' : '#222'}`
+                        background: `${this.props.isDark ? '#262529' : '#fcfcfc'}`,
+                        color: `${this.props.isDark ? '#fff' : '#222'}`,
+                        boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.4' : '0.16'})`
                     }}>
                     <div className="number-details">
                         <div id="number-details-heading">{this.props.title}</div>

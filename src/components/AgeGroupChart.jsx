@@ -52,24 +52,34 @@ export class AgeGroupChart extends Component {
     render() {
         return (
             <div className="graph-container">
-                <div className="affected-age-group">
+                <div style={{ width: '100%', textAlign: 'center' }}>
+                    <span style={{
+                        textAlign: 'center',
+                        color: `${this.props.isDark ? '#fff' : '#2d2d2d'}`,
+                        paddingTop: '-8px',
+                        fontSize: '20px',
+                        fontWeight: 'bold'
+                    }}>Affected Age Groups</span>
+                </div>
+
+                <div className="affected-age-group" >
                     <HighchartsReact
                         highcharts={Highcharts}
                         options={{
                             chart: {
-                                plotBackgroundColor: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`,
+                                plotBackgroundColor: `${this.props.isDark ? '#262529' : '#fff'}`,
                                 plotBorderWidth: null,
                                 plotShadow: false,
                                 type: 'pie',
-                                backgroundColor: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`
+                                backgroundColor: `${this.props.isDark ? '#262529' : '#fff'}`
                             },
                             credits: {
                                 enabled: false
                             },
                             title: {
-                                text: 'Affected Age Groups',
+                                text: '',
                                 style: {
-                                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`,
+                                    color: `${this.props.isDark ? '#fff' : '#2d2d2d'}`,
                                     fontWeight: 'bold',
                                     fontSize: '20px'
                                 }
@@ -80,7 +90,7 @@ export class AgeGroupChart extends Component {
                             },
                             legend: {
                                 itemStyle: {
-                                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`
+                                    color: `${this.props.isDark ? '#fff' : '#2d2d2d'}`
                                 }
                             },
                             accessibility: {
@@ -93,7 +103,12 @@ export class AgeGroupChart extends Component {
                                     allowPointSelect: true,
                                     cursor: 'pointer',
                                     dataLabels: {
-                                        enabled: false
+                                        enabled: true,
+                                        format: '<b>Age {point.name}</b>:<br>{point.y}',
+                                        color: `${this.props.isDark ? '#fff' : '#2d2d2d'}`,
+                                        style: {
+                                            textOutline: false
+                                        }
                                     },
                                     showInLegend: true
                                 }

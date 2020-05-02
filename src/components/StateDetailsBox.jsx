@@ -5,7 +5,7 @@ export class StateDetailsBox extends Component {
         return (
             <div
                 className="state-det-1"
-                style={{ background: `${this.props.isDark ? "#323A46" : "#fff"}` }}>
+                style={{ background: `${this.props.isDark ? "#252629" : "#fff"}` }}>
                 <div className="status-name" style={{ color: `${this.props.color}` }}>{this.props.title}</div>
                 <div className="status-val" style={{ color: `${this.props.isDark ? "#fff" : "#2d2d2d"}` }}>{this.props.val}</div>
                 <div className="status-counter"

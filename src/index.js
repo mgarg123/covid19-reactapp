@@ -2,10 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Routing from './Routing.jsx';
 import * as serviceWorker from './serviceWorker';
+import store from '../src/components/redux/store'
+import { Provider } from 'react-redux'
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <Routing />
+    <Provider store={store}>
+      <Routing />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

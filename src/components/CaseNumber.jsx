@@ -4,6 +4,9 @@ import '../css/index.css'
 import StatewiseMap from './StatewiseMap'
 import SamplesTested from './SamplesTested'
 import TopFiveStates from './TopFiveStates'
+import Loader from './Loader'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 export class CaseNumber extends Component {
     constructor(props) {
@@ -25,6 +28,33 @@ export class CaseNumber extends Component {
                 <div className="main-cont">
 
                     <div className="current-number-container">
+                        {
+                            this.props.location.state !== "" ?
+                                <div className="user-location" style={{
+                                    display: `${window.screen.width < 768 ? 'block' : 'none'}`,
+                                    textAlign: 'center',
+                                    marginBottom: '15px',
+                                    fontSize: '12.5px',
+                                    marginTop: '-10px'
+                                }}>
+                                    <span style={{
+                                        color: `${this.props.isDark ? 'lightgreen' : 'green'}`,
+                                        textTransform: 'uppercase'
+                                    }}>
+                                        You visited from <b> {this.props.location.district + ", " +
+                                            this.props.location.state + ", " +
+                                            this.props.location.country + "."}</b>
+                                        <Link to={`/state-data/${this.props.location.state}`} style={{
+                                            borderBottom: '0.5px solid grey',
+                                            // fontSize: '15px',
+                                            fontWeight: 'bold',
+                                            color: `${this.props.isDark ? 'orange' : 'red'}`
+                                        }}>CHECK STATUS.</Link>
+                                    </span>
+                                </div> :
+                                <Loader />
+                        }
+
                         <div className='last-updated-at' style={{
                             color: `${this.props.isDark ? 'skyblue' : 'red'}`,
                             fontSize: '13px'
@@ -59,8 +89,8 @@ export class CaseNumber extends Component {
                                 isDark={this.props.isDark} />
                         </div>
                         <div className="sample-tf-cont">
-                            <SamplesTested isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />
-                            <TopFiveStates />
+                            <SamplesTested isDark={this.props.isDark} />
+                            <TopFiveStates isDark={this.props.isDark} />
                         </div>
 
                     </div>
@@ -77,4 +107,10 @@ export class CaseNumber extends Component {
     }
 }
 
-export default CaseNumber
+const mapStateToProps = (state) => {
+    return {
+        location: state.users.location
+    }
+}
+
+export default connect(mapStateToProps, null)(CaseNumber)

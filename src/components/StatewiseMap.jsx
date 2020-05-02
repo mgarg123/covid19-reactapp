@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import IndiaSvg from './IndiaSvg'
 import '../css/plot.css'
 import StateDetailsCont from './StateDetailsCont'
+import { Link } from 'react-router-dom'
+import Loader from './Loader'
+import { connect } from 'react-redux'
 
 export class StatewiseMap extends Component {
     constructor(props) {
@@ -24,6 +27,31 @@ export class StatewiseMap extends Component {
     render() {
         return (
             <div className="plot-cont">
+                {
+                    this.props.location.state !== "" ?
+                        <div className="user-location" style={{
+                            display: `${window.screen.width < 768 ? 'none' : 'block'}`,
+                            textAlign: 'left',
+                            marginBottom: '15px',
+                            marginTop: '3px'
+                        }}>
+                            <span style={{
+                                color: `${this.props.isDark ? 'lightgreen' : 'green'}`,
+                                textTransform: 'uppercase'
+                            }}>
+                                You visited from <b style={{ letterSpacing: '0.5px' }}>{this.props.location.district + ", " +
+                                    this.props.location.state && this.props.location.state + ", " +
+                                    this.props.location.country + "."}</b>
+                                <Link to={`/state-data/${this.props.location.state}`} style={{
+                                    borderBottom: '0.5px solid grey',
+                                    // fontSize: '15px',
+                                    fontWeight: 'bold',
+                                    color: `${this.props.isDark ? 'orange' : 'red'}`
+                                }}>Check Status.</Link>
+                            </span>
+                        </div> :
+                        <Loader />
+                }
                 <div className="plot-cont-main" >
                     <div className="plot-cont-heading">
                         <span>Statewise Statistics</span>
@@ -43,4 +71,9 @@ export class StatewiseMap extends Component {
     }
 }
 
-export default StatewiseMap
+const mapStateToProps = (state) => {
+    return {
+        location: state.users.location
+    }
+}
+export default connect(mapStateToProps, null)(StatewiseMap)

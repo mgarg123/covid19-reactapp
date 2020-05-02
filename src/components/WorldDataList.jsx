@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { connect } from 'react-redux'
+
 export class WorldDataList extends Component {
     constructor(props) {
         super(props)
@@ -29,14 +30,14 @@ export class WorldDataList extends Component {
         // }).catch(error => console.log(error.message));
 
         //IP Address to Country Name using ipapi.co API
-        axios.get('https://ipapi.co/json').then(response => {
-            let data = response.data
-            let countryName = data.country_name
+        // axios.get('https://ipapi.co/json').then(response => {
+        //     let data = response.data
+        //     let countryName = data.country_name
 
-            sessionStorage.setItem('ncovindia_usersCountry', countryName)   //Setting User's Country Name to Session Storage
-            this.setState({ userCountry: countryName })
+        //     sessionStorage.setItem('ncovindia_usersCountry', countryName)   //Setting User's Country Name to Session Storage
+        //     this.setState({ userCountry: countryName })
 
-        }).catch(error => console.log(error.message));
+        // }).catch(error => console.log(error.message));
     }
 
     render() {
@@ -49,7 +50,7 @@ export class WorldDataList extends Component {
                 padding: '15px 0px 10px 0px'
             }}>
                 <div><span style={{
-                    fontSize: '14px', color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? 'skyblue' : 'blue'}`,
+                    fontSize: '14px', color: `${this.props.isDark ? 'skyblue' : 'blue'}`,
                     textTransform: 'uppercase',
                     marginTop: '10px'
                 }}>
@@ -68,7 +69,7 @@ export class WorldDataList extends Component {
                                     border: '0.5px solid',
                                     textAlign: 'left',
                                     fontWeight: 'bold',
-                                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#1c1c1c' : '#ccc'}`
+                                    background: `${this.props.isDark ? '#1c1c1c' : '#ccc'}`
                                 }}>COUNTRY NAME</th>
                                 <th style={{
                                     width: '130px', border: 'none',
@@ -76,7 +77,7 @@ export class WorldDataList extends Component {
                                     //eslint-disable-next-line
                                     border: '0.4px solid',
                                     fontWeight: 'bold',
-                                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#1c1c1c' : '#ccc'}`,
+                                    background: `${this.props.isDark ? '#1c1c1c' : '#ccc'}`,
                                     textAlign: 'center'
                                 }}
                                     onClick={() => this.setState({ sortCases: !this.state.sortCases })}
@@ -92,10 +93,10 @@ export class WorldDataList extends Component {
 
                                                 <tr key={x.country}
                                                     style={{
-                                                        background: `${this.state.userCountry === x.country ?
-                                                            localStorage.getItem('ncovindia_isDark') === 'true' ? 'skyblue' : 'aqua' :
+                                                        background: `${this.props.location.country === x.country ?
+                                                            this.props.isDark ? 'skyblue' : 'aqua' :
                                                             index % 2 !== 0 ?
-                                                                localStorage.getItem('ncovindia_isDark') === 'true' ? '#1c1c1c' : '#eee' : ''}`
+                                                                this.props.isDark ? '#1c1c1c' : '#eee' : ''}`
                                                     }}>
                                                     <td style={{ width: '30px' }}>{x.index}</td>
 
@@ -125,4 +126,10 @@ export class WorldDataList extends Component {
     }
 }
 
-export default WorldDataList
+const mapStateToProps = (state) => {
+    return {
+        location: state.users.location
+    }
+}
+
+export default connect(mapStateToProps, null)(WorldDataList)

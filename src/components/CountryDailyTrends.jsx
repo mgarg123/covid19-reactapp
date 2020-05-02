@@ -6,9 +6,9 @@ class CountryDailyTrends extends Component {
     constructor(props) {
         super(props);
 
-        this.loadDayData = this.loadDayData.bind(this);
-        this.loadWeekData = this.loadWeekData.bind(this);
-        this.loadMonthData = this.loadMonthData.bind(this);
+        // this.loadDayData = this.loadDayData.bind(this);
+        // this.loadWeekData = this.loadWeekData.bind(this);
+        // this.loadMonthData = this.loadMonthData.bind(this);
 
         this.state = {
             labels: this.props.labels,
@@ -146,6 +146,12 @@ class CountryDailyTrends extends Component {
         this.setState((prevState, prevProps) => ({ toggledLine: !prevState.toggledLine }))
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.confirmed !== this.props.confirmed) {
+            this.setState({ confirmeds: this.props.confirmed, labels: this.props.labels })
+        }
+    }
+
     render() {
         //console.log(this.state.labels);
         //console.log(this);
@@ -159,7 +165,9 @@ class CountryDailyTrends extends Component {
         }
 
         return (
-            <div className="daily-trend-container">
+            <div className="daily-trend-container" style={{
+                width: `${this.props.width !== undefined ? window.screen.width > 767 ? '100%' : this.props.width : window.screen.width > 767 ? '50%' : '100%'}`
+            }}>
                 <span style={{
                     textAlign: 'center',
                     color: `${this.props.isDark ? '#fff' : '#2d2d2d'}`,

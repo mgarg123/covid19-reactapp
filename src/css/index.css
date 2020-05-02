@@ -2,12 +2,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background 0.5s ease-in-out;
 }
 
 body {
     /* background-color: #282e38; */
     /* color: #adb5bd; */
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     font-family: sans-serif;
     -webkit-tap-highlight-color: transparent;
 }
@@ -19,8 +20,11 @@ input:focus {
 }
 
 .site-holder {
-    /* display: inline-block; */
-    overflow-x: hidden;
+    display: inline-block;
+    /* overflow-x: unset; */
+    width: 100%;
+    height: auto;
+    /* position: relative; */
 }
 
 .main-cont {
@@ -34,6 +38,9 @@ input:focus {
 .header {
     background: #2e97d3;
     clear: both;
+    /* position: sticky;
+    top: 0;
+    z-index: 9; */
     /* width: 100vw; */
     height: 60px;
     /* padding: 0px 5px; */
@@ -97,7 +104,15 @@ input:focus {
 .navbar-2 {
     list-style: none;
     display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 115px;
+}
+
+.navbar-2 li:nth-child(1) {
+    display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 
@@ -184,7 +199,10 @@ input:focus {
     float: left;
     padding: 15px;
     margin: 10px 10px;
-    box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    transition: box-shadow 0.4s ease-in-out;
+    /* box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.5); */
+    /* box-shadow: 7px 7px 15px 1px rgba(0, 0, 0, 0.5); */
     /* animation: animate-box ease-in-out 1s; */
 }
 
@@ -270,7 +288,7 @@ input:focus {
 
 .footer {
     clear: both;
-    width: 100vw;
+    width: 100%;
     height: 40px;
     background: #1c1c1c;
     position: fixed;
@@ -279,6 +297,7 @@ input:focus {
     align-items: center;
     bottom: 0px;
     left: 0;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
 }
 
 .footer-left {
@@ -438,6 +457,8 @@ a {
     width: 160px;
     height: 170px;
     background: #323a46;
+    border-radius: 5px;
+    /* box-shadow: 7px 7px 15px 1px rgba(0, 0, 0, 0.4); */
     /* margin: 10px 10px; */
 }
 
@@ -479,10 +500,6 @@ a {
     font-size: 20px;
     letter-spacing: 0.5px;
     font-weight: bold;
-}
-
-.sample-box {
-    box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.5);
 }
 
 .sample-box div:nth-child(3) {
@@ -540,6 +557,8 @@ a {
 .tfs-table {
     border-collapse: collapse;
     margin-top: 6px;
+    border-radius: 5px;
+    /* box-shadow: 7px 7px 15px 1px rgba(0, 0, 0, 0.5); */
     /* border: 0.7px solid #1c1c1c; */
 }
 
@@ -676,6 +695,85 @@ tbody {
     font-size: 13px;
 }
 
+
+/* State District Table CSS  */
+
+.state-dist-table thead {
+    display: block;
+}
+
+.state-dist-table thead tr th {
+    text-align: left;
+    padding: 5px 0px;
+}
+
+.state-dist-table tbody td:nth-child(2) {
+    text-align: left;
+    width: unset !important;
+}
+
+.state-dist-table thead tr th {}
+
+.state-dist-table tbody td:nth-child(3) {
+    text-align: center !important;
+}
+
+.state-dist-table tbody {
+    display: block;
+    height: 445px;
+    overflow-y: scroll;
+}
+
+.table-containers {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.all-table-cont {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.zone-table {
+    width: 40%;
+}
+
+.zone-table table {
+    border-collapse: collapse;
+}
+
+.zone-table table>tr {
+    /* background: red; */
+}
+
+.zone-table table>tr td {
+    display: table-cell;
+}
+
+.zone-table table tr th,
+.zone-table table tr td {
+    width: 100px !important;
+}
+
+.zone-table table tr th:nth-child(2) {
+    text-align: left;
+}
+
+.zone-table table tr td:nth-child(2) {
+    text-align: left;
+}
+
+.zone-table table tr td:nth-child(3) {
+    text-align: left;
+}
+
+.zone-table table tr td {
+    width: 100px !important;
+}
+
+
+/* State District Table CSS Ends  */
+
 @media(max-width:768px) {
     /*.tabs-container, .main-cont{ display: none !important;}
     html, body, #root, .site-holder{ width:100%; float: left; display: inline-block;}
@@ -728,17 +826,26 @@ tbody {
     .sample-tested-main {
         padding: 0px;
     }
+    #add-to-homescreen {
+        /* padding-right: 18px; */
+    }
     #mob-dark-mode {
         display: flex;
         align-items: center;
-        height: 100px;
-        padding: 20px 32px;
+        /* height: 100px; */
+        /* padding: 6px 20px; */
+        font-size: 25px;
         font-weight: bold;
+        /* padding-right: 18px; */
         letter-spacing: 2.5px;
         text-transform: uppercase;
     }
+    #mob-dark-mode i {
+        /* margin-right: 6.5px; */
+    }
     #pc-dark-mode {
-        display: none;
+        /* display: none; */
+        /* padding-right: 18px; */
     }
 }
 
@@ -774,6 +881,17 @@ tbody {
     .tf-title {
         text-align: center;
         width: 100%;
+    }
+    .table-containers {
+        width: 96%;
+        margin: 0 auto;
+    }
+    state-dist-table thead tr th:nth-child(2) {
+        /* width: 120px !important; */
+    }
+    .zone-table {
+        width: 95%;
+        margin: 0 auto;
     }
 }
 

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import '../css/table.css'
+import { connect } from 'react-redux'
 
 export class StateTable extends Component {
     constructor(props) {
@@ -15,8 +16,12 @@ export class StateTable extends Component {
             sortActive: false,
             clickedState: "",
             isDistrictOpen: false,
-            sortDistrict: false,
-            stateSearchVal: ""
+            sortDistrictConf: false,
+            sortDistrictRec: false,
+            sortDistrictDth: false,
+            stateSearchVal: "",
+            districtData: props.districtDatas,
+            // zoneData: JSON.parse(localStorage.getItem('ncovindia_zoneDataV2'))
         }
     }
 
@@ -113,6 +118,14 @@ export class StateTable extends Component {
 
         //State Search Logic
         if (this.state.stateSearchVal !== prevState.stateSearchVal) {
+            // let distArry = []
+            // let dist = this.state.districtData.map(x => x.districtData)
+            // for (let i = 0; i < dist.length; i++) {
+            //     for (let j = 0; j < dist[i].length; j++) {
+            //         distArry.push(dist[i][j])
+            //     }
+            // }
+            // console.log(distArry);
             let mainData = [...this.state.stateDataMain]
             let arr = mainData.filter(x => x.state.toLowerCase().includes(this.state.stateSearchVal.toLowerCase()))
             this.setState({ stateData: arr })
@@ -123,255 +136,415 @@ export class StateTable extends Component {
     render() {
         return (
             <div className="state-table-container">
-                <div className='search-country' style={{
-                    width: '100%',
-                    margin: '20px 0px 0px 0px'
-                }}>
-                    <div style={{ width: 'fit-content', margin: '0 auto' }}>
-                        <input type="text"
-                            value={this.state.countrySearchVal}
-                            placeholder='Search State or UT'
-                            name="countryname"
-                            id="countryname"
-                            style={{
-                                width: '250px',
-                                height: '35px',
-                                padding: '8px 8px',
-                                border: 'none',
-                                boxShadow: `1px 2px 4px 2px ${localStorage.getItem('ncovindia_isDark') === 'true' ?
-                                    'rgba(0,0,0,1)' : 'rgba(0,0,0,0.4)'}`,
-                                borderRadius: '4px',
-                                fontSize: '17px'
-                            }}
-                            onChange={(event) => this.setState({ stateSearchVal: event.target.value })}
-                        />
-                    </div>
+                <div className="state-table-header">
+                    <div className='search-country' style={{
+                        width: '100%',
+                        margin: '20px 0px 0px 0px'
+                    }}>
+                        <div style={{ width: 'fit-content', margin: '0 auto' }}>
+                            <input type="text"
+                                value={this.state.countrySearchVal}
+                                placeholder='Search State or UT'
+                                name="countryname"
+                                id="countryname"
+                                style={{
+                                    width: '250px',
+                                    height: '35px',
+                                    padding: '8px 8px',
+                                    border: 'none',
+                                    boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.8' : '0.4'})`,
+                                    borderRadius: '4px',
+                                    fontSize: '17px'
+                                }}
+                                onChange={(event) => this.setState({ stateSearchVal: event.target.value })}
+                            />
+                        </div>
 
-                </div>
-                <div className="affectedDiv" >
-                    <span>{this.props.affectedState} STATES/UTS AFFECTED</span>
-                </div><div className="feature-notice" style={{ fontSize: '10px', textAlign: 'center', marginTop: '10px' }} >
-                    <span>* Click on the states to see affected districts</span>
-                </div>
+                    </div >
+                    <div className="affectedDiv" >
+                        <span>{this.props.affectedState} STATES/UTS AFFECTED</span>
+                    </div><div className="feature-notice" style={{ fontSize: '10px', textAlign: 'center', marginTop: '10px' }} >
+                        <span>* Click on the states to see affected districts</span>
+                    </div>
+                </div >
                 {/* <StateTable stateData={this.state.stateData} isDark={this.props.isDark} /> */}
-                <div className="table-container">
-                    <table className="state-table">
-                        <thead style={{ background: `${this.props.isDark ? 'rgb(50, 58, 70)' : 'rgb(208, 206, 206)'}`, fontWeight: 'bold' }}>
-                            <tr>
-                                <th style={{
-                                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`,
-                                    height: '32px'
-                                }}></th>
-                                <th onClick={() => this.setState({
-                                    // sortState: !this.state.sortState,
-                                    sortConfirmed: false,
-                                    sortActive: false,
-                                    sortDeaths: false,
-                                    sortRecovered: false
-                                })}
-                                >STATE/UT
+                < div className="all-table-cont" >
+                    <div className="table-container">
+                        <table className="state-table">
+                            <thead style={{
+                                background: `${this.props.isDark ? 'rgb(50, 58, 70)' : 'rgb(208, 206, 206)'}`,
+                                fontWeight: 'bold',
+                                position: 'sticky',
+                                top: '0',
+                                left: '0'
+                            }}>
+                                <tr>
+                                    <th style={{
+                                        // background: `${this.props.isDark ? '#262626' : '#fff'}`,
+                                        height: '32px'
+                                    }}></th>
+                                    <th onClick={() => this.setState({
+                                        // sortState: !this.state.sortState,
+                                        sortConfirmed: false,
+                                        sortActive: false,
+                                        sortDeaths: false,
+                                        sortRecovered: false
+                                    })}
+                                    >STATE/UT
                             {/* <span class="material-icons" style={{ fontSize: '11px' }}>
                                     {this.state.sortState ? 'arrow_downward' : 'arrow_upward'}
                                 </span> */}
-                                </th>
-                                <th onClick={() => this.setState({
-                                    sortState: false,
-                                    sortConfirmed: !this.state.sortConfirmed,
-                                    sortActive: false,
-                                    sortDeaths: false,
-                                    sortRecovered: false
-                                })}><span>
-                                        INFCTD
-                            <span className="material-icons" style={{ fontSize: '11px' }}>
-                                            {this.state.sortConfirmed ? 'arrow_upward' : 'arrow_downward'}</span>
-                                    </span>
+                                    </th>
+                                    <th onClick={() => this.setState({
+                                        sortState: false,
+                                        sortConfirmed: !this.state.sortConfirmed,
+                                        sortActive: false,
+                                        sortDeaths: false,
+                                        sortRecovered: false
+                                    })}><span>
+                                            INFCTD
+                            <span className="material-icons" style={{
+                                                fontSize: '11px',
+                                                transform: `${this.state.sortConfirmed ? 'rotate(180deg)' : 'none'}`,
+                                                transition: 'transform 0.2s ease-in-out'
+                                            }}>
+                                                arrow_downward
+                                           </span>
+                                        </span>
 
-                                </th>
-                                <th onClick={() => this.setState({
-                                    sortState: false,
-                                    sortConfirmed: false,
-                                    sortActive: false,
-                                    sortDeaths: false,
-                                    sortRecovered: !this.state.sortRecovered
-                                })}>RECVRD
-                            <span className="material-icons" style={{ fontSize: '11px' }}>
-                                        {this.state.sortRecovered ? 'arrow_downward' : 'arrow_upward'}</span>
-                                </th>
-                                <th onClick={() => this.setState({
-                                    sortState: false,
-                                    sortConfirmed: false,
-                                    sortActive: false,
-                                    sortDeaths: !this.state.sortDeaths,
-                                    sortRecovered: false
-                                })}>DTHS
-                            <span className="material-icons" style={{ fontSize: '11px' }}>
-                                        {this.state.sortDeaths ? 'arrow_downward' : 'arrow_upward'}
+                                    </th>
+                                    <th onClick={() => this.setState({
+                                        sortState: false,
+                                        sortConfirmed: false,
+                                        sortActive: false,
+                                        sortDeaths: false,
+                                        sortRecovered: !this.state.sortRecovered
+                                    })}>RECVRD
+                            <span className="material-icons" style={{
+                                            fontSize: '11px',
+                                            transform: `${this.state.sortRecovered ? 'rotate(180deg)' : 'none'}`,
+                                            transition: 'transform 0.2s ease-in-out'
+                                        }}>
+                                            arrow_upward
+                                        </span>
+                                    </th>
+                                    <th onClick={() => this.setState({
+                                        sortState: false,
+                                        sortConfirmed: false,
+                                        sortActive: false,
+                                        sortDeaths: !this.state.sortDeaths,
+                                        sortRecovered: false
+                                    })}>DTHS
+                            <span className="material-icons" style={{
+                                            fontSize: '11px',
+                                            transform: `${this.state.sortDeaths ? 'rotate(180deg)' : 'none'}`,
+                                            transition: 'transform 0.2s ease-in-out'
+                                        }}>
+                                            arrow_upward
                                     </span>
-                                </th>
-                                <th onClick={() => this.setState({
-                                    sortState: false,
-                                    sortConfirmed: false,
-                                    sortActive: !this.state.sortActive,
-                                    sortDeaths: false,
-                                    sortRecovered: false
-                                })}>ACTV
-                            <span className="material-icons" style={{ fontSize: '11px' }}>
-                                        {this.state.sortActive ? 'arrow_downward' : 'arrow_upward'}
+                                    </th>
+                                    <th onClick={() => this.setState({
+                                        sortState: false,
+                                        sortConfirmed: false,
+                                        sortActive: !this.state.sortActive,
+                                        sortDeaths: false,
+                                        sortRecovered: false
+                                    })}>ACTV
+                            <span className="material-icons" style={{
+                                            fontSize: '11px',
+                                            transform: `${this.state.sortActive ? 'rotate(180deg)' : 'none'}`,
+                                            transition: 'transform 0.2s ease-in-out'
+                                        }}>
+                                            arrow_upward
                                     </span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                this.state.stateData.map((obj, index) => {
-                                    return (
-                                        obj.confirmed !== 0 &&
-                                        <Fragment key={obj.state + "" + obj.confirmed}>
-                                            <tr
-                                                style={{ background: `${index % 2 !== 0 ? this.props.isDark ? '#1c1c1c' : '#eee' : ''}` }}
-                                                onClick={() => { this.setState({ clickedState: obj.state, isDistrictOpen: !this.state.isDistrictOpen }) }}
-                                            >
-                                                <td>
-                                                    <i className={`${this.state.isDistrictOpen &&
-                                                        this.state.clickedState === obj.state ? "fa fa-caret-down" :
-                                                        "fa fa-caret-right"}`}
-                                                        style={{
-                                                            fontWeight: 'bolder',
-                                                            fontSize: '17px',
-                                                            color: `${this.props.isDark ? 'aqua' : 'darkblue'}`
-                                                        }}
-                                                    ></i>
-                                                </td>
-                                                <td>{obj.state.toLowerCase().replace(/\b(\w)/g, x => { return (x.toUpperCase()) })}</td>
-                                                <td>
-                                                    <span style={{
-                                                    }}> <i style={{
-                                                        color: '#00b5ff',
-                                                        fontWeight: 'normal',
-                                                        fontSize: '12px',
-                                                        visibility: `${parseInt(obj.deltaconfirmed) > 0 ? 'visible' : 'hidden'}`,
-                                                    }} className="fa fa-arrow-up">
-                                                        </i>
-                                                    </span>
-                                                    {parseInt(obj.confirmed).toLocaleString('en-IN')}
-                                                </td>
-                                                <td>
-                                                    <span style={{
-                                                    }}> <i style={{
-                                                        color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? 'lightgreen' : 'green'}`,
-                                                        fontWeight: 'normal',
-                                                        fontSize: '12px',
-                                                        visibility: `${parseInt(obj.deltarecovered) > 0 ? 'visible' : 'hidden'}`,
-                                                    }} className="fa fa-arrow-up">
-                                                        </i>
-                                                    </span>
-                                                    {parseInt(obj.recovered).toLocaleString('en-IN')}</td>
-                                                <td>
-                                                    <span style={{
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    this.state.stateData.map((obj, index) => {
+                                        return (
+                                            obj.confirmed !== 0 &&
+                                            <Fragment key={obj.state + "" + obj.confirmed}>
+                                                <tr
+                                                    style={{
+                                                        background: `${this.props.location.state === obj.state ?
+                                                            this.props.isDark ? 'skyblue' : 'aqua' :
+                                                            index % 2 !== 0 ?
+                                                                this.props.isDark ? '#262529' : '#e4e0e0' : ''}`,
+                                                        color: `${this.props.location.state === obj.state && '#000'}`,
+                                                        fontWeight: `${this.props.location.state === obj.state && 'bold'}`
+                                                    }}
+                                                    onClick={() => { this.setState({ clickedState: obj.state, isDistrictOpen: !this.state.isDistrictOpen }) }}
+                                                >
+                                                    <td>
+                                                        <div>&nbsp;</div>
+                                                        <i className="fa fa-caret-right"
+                                                            style={{
+                                                                fontWeight: 'bolder',
+                                                                fontSize: '17px',
+                                                                color: `${this.props.isDark ? 'aqua' : 'darkblue'}`,
+                                                                transform: `${this.state.isDistrictOpen &&
+                                                                    this.state.clickedState === obj.state ? 'rotate(90deg)' : 'none'}`,
+                                                                transition: 'transform 0.2s ease-in-out'
+                                                            }}
+                                                        ></i>
+                                                    </td>
+                                                    <td>
+                                                        <div>&nbsp;</div>
+                                                        {obj.state.toLowerCase().replace(/\b(\w)/g, x => { return (x.toUpperCase()) })}
+                                                    </td>
+                                                    <td>
+                                                        <div style={{
+                                                        }}> <i style={{
+                                                            color: '#00b5ff',
+                                                            fontWeight: 'normal',
+                                                            fontSize: '12px',
+                                                            visibility: `${parseInt(obj.deltaconfirmed) > 0 ? 'visible' : 'hidden'}`,
+                                                        }} className="fa fa-arrow-up">
+                                                                {obj.deltaconfirmed}
+                                                            </i>
 
-                                                    }}> <i style={{
-                                                        color: 'red',
-                                                        fontWeight: 'normal',
-                                                        fontSize: '12px',
-                                                        visibility: `${parseInt(obj.deltadeaths) > 0 ? 'visible' : 'hidden'}`,
-                                                    }} className="fa fa-arrow-up">
-                                                        </i>
-                                                    </span>
-                                                    {parseInt(obj.deaths).toLocaleString('en-IN')}</td>
-                                                <td>{parseInt(obj.active).toLocaleString('en-In')}</td>
-                                            </tr>
-                                            <tr
-                                                className="district-data-div"
-                                                style={{
-                                                    background: `${this.props.isDark ? '#262626' : '#fff'}`,
-                                                    display: "none",
-                                                    WebkitTapHighlightColor: 'transparent'
-                                                }}
-                                                id={`data-${obj.state}`}
-                                            >
-                                                <td colSpan="5" className="full-width">
-                                                    <div style={{
-                                                        fontSize: '12px',
-                                                        textAlign: 'left', marginLeft: '18px',
-                                                        color: `${this.props.isDark ? 'lightgreen' : 'green'}`
-                                                    }}>Last Updated at {obj.lastupdatedtime}</div>
-                                                    <table className="internal-table">
-                                                        <thead>
-                                                            <tr className="label-div">
-                                                                <th style={{ visibility: 'hidden' }}></th>
-                                                                <th style={{
-                                                                    border: `0.4px solid ${this.props.isDark ? '#eee' : '#1c1c1c'}`,
-                                                                    borderRight: 'none'
-                                                                }}>District Name</th>
-                                                                <th style={{
-                                                                    border: `0.4px solid ${this.props.isDark ? '#eee' : '#1c1c1c'}`,
-                                                                    // borderLeft: 'none'
-                                                                }}
-                                                                    onClick={() => { this.setState({ sortDistrict: !this.state.sortDistrict }) }}
-                                                                >Infected <i
-                                                                    className={`fa ${this.state.sortDistrict ? 'fa-arrow-down' : 'fa-arrow-up'}`}></i>
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {
-                                                                this.props.districtDatas.filter(x =>
-                                                                    x.state.toLowerCase() === obj.state.toLowerCase()
-                                                                )[0].districtData.sort((x, y) => this.state.sortDistrict ? x.confirmed - y.confirmed : y.confirmed - x.confirmed).map(y => {
-                                                                    return (
-                                                                        <tr key={y.district + "" + y.confirmed} className="data-div" style={{ background: 'transparent' }}>
-                                                                            <td><i className="fa fa-angle-right"></i></td>
-                                                                            <td style={{ color: `${this.props.isDark ? '#fff' : '#222'}` }}>
-                                                                                {y.district}
-                                                                            </td>
-                                                                            <td style={{
-                                                                                color: `${this.props.isDark ? '#fff' : '#222'}`
-                                                                            }}
-                                                                            >
-                                                                                <span style={{
-                                                                                }}> <i style={{
-                                                                                    color: 'red',
-                                                                                    fontWeight: 'normal',
-                                                                                    fontSize: '12px',
-                                                                                    visibility: `${y.delta.confirmed > 0 ? 'visible' : 'hidden'}`,
-                                                                                }} className="fa fa-arrow-up">
-                                                                                        {y.delta.confirmed}</i>
-                                                                                </span>
-                                                                                <span
+                                                        </div>
+                                                        {parseInt(obj.confirmed).toLocaleString('en-IN')}
+                                                    </td>
+                                                    <td>
+                                                        <div style={{
+                                                        }}> <i style={{
+                                                            color: `${this.props.isDark ? 'lightgreen' : 'green'}`,
+                                                            fontWeight: 'normal',
+                                                            fontSize: '12px',
+                                                            visibility: `${parseInt(obj.deltarecovered) > 0 ? 'visible' : 'hidden'}`,
+                                                        }} className="fa fa-arrow-up">
+                                                                {obj.deltarecovered}
+                                                            </i>
+                                                        </div>
+                                                        {parseInt(obj.recovered).toLocaleString('en-IN')}</td>
+                                                    <td>
+                                                        <div style={{
+
+                                                        }}> <i style={{
+                                                            color: 'red',
+                                                            fontWeight: 'normal',
+                                                            fontSize: '12px',
+                                                            visibility: `${parseInt(obj.deltadeaths) > 0 ? 'visible' : 'hidden'}`,
+                                                        }} className="fa fa-arrow-up">
+                                                                {obj.deltadeaths}
+                                                            </i>
+                                                        </div>
+                                                        {parseInt(obj.deaths).toLocaleString('en-IN')}</td>
+                                                    <td>
+                                                        <div>&nbsp;</div>
+                                                        {parseInt(obj.active).toLocaleString('en-In')}
+                                                    </td>
+                                                </tr>
+                                                <tr
+                                                    className="district-data-div"
+                                                    style={{
+                                                        background: `${this.props.isDark ? 'transparent' : 'transparent'}`,
+                                                        display: "none",
+                                                        WebkitTapHighlightColor: 'transparent'
+                                                    }}
+                                                    id={`data-${obj.state}`}
+                                                >
+                                                    <td colSpan="5" className="full-width">
+                                                        <div style={{
+                                                            fontSize: '12px',
+                                                            textAlign: 'left', marginLeft: '18px',
+                                                            color: `${this.props.isDark ? 'lightgreen' : 'green'}`
+                                                        }}>Last Updated at {obj.lastupdatedtime}</div>
+                                                        <table className="internal-table">
+                                                            <thead>
+                                                                <tr className="label-div" style={{ background: `${this.props.isDark ? 'rgba(50,58,70)' : '#ccc'}` }} >
+                                                                    <th style={{ visibility: 'hidden' }}></th>
+                                                                    <th style={{
+                                                                        // border: `0.4px solid ${this.props.isDark ? '#eee' : '#262529'}`,
+                                                                        borderRight: 'none'
+                                                                    }}>DISTRICT</th>
+                                                                    <th style={{
+                                                                        // border: `0.4px solid ${this.props.isDark ? '#eee' : '#262529'}`,
+                                                                        // borderLeft: 'none'
+                                                                    }}
+                                                                        onClick={() => { this.setState({ sortDistrictConf: !this.state.sortDistrictConf }) }}
+                                                                    >INFCTD <i
+                                                                        className=" fa fa-arrow-up"
+                                                                        style={{
+                                                                            transform: `${this.state.sortDistrictConf ? 'rotate(180deg)' : 'none'}`,
+                                                                            transition: 'transform 0.2s ease-in-out'
+                                                                        }}
+                                                                    ></i>
+                                                                    </th>
+                                                                    <th style={{
+                                                                        // border: `0.4px solid ${this.props.isDark ? '#eee' : '#262529'}`,
+                                                                        // borderLeft: 'none'
+                                                                    }}
+                                                                    // onClick={() => { this.setState({ sortDistrict: !this.state.sortDistrict }) }}
+                                                                    >RECVRD
+                                                                {/* <i className={`fa ${this.state.sortDistrict ? 'fa-arrow-down' : 'fa-arrow-up'}`}></i> */}
+                                                                    </th>
+                                                                    <th style={{
+                                                                        // border: `0.4px solid ${this.props.isDark ? '#eee' : '#262529'}`,
+                                                                        // borderLeft: 'none'
+                                                                    }}
+                                                                    // onClick={() => { this.setState({ sortDistrictConf: !this.state.sortDistrictConf }) }}
+                                                                    >DEATHS
+                                                                {/* <i className={`fa ${this.state.sortDistrictConf ? 'fa-arrow-down' : 'fa-arrow-up'}`}></i> */}
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {
+                                                                    this.state.districtData.filter(x =>
+                                                                        x.state.toLowerCase() === obj.state.toLowerCase()
+                                                                    )[0].districtData.sort((x, y) => this.state.sortDistrictConf ? x.confirmed - y.confirmed :
+                                                                        y.confirmed - x.confirmed).map((y, index) => {
+                                                                            return (
+                                                                                <tr key={y.district + "" + y.confirmed} className="data-div"
                                                                                     style={{
-                                                                                        paddingLeft: `${y.delta.confirmed < 9 ? '30px' :
-                                                                                            y.delta.confirmed > 9 && y.delta.confirmed < 99 ? '20px' : '17px'}`
+                                                                                        background: `${this.props.location.district === y.district ?
+                                                                                            'rgb(119, 156, 156)' : index % 2 !== 0 ? this.props.isDark ? '#262529' : '#e4e0e0' : 'transparent'}`,
+                                                                                        color: `${this.props.location.district === y.district && '#000 !important'}`,
+                                                                                        fontWeight: `${this.props.location.district === y.district && 'bold'}`,
+
                                                                                     }}>
-                                                                                    {y.confirmed.toLocaleString('en-IN')}</span>
-                                                                            </td>
-                                                                        </tr>
+                                                                                    <td style={{ background: `${this.props.isDark ? '#1e1d21' : '#ebebeb'}` }}>
+                                                                                        <div>&nbsp;</div><i className="fa fa-angle-right"></i>
+                                                                                    </td>
+                                                                                    <td style={{ color: `${this.props.isDark ? '#fff' : '#222'}` }}>
+                                                                                        <div>&nbsp;</div>{y.district}
+                                                                                    </td>
+                                                                                    <td style={{
+                                                                                        color: `${this.props.isDark ? '#fff' : '#222'}`
+                                                                                    }}
+                                                                                    >
+                                                                                        <div style={{
+                                                                                        }}> <i style={{
+                                                                                            color: '#00b5ff',
+                                                                                            fontWeight: 'normal',
+                                                                                            fontSize: '12px',
+                                                                                            visibility: `${y.delta.confirmed > 0 ? 'visible' : 'hidden'}`,
+                                                                                        }} className="fa fa-arrow-up">
+                                                                                                {y.delta.confirmed}</i>
+                                                                                        </div>
+                                                                                        <span
+                                                                                        // style={{
+                                                                                        //     paddingLeft: `${y.delta.confirmed < 9 ? '30px' :
+                                                                                        //         y.delta.confirmed > 9 && y.delta.confirmed < 99 ? '20px' : '17px'}`
+                                                                                        // }}
+                                                                                        >
+                                                                                            {y.confirmed.toLocaleString('en-IN')}</span>
+                                                                                    </td>
+                                                                                    <td style={{
+                                                                                        color: `${this.props.isDark ? '#fff' : '#222'}`
+                                                                                    }}
+                                                                                    >
+                                                                                        <div style={{
+                                                                                        }}> <i style={{
+                                                                                            color: `${this.props.isDark ? 'lightgreen' : 'green'}`,
+                                                                                            fontWeight: 'normal',
+                                                                                            fontSize: '12px',
+                                                                                            visibility: `${y.delta.recovered > 0 ? 'visible' : 'hidden'}`,
+                                                                                        }} className="fa fa-arrow-up">
+                                                                                                {y.delta.recovered}</i>
+                                                                                        </div>
+                                                                                        <span
+                                                                                        // style={{
+                                                                                        //     paddingLeft: `${y.delta.confirmed < 9 ? '30px' :
+                                                                                        //         y.delta.confirmed > 9 && y.delta.confirmed < 99 ? '20px' : '17px'}`
+                                                                                        // }}
+                                                                                        >
+                                                                                            {y.recovered.toLocaleString('en-IN')}</span>
+                                                                                    </td>
 
-                                                                    )
-                                                                })
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                    <div style={{
-                                                        color: 'skyblue',
-                                                        textAlign: 'left',
-                                                        marginLeft: '18px',
-                                                        fontSize: '11px'
-                                                    }}>*Details awaited for Unknown</div>
-                                                </td>
-                                            </tr>
-                                        </Fragment>
+                                                                                    <td style={{
+                                                                                        color: `${this.props.isDark ? '#fff' : '#222'}`
+                                                                                    }}
+                                                                                    >
+                                                                                        <div style={{
+                                                                                        }}> <i style={{
+                                                                                            color: 'red',
+                                                                                            fontWeight: 'normal',
+                                                                                            fontSize: '12px',
+                                                                                            visibility: `${y.delta.deceased > 0 ? 'visible' : 'hidden'}`,
+                                                                                        }} className="fa fa-arrow-up">
+                                                                                                {y.delta.deceased}</i>
+                                                                                        </div>
+                                                                                        <span
+                                                                                        // style={{
+                                                                                        //     paddingLeft: `${y.delta.confirmed < 9 ? '30px' :
+                                                                                        //         y.delta.confirmed > 9 && y.delta.confirmed < 99 ? '20px' : '17px'}`
+                                                                                        // }}
+                                                                                        >
+                                                                                            {y.deceased.toLocaleString('en-IN')}</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div>&nbsp;</div>
 
+                                                                                    </td>
+
+                                                                                </tr>
+
+                                                                            )
+                                                                        })
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                        <div style={{
+                                                            color: 'skyblue',
+                                                            textAlign: 'left',
+                                                            marginLeft: '18px',
+                                                            fontSize: '11px'
+                                                        }}>*Details awaited for Unknown</div>
+                                                    </td>
+                                                </tr>
+                                            </Fragment>
+
+                                        )
+                                    })
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    {/* <div className="zone-table">
+                        <table className="">
+                            <tr>
+                                <th></th>
+                                <th style={{
+                                    width: '100px'
+                                }}>District</th>
+                                <th>State</th>
+                                <th>Zone</th>
+                            </tr>
+                            {
+                                this.state.zoneData && this.state.zoneData.map(x => {
+                                    return (
+                                        <tr>
+                                            <td>
+                                                <i className="fa fa-caret-right"></i>
+                                            </td>
+                                            <td style={{
+                                                width: '100px'
+                                            }} >{x.district}</td>
+                                            <td>{x.state}</td>
+                                            <td>{x.zone}</td>
+                                        </tr>
                                     )
                                 })
                             }
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                        </table>
+                    </div> */}
+                </div >
+            </div >
 
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        location: state.users.location
+    }
+}
 
-export default StateTable
+export default connect(mapStateToProps, null)(StateTable)

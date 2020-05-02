@@ -1,8 +1,11 @@
 import React, { Component, Fragment, createRef } from 'react'
-import Switch from 'react-switch'
+// import Switch from 'react-switch'
 import logo from '../img/Logo.png'
 import { Link } from 'react-router-dom'
 import '../css/header.css'
+// import sun from '../img/sun.png'
+import { connect } from 'react-redux'
+import { switchDarkMode } from './redux/darkModeReducer'
 
 import styled from 'styled-components';
 
@@ -13,7 +16,7 @@ class Header extends Component {
         super(props)
 
         this.state = {
-            switched: true,
+            switched: props.isDark,
             isStandalone: false,
             open: false
         }
@@ -31,6 +34,7 @@ class Header extends Component {
 
     }
     componentDidMount() {
+        // console.log(this.props.isDark)
         let btn = document.getElementById("add-to-homescreen")
         window.addEventListener('beforeinstallprompt', (event) => {
             btn.addEventListener('click', () => {
@@ -66,7 +70,9 @@ class Header extends Component {
         if (prevState.switched !== this.state.switched) {
             localStorage.setItem('ncovindia_isDark', '' + this.state.switched)      //To synchronize the theme between the pages
             // alert(localStorage.getItem('ncovindia_isDark'))
-            this.props.isDarkCallBack(this.state.switched)
+            this.props.switchDarkMode(!prevState.switched)
+            // console.log(this.props.isDark)
+            // this.props.isDarkCallBack(this.state.switched)
         }
     }
 
@@ -170,25 +176,39 @@ class Header extends Component {
 
                         <div id='mobileMenu'>
                             <ul className='navbar-2'>
-                                <li style={{ paddingRight: "25px" }}>
-                                    <span style={{ paddingRight: '8px', cursor: 'pointer' }}
+                                <li style={{ cursor: 'pointer' }}>
+                                    <span style={{ cursor: 'pointer' }}
                                         className="material-icons"
                                         id="add-to-homescreen"
                                         ref={this.btnRef}
                                         //eslint-disable-next-line
-                                        style={{ display: `${this.state.isStandalone ? 'none' : 'inline-block'}`, fontSize: '30px' }}
+                                        style={{ display: `${this.state.isStandalone ? 'none' : 'inline-block'}`, fontSize: '28px' }}
                                     >
                                         add_to_home_screen
                                     </span>
                                 </li>
-                                <li id="pc-dark-mode" style={{ paddingRight: "30px" }}>
-                                    <span style={{ marginRight: "0px", fontSize: "15px" }}>Dark Mode</span>
+                                <li id="pc-dark-mode"
+                                    onClick={() => this.setState({ switched: !this.state.switched })}
+                                    style={{}}>
+                                    <i className={`fa ${this.state.switched ? 'fa-sun-o' : 'fa-moon-o'}`}
+                                        style={{
+                                            color: `${this.state.switched ? 'yellow' : '#fff'}`,
+                                            fontSize: '28px',
+                                            cursor: 'pointer',
+                                            transform: 'rotate(360deg)',
+                                            transition: 'transform 0.3s ease-in-out'
+                                            // display: `${this.state.switched ? 'none' : 'inline-block'}`
+                                        }}
+                                    ></i>
+                                    {/* <img src={sun} style={{ display: `${this.state.switched ? 'inline-block' : 'none'}` }} alt="" /> */}
+
+                                    {/* <span style={{ marginRight: "0px", fontSize: "15px" }}>Dark Mode</span>
                                     <Switch onChange={this.toggleSwitch}
                                         checked={this.state.switched && localStorage.getItem('ncovindia_isDark') === 'true'}
                                         className="react-switch"
                                         height={21}
                                         width={40}
-                                    />
+                                    /> */}
                                 </li>
 
                             </ul>
@@ -210,16 +230,27 @@ class Header extends Component {
                     </div>
                     <StyledMenu open={this.state.open} >
                         <ul className="navbar">
-                            <li><Link to="/"><span
-                                // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
-                                className="material-icons navbar-icons">
-                                home</span><span> Home</span></Link></li>
-                            <li><Link to="/about-corona"><span
-                                // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
-                                className="material-icons navbar-icons">
-                                info
+                            <li style={{
+                                background: `${window.location.pathname === "/" ? this.state.switched ? '#2f2f33' : 'rgb(96, 183, 232)' : ''}`,
+                                borderLeft: `${window.location.pathname === "/" && '0.05px solid red'}`
+                            }}>
+                                <Link to="/"><span
+                                    // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
+                                    className="material-icons navbar-icons">
+                                    home</span><span> Home</span></Link></li>
+                            <li style={{
+                                background: `${window.location.pathname === "/about-corona" ? this.state.switched ? '#2f2f33' : 'rgb(96, 183, 232)' : ''}`,
+                                borderLeft: `${window.location.pathname === "/about-corona" && '0.05px solid red'}`
+                            }}>
+                                <Link to="/about-corona"><span
+                                    // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
+                                    className="material-icons navbar-icons">
+                                    info
                             </span><span> About Corona</span> </Link></li>
-                            <li>
+                            <li style={{
+                                background: `${window.location.pathname === "/corona-patients-in-world" ? this.state.switched ? '#2f2f33' : 'rgb(96, 183, 232)' : ''}`,
+                                borderLeft: `${window.location.pathname === "/corona-patients-in-world" && '0.05px solid red'}`
+                            }}>
                                 <Link to="/corona-patients-in-world"><span
                                     // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
                                     className="material-icons navbar-icons">
@@ -227,7 +258,11 @@ class Header extends Component {
                             </span><span> World Data</span>
                                 </Link>
                             </li>
-                            <li>
+                            <li style={{
+                                background: `${window.location.pathname === "/compare-corona-records-of-different-countries" ?
+                                    this.state.switched ? '#2f2f33' : 'rgb(96, 183, 232)' : ''}`,
+                                borderLeft: `${window.location.pathname === "/compare-corona-records-of-different-countries" && '0.05px solid red'}`
+                            }}>
                                 <Link to="/compare-corona-records-of-different-countries"><span
                                     // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
                                     className="material-icons navbar-icons">
@@ -235,12 +270,18 @@ class Header extends Component {
                             </span><span> Compare Data</span>
                                 </Link>
                             </li>
-                            <li> <Link to="/donate"><span
+                            <li style={{
+                                background: `${window.location.pathname === "/donate" ? this.state.switched ? '#2f2f33' : 'rgb(96, 183, 232)' : ''}`,
+                                borderLeft: `${window.location.pathname === "/donate" && '0.05px solid red'}`
+                            }}> <Link to="/donate"><span
                                 // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
                                 className="material-icons navbar-icons">
                                 account_balance_wallet
                             </span><span>  Donate</span> </Link></li>
-                            <li id="mob-dark-mode">
+                            {/* <li id="mob-dark-mode" style={{
+                                padding: `6px ${this.state.switched ? '23px' : '20px'}`
+                            }}>
+                                <i className={`fa ${this.state.switched ? 'fa-moon-o' : 'fa-sun-o'}`}></i>
                                 <span style={{
                                     marginRight: "0px", paddingRight: "4px",
                                     color: '#fff',
@@ -253,7 +294,7 @@ class Header extends Component {
                                     width={40}
                                 />
 
-                            </li>
+                            </li> */}
 
                         </ul>
                     </StyledMenu>
@@ -264,4 +305,16 @@ class Header extends Component {
     }
 }
 
-export default Header
+const mapStateToProps = state => {
+    return {
+        isDark: state.theme.isDark
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        switchDarkMode: mode => dispatch(switchDarkMode(mode))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

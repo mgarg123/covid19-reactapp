@@ -153,7 +153,11 @@ class DailyTrends extends Component {
         //console.log(this.state.confirmeds);
 
         return (
-            <div className="daily-trend-container" style={{ width: `${this.props.width !== undefined && this.props.width}` }}>
+            <div className="daily-trend-container" style={{
+                width: `${this.props.width !== undefined ? this.props.width :
+                    window.screen.width > 767 ? '50%' : '100%'
+                    }`
+            }}>
                 <span style={{
                     textAlign: 'center',
                     color: `${this.props.isDark ? '#fff' : '#2d2d2d'}`,
@@ -161,7 +165,7 @@ class DailyTrends extends Component {
                     fontSize: '20px',
                     fontWeight: 'bold'
                 }}>Daily Spread Trends</span>
-                <div className="daily-trends">
+                <div className="daily-trends" style={{ background: `${this.props.isDark ? '#262529' : '#fff'}` }}>
                     {/* <div className="buttons-left" style={{ border: '1px solid red' }}>
                         
                     </div> */}
@@ -179,7 +183,7 @@ class DailyTrends extends Component {
                         options={{
                             chart: {
                                 zoomType: 'xy',
-                                backgroundColor: `${this.props.isDark ? 'transparent' : '#fff'}`,
+                                backgroundColor: `${this.props.isDark ? '#262529' : '#fff'}`,
                             },
                             credits: {
                                 enabled: false

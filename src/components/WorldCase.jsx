@@ -10,7 +10,8 @@ export class WorldCase extends Component {
 
         this.state = {
             worldStats: {},
-            lastUpdated: ''
+            lastUpdated: '',
+            todayDelta: {}
         }
     }
 
@@ -61,24 +62,35 @@ export class WorldCase extends Component {
             }
 
             this.setState({ worldStats: data })
-        }).catch(error => console.log(error.message))
+        }).catch(error => console.log(error.message));
+
+        axios.get("https://api.covid19api.com/summary").then(response => {
+            let data = response.data
+            let obj = {
+                todayConfirmed: data.Global.NewConfirmed,
+                todayDeaths: data.Global.NewDeaths,
+                todayRecovered: data.Global.NewRecovered,
+            }
+            this.setState({ todayDelta: obj })
+
+        }).catch(error => console.log(error.message));
     }
 
     render() {
         return (
             <div className='world-cases' style={{
-                background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`,
-                color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#222'}`
+                background: `${this.props.isDark ? '#262626' : '#fff'}`,
+                color: `${this.props.isDark ? '#fff' : '#222'}`
             }}>
                 <div className='wc-container'>
                     <div className='last-updated-wc'
-                        style={{ color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? 'skyblue' : 'red'}` }}>
+                        style={{ color: `${this.props.isDark ? 'skyblue' : 'red'}` }}>
                         <span>Last Updated {this.state.lastUpdated} Ago</span>
                     </div>
                     <div className='world-cases-main'
-                        style={{ border: ` 0.5px solid ${localStorage.getItem('ncovindia_isDark') === 'true' ? '#1c1c1c' : '#eee'}` }}>
+                        style={{ border: ` 0.5px solid ${this.props.isDark ? '#1c1c1c' : '#eee'}` }}>
 
-                        <div className='world-case-cont' style={{ background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#323a46' : '#fff'}` }}>
+                        <div className='world-case-cont' style={{ background: `${this.props.isDark ? '#262529' : '#fff'}` }}>
                             <div className='wc-title'><span>Infected</span></div>
 
                             {
@@ -93,13 +105,21 @@ export class WorldCase extends Component {
                                                 this.props.countryStat.confirmed.toLocaleString('en-IN')
                                                 : this.state.worldStats.cases.toLocaleString('en-IN')}</span>
                                         </div>
+                                        <div className="today-delta"
+                                            style={{
+                                                color: `${this.props.isDark ? 'rgb(125, 221, 189)' : 'rgb(34, 143, 106)'}`,
+                                                padding: '20px 0px 20px 0px'
+                                            }}
+                                        >{`${this.props.todayStats !== undefined ? "+" + this.props.todayStats.todayConfirmed + " today" :
+                                            this.state.todayDelta.todayConfirmed !== undefined ? '+' + (this.state.todayDelta.todayConfirmed.toLocaleString('en-IN')) + ' today' : ''}`}
+                                        </div>
                                     </Fragment>
 
                             }
 
                             <div className='wc-hr'><hr style={{ background: 'rgb(1, 176, 230)' }} /></div>
                         </div>
-                        <div className='world-case-cont ' style={{ background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#323a46' : '#fff'}` }}>
+                        <div className='world-case-cont ' style={{ background: `${this.props.isDark ? '#262529' : '#fff'}` }}>
                             <div className='wc-title'><span>Recovered</span></div>
 
                             {
@@ -116,12 +136,20 @@ export class WorldCase extends Component {
                                                 this.props.countryStat.recovered.toLocaleString('en-IN')
                                                 : this.state.worldStats.recovered.toLocaleString('en-IN')}</span>
                                         </div>
+                                        <div className="today-delta"
+                                            style={{
+                                                color: `${this.props.isDark ? 'rgb(125, 221, 189)' : 'rgb(34, 143, 106)'}`,
+                                                padding: '20px 0px 20px 0px'
+                                            }}
+                                        >{`${this.props.todayStats !== undefined ? '' :
+                                            this.state.todayDelta.todayRecovered !== undefined ? '+' + (this.state.todayDelta.todayRecovered.toLocaleString('en-IN')) + ' today' : ''}`}
+                                        </div>
                                     </Fragment>
 
                             }
                             <div className='wc-hr'><hr style={{ background: 'rgb(42, 180, 7)' }} /></div>
                         </div>
-                        <div className='world-case-cont' style={{ background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#323a46' : '#fff'}` }}>
+                        <div className='world-case-cont' style={{ background: `${this.props.isDark ? '#262529' : '#fff'}` }}>
                             <div className='wc-title'><span>Deaths</span></div>
 
                             {
@@ -137,12 +165,20 @@ export class WorldCase extends Component {
                                                 this.props.countryStat.deaths.toLocaleString('en-IN')
                                                 : this.state.worldStats.deaths.toLocaleString('en-IN')}</span>
                                         </div>
+                                        <div className="today-delta"
+                                            style={{
+                                                color: `${this.props.isDark ? 'rgb(125, 221, 189)' : 'rgb(34, 143, 106)'}`,
+                                                padding: '20px 0px 20px 0px'
+                                            }}
+                                        >{`${this.props.todayStats !== undefined ? "+" + this.props.todayStats.todayDeaths + " today" :
+                                            this.state.todayDelta.todayDeaths !== undefined ? '+' + (this.state.todayDelta.todayDeaths.toLocaleString('en-IN')) + ' today' : ''}`}
+                                        </div>
                                     </Fragment>
 
                             }
                             <div className='wc-hr'><hr style={{ background: 'rgb(255, 0, 0)' }} /></div>
                         </div>
-                        <div className='world-case-cont' style={{ background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#323a46' : '#fff'}` }}>
+                        <div className='world-case-cont' style={{ background: `${this.props.isDark ? '#262529' : '#fff'}` }}>
                             <div className='wc-title'><span>Active</span></div>
 
                             {
@@ -160,6 +196,13 @@ export class WorldCase extends Component {
                                                 this.props.countryStat.active.toLocaleString('en-IN')
                                                 : (this.state.worldStats.cases - (this.state.worldStats.deaths + this.state.worldStats.recovered)).toLocaleString('en-IN')}
                                             </span>
+                                        </div>
+                                        <div className="today-delta"
+                                            style={{
+                                                color: `${this.props.isDark ? 'rgb(125, 221, 189)' : 'rgb(34, 143, 106)'}`,
+                                                padding: '20px 0px 20px 0px',
+                                            }}
+                                        >{''}
                                         </div>
                                     </Fragment>
 

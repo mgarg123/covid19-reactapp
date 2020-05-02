@@ -5,13 +5,13 @@ import Header from './Header'
 import Footer from './Footer'
 import axios from 'axios'
 import WorldCase from './WorldCase'
+import { connect } from 'react-redux'
 
 class CountryData extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            isDark: true,
             //labels: [],
             //confirmeds: []
             // labels: this.props.countryStateData.labels,
@@ -33,9 +33,6 @@ class CountryData extends Component {
         // setGraphsClicked(isGraphs)
     }
 
-    isDarkModeActive = (isDark) => {
-        this.setState({ isDark: isDark })
-    }
 
     componentDidMount() {
         const { match: { params } } = this.props
@@ -56,6 +53,7 @@ class CountryData extends Component {
             let labels = cData.map(x => x.date.split("-")[2] + " " + monthName[parseInt(x.date.split("-")[1]) - 1])
             let recover = cData.map(x => x.recovered)
 
+
             //Setting up statistics
             let cntryStat = {
                 confirmed: cData[cData.length - 1].confirmed,
@@ -65,7 +63,8 @@ class CountryData extends Component {
                 deathRate: ((cData[cData.length - 1].deaths / cData[cData.length - 1].confirmed) * 100).toPrecision(3) + "%",
                 recoveryRate: ((cData[cData.length - 1].recovered / cData[cData.length - 1].confirmed) * 100).toPrecision(3) + "%",
                 activeRate: (((cData[cData.length - 1].confirmed - (cData[cData.length - 1].deaths + cData[cData.length - 1].recovered)) /
-                    cData[cData.length - 1].confirmed) * 100).toPrecision(3) + "%"
+                    cData[cData.length - 1].confirmed) * 100).toPrecision(3) + "%",
+
             }
 
             this.setState({ countryStat: cntryStat })
@@ -96,7 +95,24 @@ class CountryData extends Component {
             // console.log(this.state.confirmed);
             // console.log(this.state.labels);
 
-        }).catch(error => console.log(error.message))
+        }).catch(error => console.log(error.message));
+
+        //Today Stats Country Wise
+        axios.get('http://api.coronastatistics.live/countries/' + params.countryname.replace('-', ' ')).then(response => {
+            let data2 = response.data
+            var todayDeaths = data2.todayDeaths
+            var todayCases = data2.todayCases
+
+            let todayDelta = {
+                todayDeaths: todayDeaths,
+                todayConfirmed: todayCases
+            }
+
+            this.setState({
+                todayDeltaCountry: todayDelta
+            })
+
+        }).catch(error => console.log(error.message));
 
     }
 
@@ -105,16 +121,16 @@ class CountryData extends Component {
 
         return (
             <Fragment>
-                <Header isDarkCallBack={this.isDarkModeActive} isSwitched={localStorage.getItem('ncovindia_isDark') === 'true'} />
+                <Header />
                 {/* <HeaderTab tabs={["Stats", "Graphs"]} tabClickedCallBack={this.whichTab} /> */}
                 <div className='cd-country-name' style={{
                     marginTop: '-10px', width: '100%',
                     textAlign: 'center',
                     paddingBottom: '15px',
-                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`
+                    background: `${this.props.isDark ? '#1e1d21' : '#fff'}`
                 }}>
                     <span style={{
-                        color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#222'}`,
+                        color: `${this.props.isDark ? '#fff' : '#222'}`,
                         fontSize: '23px',
                         fontWeight: 'bold',
                         letterSpacing: '0.6px',
@@ -129,12 +145,12 @@ class CountryData extends Component {
                         display: "flex",
                         flexDirection: `${window.screen.width <= 767 ? 'column' : 'row'}`,
                         width: '100%',
-                        background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`
+                        background: `${this.props.isDark ? '#1e1d21' : '#fff'}`
                     }}
                 >
-                    <WorldCase countryStat={this.state.countryStat} />
+                    <WorldCase countryStat={this.state.countryStat} todayStats={this.state.todayDeltaCountry} isDark={this.props.isDark} />
                     <CountryDailyTrends
-                        isDark={this.state.isDark}
+                        isDark={this.props.isDark}
                         labels={this.state.labels}
                         confirmed={this.state.confirmed}
                         apiresponseData={this.state.apiresponseData}
@@ -143,20 +159,26 @@ class CountryData extends Component {
                 </div>
                 <div className="cd-dvr" style={{
                     width: '100%',
-                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`,
+                    background: `${this.props.isDark ? '#1e1d21' : '#fff'}`,
                     display: 'flex',
                     justifyContent: 'center'
                 }}>
-                    <DeathVsRecovered isDark={this.state.isDark}
+                    <DeathVsRecovered isDark={this.props.isDark}
                         margin={'52px'}
                         labels={this.state.labels}
                         deaths={this.state.deaths}
                         recover={this.state.recover} />
                 </div>
-                <Footer isDark={this.state.isDark} />
+                <Footer isDark={this.props.isDark} />
             </Fragment>
         )
     }
 }
 
-export default CountryData
+const mapStateToProps = state => {
+    return {
+        isDark: state.theme.isDark
+    }
+}
+
+export default connect(mapStateToProps, null)(CountryData)

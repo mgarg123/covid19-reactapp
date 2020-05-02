@@ -17,16 +17,20 @@ export class DeathVsRecovered extends Component {
 
     render() {
         return (
-            <div className="death-rec-container" style={{ marginBottom: `${this.props.margin ? this.props.margin : '0px'}` }}>
+            <div className="death-rec-container" style={{
+                marginBottom: `${this.props.margin ? this.props.margin : '0px'}`,
+                width: `${this.props.width !== undefined ? window.screen.width > 767 ? '100%' : this.props.width : window.screen.width > 767 ? '50%' : '100%'}`
+            }}>
                 <div id="death-rec-title" style={{
                     textAlign: "center",
                     color: `${this.props.isDark ? '#fff' : '#2d2d2d'}`,
                     fontSize: '20px',
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+
                 }}>
-                    <span > Daily Deaths Vs Recovered</span>
+                    <span > {this.props.country !== undefined ? this.props.country : 'Daily Deaths Vs Recovered'}</span>
                 </div>
-                <div className="death-vs-rec">
+                <div className="death-vs-rec" style={{ backgroundColor: `${this.props.isDark ? '#262529' : '#fff'}` }}>
                     <div className="buttons" style={{ marginTop: '10px' }}>
                         <button onClick={() => this.setState({ toggleRecovered: !this.state.toggleRecovered })} id="week">Toggle Recovered</button>
                         <button onClick={() => this.setState({ toggleDeath: !this.state.toggleDeath })} id="month">Toggle Death</button>
@@ -37,7 +41,7 @@ export class DeathVsRecovered extends Component {
                         options={{
                             chart: {
                                 zoomType: 'xy',
-                                backgroundColor: `${this.props.isDark ? 'transparent' : '#fff'}`,
+                                backgroundColor: `${this.props.isDark ? '#262529' : '#fff'}`,
                             },
                             credits: {
                                 enabled: false

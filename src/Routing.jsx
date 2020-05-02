@@ -10,6 +10,14 @@ import ScrollMemory from 'react-router-scroll-memory'
 import ReactGA from 'react-ga'
 import Donate from './components/Donate'
 import CompareRecords from './components/CompareRecords'
+import StatesDashboard from './components/StatesDashboard'
+// import store from '../src/components/redux/store'
+// import { Provider } from 'react-redux'
+import { connect } from 'react-redux'
+import { usersLocation } from './components/redux/usersReducer'
+
+
+// const WorldData = lazy(() => import('../src/components/WorldData'))
 
 
 export class Routing extends Component {
@@ -24,7 +32,8 @@ export class Routing extends Component {
             // recover: [],
             // deaths: [],
             indiaStat: {},
-            indiaConfirmed: ''
+            indiaConfirmed: '',
+            userLocation: {}
         }
     }
 
@@ -34,8 +43,6 @@ export class Routing extends Component {
         //Initializing Google Analytics
         ReactGA.initialize('UA-155988779-1')
 
-
-        localStorage.setItem('ncovindia_isDark', 'true')        //Set theme initially to Dark Mode
 
         // //IP Address to Country Name using ipinfo API
         // axios.get('https://ipinfo.io?token=d67524c3026916').then(response => {
@@ -61,24 +68,61 @@ export class Routing extends Component {
 
         }).catch(error => console.log(error.message))
 
-        // //Updating India Data in the list
-        // let url1 = "https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise"
-        // axios.get(url1).then(response => {
-        //     var data = response.data.data
 
-        //     let conf = data.total.confirmed
-        //     let rec = data.total.recovered
-        //     let death = data.total.deaths
-        //     let act = data.total.active
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                console.log(position.coords.latitude + " " + position.coords.longitude);
+                let latitude = position.coords.latitude
+                let longitude = position.coords.longitude
 
-        //     let stat = {
-        //         confirmed: conf,
-        //         recovered: rec,
-        //         deaths: death,
-        //         active: act
-        //     }
-        //     this.setState({ indiaStat: stat })
-        // }).catch(error => console.log(error.message))
+                let url = "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + latitude + "&longitude=" + longitude + "&localityLanguage=en"
+                axios.get(url).then(response => {
+                    let data = response.data
+                    // console.log(data);
+                    let countryName = data.countryName
+                    let stateName = data.principalSubdivision
+                    let districtName = data.localityInfo["administrative"][2].name.split(" ")[0]
+                    // alert(stateName + " " + districtName)
+
+                    localStorage.setItem('ncovindia_usersCountry', countryName)
+                    localStorage.setItem('ncovindia_usersState', stateName)   //Setting User's State Name to Local Storage
+                    localStorage.setItem('ncovindia_usersCity', districtName)   //Setting User's City Name to Local Storage
+
+                    //Setting location values to Redux State
+                    this.props.usersLocation({
+                        country: countryName,
+                        state: stateName,
+                        district: districtName
+                    })
+                    // this.setState({ userCountry: countryName })
+                })
+            }, (error) => {
+                // alert(error.message)
+                if (error.code === error.PERMISSION_DENIED) {
+                    //IP to Country and State Name
+                    axios.get('https://ipapi.co/json').then(response => {
+                        let data = response.data
+                        let countryName = data.country_name
+                        let stateName = data.region
+                        let cityName = data.city
+
+                        localStorage.setItem('ncovindia_usersCountry', countryName)   //Setting User's Country Name to Local Storage
+                        localStorage.setItem('ncovindia_usersState', stateName)   //Setting User's State Name to Local Storage
+                        localStorage.setItem('ncovindia_usersCity', cityName)   //Setting User's City Name to Local Storage
+                        //Setting location values to Redux State
+                        this.props.usersLocation({
+                            country: countryName,
+                            state: stateName,
+                            district: cityName
+                        })
+                        // this.setState({ userCountry: countryName })
+
+                    }).catch(error => console.log(error.message));
+
+                }
+            })
+        }
+
 
 
         let url = "https://pomber.github.io/covid19/timeseries.json"
@@ -87,75 +131,12 @@ export class Routing extends Component {
 
         axios.get(url).then(response => {
             let data = response.data
-            // let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-            // //console.log(data);
-
-            // let cData = [];
-            // var countryData = [];
             var worldData = data;
 
-            // if (currentURL.indexOf('china') !== -1) {
-            //     cData = data.China;
-            //     countryData = data.China;
-            // }
-            // if (currentURL.indexOf('italy') !== -1) {
-            //     cData = data.Italy;
-            //     countryData = data.Italy;
-            // }
-            // if (currentURL.indexOf('spain') !== -1) {
-            //     cData = data.Spain;
-            //     countryData = data.Spain;
-            // }
-            /*if (this.props.country === "china") {
-                cData = data.China;
-                countryData = data.China;
-                //console.log(cData);
-                
-            } else if (this.props.country === "spain") {
-                cData = data.Spain;
-                countryData = data.Spain;
-            } else {
-                cData = data.Italy;
-                countryData = data.Italy;
-            }*/
-
-            // let labels = cData.map(x => x.date.split("-")[2] + " " + monthName[parseInt(x.date.split("-")[1]) - 1])
-            // let recover = cData.map(x => x.recovered)
-            //let deaths = cData.map(x => x.deaths)
-            //let confirmed = cData.map(x => x.deaths)
-            //let confirmed = cData.map(x => x.deaths)
-            // var previousCount = 0;
-            // var count = 0;
-            // var DailyConfirmedCases = 0;
-            // var DailyDeathRecords = 0;
-            // var confirmed = [];
-            // var deaths = [];
-            // cData.map(function (confirmedDatas) {
-            //     previousCount = count - 1;
-            //     if (previousCount < 0) { previousCount = 0; }
-            //     count++;
-            //     if (previousCount == 0) {
-            //         DailyConfirmedCases = confirmedDatas.confirmed;
-            //         DailyDeathRecords = confirmedDatas.deaths;
-            //     } else {
-            //         DailyConfirmedCases = confirmedDatas.confirmed - cData[previousCount].confirmed;
-            //         DailyDeathRecords = confirmedDatas.deaths - cData[previousCount].deaths;
-            //     }
-            //     confirmed.push(DailyConfirmedCases);
-            //     deaths.push(DailyDeathRecords);
-            // });
-
             this.setState({
-                // labels: labels,
-                // confirmed: confirmed,
-                // deaths: deaths,
-                // recover: recover,
-                // apiresponseData: countryData,
                 worldPatientsData: worldData
             })
-            // console.log(deaths)
-            // console.log(confirmed)
-            // console.log(recover)
+
         }).catch(error => console.log(error.message))
     }
 
@@ -164,6 +145,7 @@ export class Routing extends Component {
         //console.log('from routing');
         //console.log(this.state.worldData);
         return (
+
             <Router>
                 <ScrollMemory />        {/*Used to Restore Scroll */}
                 <Switch>
@@ -181,6 +163,7 @@ export class Routing extends Component {
                     <Route path='/compare-corona-records-of-different-countries'
                         render={(props) => <CompareRecords data={this.state.worldPatientsData} />}></Route>
                     <Route path='/donate'><Donate /></Route>
+                    <Route path='/state-data/:statename' component={StatesDashboard}></Route>
                     <Route component={Error404}></Route>
                 </Switch>
             </Router>
@@ -188,4 +171,15 @@ export class Routing extends Component {
     }
 }
 
-export default Routing
+const mapStateToProps = (state) => {
+    return {
+        location: state.users.location
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        usersLocation: location => dispatch(usersLocation(location))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Routing)

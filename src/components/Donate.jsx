@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import Footer from './Footer'
 import Header from './Header'
 import '../css/index.css'
+import { connect } from 'react-redux'
 
 export class Donate extends Component {
     constructor(props) {
@@ -10,8 +11,7 @@ export class Donate extends Component {
         this.state = {
             taglines: ["Donate for a good cause.", "Small charities can bring bigger impacts.", "Your healing begins with charity.",
                 "Be the change.", "Rebuilding lives for futures.", "Make someone’s life by giving of yours."],
-            currentTagline: "Donate for a good cause.",
-            isDark: true
+            currentTagline: "Donate for a good cause."
         }
     }
     componentDidMount() {
@@ -21,27 +21,23 @@ export class Donate extends Component {
         }, 4000)
     }
 
-    isDarkModeActive = (isDark) => {
-        this.setState({ isDark: isDark })
-    }
-
 
 
     render() {
         return (
             <Fragment>
-                <Header isDarkCallBack={this.isDarkModeActive} />
+                <Header />
                 <div className="donation-container" style={{
-                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ?
-                        '#262626' : '#fff'}`,
-                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ?
+                    background: `${this.props.isDark ?
+                        '#1e1d21' : '#fff'}`,
+                    color: `${this.props.isDark ?
                         '#fff' : '#222'}`,
                     paddingBottom: '60px'
                 }}>
 
                     <div className="donation-subcontainer">
                         <div className="taglines-container" style={{
-                            background: `linear-gradient(to right,${this.state.isDark ? '#007991, #78ffd6' : '#1A2980,#26D0CE'})`,
+                            background: `linear-gradient(to right,${this.props.isDark ? '#007991, #78ffd6' : '#1A2980,#26D0CE'})`,
 
                         }}>
                             <div className="taglines-box">
@@ -149,5 +145,10 @@ export class Donate extends Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        isDark: state.isDark
+    }
+}
 
-export default Donate
+export default connect(mapStateToProps, null)(Donate)

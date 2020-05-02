@@ -6,13 +6,14 @@ import Footer from './Footer'
 import WorldDataList from './WorldDataList'
 import '../css/world.css'
 import WorldCase from './WorldCase'
+import { connect } from 'react-redux'
 
 class WorldData extends Component {
     constructor(props) {
         super(props)
         //console.log(this.props);
         this.state = {
-            isDark: true,
+            isDark: props.isDark,
             countrySearchVal: '',
             patientsData: props.worldPatientsData,
             showData: [],
@@ -84,10 +85,6 @@ class WorldData extends Component {
         }
     }
 
-    isDarkModeActive = (isDark) => {
-        this.setState({ isDark: isDark })
-    }
-
     render() {
         // console.log(this.props.worldPatientsData);
         // var PatientsData = this.props.worldPatientsData;
@@ -126,16 +123,16 @@ class WorldData extends Component {
 
         return (
             <Fragment>
-                <Header isDarkCallBack={this.isDarkModeActive} />
+                <Header />
                 <div className="world-parent">
-                    <WorldCase />
+                    <WorldCase isDark={this.props.isDark} />
                     <div className="country-data"
                         style={{
                             display: "flex",
                             flexDirection: `column`,
-                            marginBottom: '10px',
-                            background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#262626' : '#fff'}`,
-                            color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#222'}`
+                            // marginBottom: '10px',
+                            background: `${this.props.isDark ? '#262626' : '#fff'}`,
+                            color: `${this.props.isDark ? '#fff' : '#222'}`
                         }}
                     >
                         <div className='search-country' style={{
@@ -153,8 +150,7 @@ class WorldData extends Component {
                                         height: '35px',
                                         padding: '8px 8px',
                                         border: 'none',
-                                        boxShadow: `1px 2px 8px 3px ${localStorage.getItem('ncovindia_isDark') === 'true' ?
-                                            'rgba(0,0,0,1)' : 'rgba(0,0,0,0.4)'}`,
+                                        boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.8' : '0.4'})`,
                                         borderRadius: '4px',
                                         fontSize: '17px'
                                     }}
@@ -163,7 +159,7 @@ class WorldData extends Component {
                             </div>
 
                         </div>
-                        <WorldDataList showData={this.state.showData} isDark={this.state.isDark} />
+                        <WorldDataList showData={this.state.showData} isDark={this.props.isDark} />
                     </div>
                 </div>
 
@@ -173,4 +169,10 @@ class WorldData extends Component {
     }
 }
 
-export default WorldData
+const mapStateToProps = state => {
+    return {
+        isDark: state.theme.isDark
+    }
+}
+
+export default connect(mapStateToProps, null)(WorldData)

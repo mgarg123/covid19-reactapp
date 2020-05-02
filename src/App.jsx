@@ -10,6 +10,7 @@ import '../src/css/plot.css'
 import Graphs from './components/Graphs'
 import Predictions from './components/Predictions'
 import Loader from './components/Loader'
+import { connect } from 'react-redux'
 // import { useSwipeable } from 'react-swipeable'
 // import SamplesTested from './components/SamplesTested'
 
@@ -30,9 +31,9 @@ function App(props) {
     const [districtDatas, setDistrictDatas] = useState([])
 
 
-    function isDarkModeActive(isDark) {
-        setDarkMode(isDark)
-    }
+    // function isDarkModeActive(isDark) {
+    //     setDarkMode(isDark)
+    // }
 
     function whichTab(isStat, isState, isGraphs) {
         setStatsClicked(isStat)
@@ -90,7 +91,8 @@ function App(props) {
                 }
             }
 
-            let obj = data.statewise[0]    //this obj has lastupdatedtime,deceaseddelta,confirmeddelta,reecovereddelta
+            //this obj has lastupdatedtime,deceaseddelta,confirmeddelta,reecovereddelta
+            let obj = data.statewise[0]
 
             //Setting up Last Updated Time
             let lastUpTime = obj.lastupdatedtime.split(" ")[1].split(":")
@@ -114,6 +116,8 @@ function App(props) {
             setStats(stat)
             setAffectedState(count)
             setStateData(statesData)
+            //Set State data to localStorage also
+            localStorage.setItem('ncovindia_stateData', JSON.stringify(statesData))
 
 
         }).catch(error => {
@@ -124,8 +128,28 @@ function App(props) {
         let url3 = "https://api.covid19india.org/v2/state_district_wise.json"
         axios.get(url3).then(response => {
             let data = response.data
+
+            // let url4 = "https://us-central1-ncovindias.cloudfunctions.net/app/covid-zones"
+
+            // axios.get(url4).then(response1 => {
+            //     let data2 = response1.data
+            //     let arr = []
+            //     for (let i in data2) {
+            //         for (let j in data2[i].districtData) {
+            //             let obj = data2[i].districtData[j]
+            //             obj.state = data2[i].state
+            //             arr.push(obj)
+            //         }
+            //     }
+            //     localStorage.setItem('ncovindia_zoneData', JSON.stringify(data2))
+            //     localStorage.setItem('ncovindia_zoneDataV2', JSON.stringify(arr))
+
+            // }).catch(error => console.log(error.message));
+
             setDistrictDatas(data)
 
+            //Setting District Data to LocalStorage
+            localStorage.setItem('ncovindia_districtData', JSON.stringify(data))
         }).catch(error => console.log(error.message))
 
 
@@ -179,10 +203,10 @@ function App(props) {
         <Fragment>
             <Suspense fallback={Loader}>
                 <div className="site-holder" style={{
-                    background: `${localStorage.getItem('ncovindia_isDark') === 'true' ? "#262626" : "#fff"}`,
-                    color: `${localStorage.getItem('ncovindia_isDark') === 'true' ? '#fff' : '#2d2d2d'}`
+                    background: `${props.isDark ? "#1e1d21" : "#ebebeb"}`,
+                    color: `${props.isDark ? '#fff' : '#2d2d2d'}`
                 }}>
-                    <Header isDarkCallBack={isDarkModeActive} />
+                    <Header />     {/*isDarkCallBack = { isDarkModeActive }*/}
                     <HeaderTab tabs={["Stats", "Lists", "Graphs", "Prediction"]}
                         tabClickedCallBack={whichTab}
                         statsSwiped={isStatsClicked}
@@ -192,27 +216,33 @@ function App(props) {
                     {
                         // <div {...handlers}>
 
-                        isStatsClicked ? <><CaseNumber isDark={localStorage.getItem('ncovindia_isDark') === 'true'}
+                        isStatsClicked ? <><CaseNumber isDark={props.isDark}
                             stats={stats} keyVals={keyValues}
                             lastUpdated={lastUpdated} /></> :
                             isStatewiseClicked ? <StateTable
                                 stateData={stateData}
                                 affectedState={affectedState}
                                 districtDatas={districtDatas}
-                                isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /> : isGraphsClicked ?
-                                    <Graphs isDark={localStorage.getItem('ncovindia_isDark') === 'true'} /> :
-                                    <Predictions isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />
+                                isDark={props.isDark}
+                            /> : isGraphsClicked ?
+                                    <Graphs isDark={props.isDark} /> :
+                                    <Predictions isDark={props.isDark} />
 
 
                         // </div>
 
                     }
-                    <Footer isDark={localStorage.getItem('ncovindia_isDark') === 'true'} />
+                    <Footer isDark={props.isDark} />
                 </div>
             </Suspense>
 
         </Fragment>
     )
 }
+const mapStateToProps = state => {
+    return {
+        isDark: state.theme.isDark
+    }
+}
 
-export default App
+export default connect(mapStateToProps, null)(App)

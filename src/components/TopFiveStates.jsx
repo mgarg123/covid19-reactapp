@@ -34,11 +34,14 @@ export class TopFiveStates extends Component {
     render() {
         return (
             <div className='top-five-container'>
-                <div className="tf-title"><span>Top 5 Affected States ({this.state.date})</span></div>
+                <div className="tf-title"><span>Top 5 Affected {this.props.topFiveDistrictData === undefined ? 'States' : 'Districts'} ({this.state.date})</span></div>
                 <div className="top-five-main">
-                    <table className='tfs-table'>
+                    <table className='tfs-table' style={{
+                        background: `${this.props.isDark ? '#1e1d21' : '#fff'}`,
+                        boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.4' : '0.16'})`
+                    }}>
                         <thead style={{
-                            background: `${localStorage.getItem('ncovindia_isDark') === 'true' ?
+                            background: `${this.props.isDark ?
                                 'rgb(50, 58, 70)' : 'rgb(208, 206, 206)'}`, fontWeight: 'bold'
                         }}>
                             <tr>
@@ -49,12 +52,12 @@ export class TopFiveStates extends Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.topFiveStates.map((obj, index) => {
+                                this.props.topFiveDistrictData === undefined ? this.state.topFiveStates.map((obj, index) => {
                                     return (
                                         <tr key={obj.state}
                                             style={{
                                                 background: `${index % 2 !== 0 ?
-                                                    localStorage.getItem('ncovindia_isDark') === 'true' ? '#1c1c1c' : '#eee' : ''}`
+                                                    this.props.isDark ? '#262529' : '#eee' : ''}`
                                             }}
                                         >
                                             <td>{index + 1}</td>
@@ -62,7 +65,21 @@ export class TopFiveStates extends Component {
                                             <td>{obj.deltaconfirmed}</td>
                                         </tr>
                                     )
-                                })
+                                }) :
+                                    this.props.topFiveDistrictData.map((obj, index) => {
+                                        return (
+                                            <tr key={obj.district}
+                                                style={{
+                                                    background: `${index % 2 !== 0 ?
+                                                        this.props.isDark ? '#262529' : '#eee' : ''}`
+                                                }}
+                                            >
+                                                <td>{index + 1}</td>
+                                                <td>{obj.district}</td>
+                                                <td>{obj.delta.confirmed}</td>
+                                            </tr>
+                                        )
+                                    })
                             }
 
                         </tbody>

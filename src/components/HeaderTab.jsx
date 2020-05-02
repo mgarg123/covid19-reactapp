@@ -93,7 +93,8 @@ export class HeaderTab extends Component {
                         background: `${this.state.isPredictionClicked || (this.props.graphsSwiped === false &&
                             this.props.statsSwiped === false && this.props.statewiseSwiped === false
                         ) ? "rgb(50, 58, 70)" : ""}`,
-                        display: `${this.props.tabs[3] !== undefined ? 'flex' : 'none'}`
+                        display: `${this.props.tabs[3] !== undefined ? 'flex' : 'none'}`,
+                        position: 'relative'
                     }}
                     onClick={() => this.setState({
                         isStatsClicked: false,

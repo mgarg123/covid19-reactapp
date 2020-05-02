@@ -27,7 +27,7 @@ export class CaseBoxDetails extends Component {
                     style={{
                         color: `${this.props.isDark ? 'rgb(125, 221, 189)' : 'rgb(34, 143, 106)'}`
                     }}
-                >{`${this.props.todayDelta !== undefined ? '+' + this.props.todayDelta + ' today' : ''}`}
+                >{`${this.props.todayDelta !== undefined ? '+' + parseInt(this.props.todayDelta).toLocaleString('en-IN') + ' today' : ''}`}
                 </div>
             </div>
         )
