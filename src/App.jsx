@@ -150,7 +150,7 @@ function App(props) {
 
             //Setting District Data to LocalStorage
             localStorage.setItem('ncovindia_districtData', JSON.stringify(data))
-        }).catch(err => console.log(err.message))
+        }).catch(error => console.log(error.message))
 
 
         return () => {
