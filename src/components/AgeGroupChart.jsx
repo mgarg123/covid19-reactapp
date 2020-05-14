@@ -3,6 +3,7 @@ import axios from 'axios'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
 import '../css/plot.css'
+import { Translation } from 'react-i18next'
 
 export class AgeGroupChart extends Component {
     constructor(props) {
@@ -59,7 +60,11 @@ export class AgeGroupChart extends Component {
                         paddingTop: '-8px',
                         fontSize: '20px',
                         fontWeight: 'bold'
-                    }}>Affected Age Groups</span>
+                    }}>
+                        <Translation>
+                            {t => t('Affected Age Groups')}
+                        </Translation>
+                    </span>
                 </div>
 
                 <div className="affected-age-group" >

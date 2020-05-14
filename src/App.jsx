@@ -42,6 +42,7 @@ function App(props) {
     }
 
     useEffect(() => {
+
         //API call for Stats
         // let url = "https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise"
         let url = "https://api.covid19india.org/data.json"
@@ -118,6 +119,7 @@ function App(props) {
             setStateData(statesData)
             //Set State data to localStorage also
             localStorage.setItem('ncovindia_stateData', JSON.stringify(statesData))
+            localStorage.setItem('ncovindia_stats', JSON.stringify(stat))
 
 
         }).catch(error => {

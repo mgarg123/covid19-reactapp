@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Translation } from 'react-i18next'
 
 export class TopFiveStates extends Component {
     constructor(props) {
@@ -34,7 +35,14 @@ export class TopFiveStates extends Component {
     render() {
         return (
             <div className='top-five-container'>
-                <div className="tf-title"><span>Top 5 Affected {this.props.topFiveDistrictData === undefined ? 'States' : 'Districts'} ({this.state.date})</span></div>
+                <div className="tf-title">
+                    <span>
+                        <Translation>
+                            {t => t(`Top 5 Affected ${this.props.topFiveDistrictData === undefined ? 'States' : 'Districts'}`)}
+                        </Translation>
+                        {` (${this.state.date})`}
+                    </span>
+                </div>
                 <div className="top-five-main">
                     <table className='tfs-table' style={{
                         background: `${this.props.isDark ? '#1e1d21' : '#fff'}`,
@@ -46,8 +54,17 @@ export class TopFiveStates extends Component {
                         }}>
                             <tr>
                                 <th></th>
-                                <th>State</th>
-                                <th>Infected</th>
+                                <th>
+                                    <Translation>
+                                        {t => t("State")}
+                                    </Translation>
+
+                                </th>
+                                <th>
+                                    <Translation>
+                                        {t => t("Infected")}
+                                    </Translation>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,8 +78,12 @@ export class TopFiveStates extends Component {
                                             }}
                                         >
                                             <td>{index + 1}</td>
-                                            <td>{obj.state}</td>
-                                            <td>{obj.deltaconfirmed}</td>
+                                            <td>
+                                                <Translation>
+                                                    {t => t(obj.state)}
+                                                </Translation>
+                                            </td>
+                                            <td>{parseInt(obj.deltaconfirmed).toLocaleString('en-In')}</td>
                                         </tr>
                                     )
                                 }) :
@@ -76,7 +97,7 @@ export class TopFiveStates extends Component {
                                             >
                                                 <td>{index + 1}</td>
                                                 <td>{obj.district}</td>
-                                                <td>{obj.delta.confirmed}</td>
+                                                <td>{parseInt(obj.delta.confirmed).toLocaleString('en-In')}</td>
                                             </tr>
                                         )
                                     })

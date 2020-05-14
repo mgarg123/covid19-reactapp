@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import '../css/header.css'
 import newFeature from '../img/new.svg'
 import ReactGA from 'react-ga'
+import { Translation } from 'react-i18next'
 
 export class HeaderTab extends Component {
     constructor(props) {
@@ -60,7 +61,11 @@ export class HeaderTab extends Component {
                         isGraphsClicked: false,
                         isPredictionClicked: false
                     })}>
-                    <span>{this.props.tabs[0]}</span>
+                    <span>
+                        <Translation>
+                            {t => t(this.props.tabs[0])}
+                        </Translation>
+                    </span>
                 </div>
                 <div className="tabs"
                     style={{
@@ -73,7 +78,11 @@ export class HeaderTab extends Component {
                         isGraphsClicked: false,
                         isPredictionClicked: false
                     })}>
-                    <span>{this.props.tabs[1] !== undefined && this.props.tabs[1]}</span>
+                    <span>{this.props.tabs[1] !== undefined &&
+                        <Translation>
+                            {t => t(this.props.tabs[1])}
+                        </Translation>
+                    }</span>
                 </div>
                 <div className="tabs"
                     style={{
@@ -86,7 +95,11 @@ export class HeaderTab extends Component {
                         isGraphsClicked: true,
                         isPredictionClicked: false
                     })}>
-                    <span>{this.props.tabs[2] !== undefined && this.props.tabs[2]}</span>
+                    <span>{this.props.tabs[2] !== undefined &&
+                        <Translation>
+                            {t => t(this.props.tabs[2])}
+                        </Translation>
+                    }</span>
                 </div>
                 <div className="tabs"
                     style={{
@@ -111,7 +124,11 @@ export class HeaderTab extends Component {
                             top: '0'
                         }}
                     />
-                    <span>{this.props.tabs[3] !== undefined && this.props.tabs[3]}</span>
+                    <span>{this.props.tabs[3] !== undefined &&
+                        <Translation>
+                            {t => t(this.props.tabs[3])}
+                        </Translation>
+                    }</span>
                 </div>
             </div>
         )

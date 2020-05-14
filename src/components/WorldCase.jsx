@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import axios from 'axios'
 import '../css/world.css'
 import Loader from './Loader'
+import { Translation } from 'react-i18next'
 
 
 export class WorldCase extends Component {
@@ -91,7 +92,11 @@ export class WorldCase extends Component {
                         style={{ border: ` 0.5px solid ${this.props.isDark ? '#1c1c1c' : '#eee'}` }}>
 
                         <div className='world-case-cont' style={{ background: `${this.props.isDark ? '#262529' : '#fff'}` }}>
-                            <div className='wc-title'><span>Infected</span></div>
+                            <div className='wc-title'>
+                                <span>
+                                    <Translation>{(t) => t('Infected')}</Translation>
+                                </span>
+                            </div>
 
                             {
                                 this.state.worldStats.cases === undefined ? <Loader /> :
@@ -120,7 +125,11 @@ export class WorldCase extends Component {
                             <div className='wc-hr'><hr style={{ background: 'rgb(1, 176, 230)' }} /></div>
                         </div>
                         <div className='world-case-cont ' style={{ background: `${this.props.isDark ? '#262529' : '#fff'}` }}>
-                            <div className='wc-title'><span>Recovered</span></div>
+                            <div className='wc-title'>
+                                <span>
+                                    <Translation>{(t) => t('Recovered')}</Translation>
+                                </span>
+                            </div>
 
                             {
                                 this.state.worldStats.cases === undefined ? <Loader /> :
@@ -150,7 +159,11 @@ export class WorldCase extends Component {
                             <div className='wc-hr'><hr style={{ background: 'rgb(42, 180, 7)' }} /></div>
                         </div>
                         <div className='world-case-cont' style={{ background: `${this.props.isDark ? '#262529' : '#fff'}` }}>
-                            <div className='wc-title'><span>Deaths</span></div>
+                            <div className='wc-title'>
+                                <span>
+                                    <Translation>{(t) => t('Deaths')}</Translation>
+                                </span>
+                            </div>
 
                             {
                                 this.state.worldStats.cases === undefined ? <Loader /> :
@@ -179,7 +192,11 @@ export class WorldCase extends Component {
                             <div className='wc-hr'><hr style={{ background: 'rgb(255, 0, 0)' }} /></div>
                         </div>
                         <div className='world-case-cont' style={{ background: `${this.props.isDark ? '#262529' : '#fff'}` }}>
-                            <div className='wc-title'><span>Active</span></div>
+                            <div className='wc-title'>
+                                <span>
+                                    <Translation>{(t) => t('Active')}</Translation>
+                                </span>
+                            </div>
 
                             {
                                 this.state.worldStats.cases === undefined ? <Loader /> :

@@ -6,7 +6,7 @@ import '../css/header.css'
 // import sun from '../img/sun.png'
 import { connect } from 'react-redux'
 import { switchDarkMode } from './redux/darkModeReducer'
-
+import { Translation } from 'react-i18next'
 import styled from 'styled-components';
 
 
@@ -237,7 +237,13 @@ class Header extends Component {
                                 <Link to="/"><span
                                     // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
                                     className="material-icons navbar-icons">
-                                    home</span><span> Home</span></Link></li>
+                                    home</span>
+                                    <span>
+                                        <Translation>
+                                            {t => t("Home")}
+                                        </Translation>
+                                    </span>
+                                </Link></li>
                             <li style={{
                                 background: `${window.location.pathname === "/about-corona" ? this.state.switched ? '#2f2f33' : 'rgb(96, 183, 232)' : ''}`,
                                 borderLeft: `${window.location.pathname === "/about-corona" && '0.05px solid red'}`
@@ -246,7 +252,13 @@ class Header extends Component {
                                     // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
                                     className="material-icons navbar-icons">
                                     info
-                            </span><span> About Corona</span> </Link></li>
+                            </span>
+                                    <span>
+                                        <Translation>
+                                            {t => t("About Corona")}
+                                        </Translation>
+                                    </span>
+                                </Link></li>
                             <li style={{
                                 background: `${window.location.pathname === "/corona-patients-in-world" ? this.state.switched ? '#2f2f33' : 'rgb(96, 183, 232)' : ''}`,
                                 borderLeft: `${window.location.pathname === "/corona-patients-in-world" && '0.05px solid red'}`
@@ -255,7 +267,11 @@ class Header extends Component {
                                     // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
                                     className="material-icons navbar-icons">
                                     language
-                            </span><span> World Data</span>
+                            </span><span>
+                                        <Translation>
+                                            {t => t("World Data")}
+                                        </Translation>
+                                    </span>
                                 </Link>
                             </li>
                             <li style={{
@@ -267,7 +283,11 @@ class Header extends Component {
                                     // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
                                     className="material-icons navbar-icons">
                                     compare
-                            </span><span> Compare Data</span>
+                            </span><span>
+                                        <Translation>
+                                            {t => t("Compare Data")}
+                                        </Translation>
+                                    </span>
                                 </Link>
                             </li>
                             <li style={{
@@ -277,7 +297,11 @@ class Header extends Component {
                                 // style={{ color: `${this.state.switched ? '#4cd2b9' : 'rgb(236, 181, 57)'}` }}
                                 className="material-icons navbar-icons">
                                 account_balance_wallet
-                            </span><span>  Donate</span> </Link></li>
+                            </span><span>
+                                        <Translation>
+                                            {t => t("Donate")}
+                                        </Translation>
+                                    </span> </Link></li>
                             {/* <li id="mob-dark-mode" style={{
                                 padding: `6px ${this.state.switched ? '23px' : '20px'}`
                             }}>

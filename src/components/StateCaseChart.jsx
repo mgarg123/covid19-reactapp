@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
 import axios from 'axios'
+import { Translation } from 'react-i18next'
 
 export class StateCaseChart extends Component {
     constructor(props) {
@@ -66,7 +67,11 @@ export class StateCaseChart extends Component {
                     fontSize: '20px',
                     fontWeight: 'bold'
                 }}>
-                    <span > Districtwise Cases Distribution</span>
+                    <span >
+                        <Translation>
+                            {t => t('Districtwise Cases Distribution')}
+                        </Translation>
+                    </span>
                 </div>
                 <div className="scc-main" style={{ background: `${this.props.isDark ? '#262529' : '#fff'}` }}>
                     <div className="buttons" style={{ marginTop: '10px' }}>
@@ -75,7 +80,10 @@ export class StateCaseChart extends Component {
                                 this.state.statesList.sort((x, y) => x.localeCompare(y)).map((x, index) => {
                                     return (
                                         <Fragment key={x}>
-                                            <option value={x}>{x}</option>
+                                            <Translation>
+                                                {t => <option value={x}>{t(x)}</option>}
+                                            </Translation>
+
                                         </Fragment>
                                     )
                                 })

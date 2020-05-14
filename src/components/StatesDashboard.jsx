@@ -7,6 +7,7 @@ import SamplesTested from './SamplesTested'
 import TopFiveStates from './TopFiveStates'
 import { connect } from 'react-redux'
 import Footer from './Footer'
+import { Translation } from 'react-i18next'
 
 
 
@@ -15,7 +16,7 @@ export class StatesDashboard extends Component {
         super(props)
 
         this.state = {
-            stats: {},
+            stats: { lastupdatedtime: "" },
             stateData: [],
             testData: [],
             topFiveDistrirctData: [],
@@ -74,7 +75,7 @@ export class StatesDashboard extends Component {
         else if ((currHour - parseInt(lastUpTime[0]) !== 0) && (currMin < parseInt(lastUpTime[1]))) {
             updatedTime = 60 - Math.abs(currMin - parseInt(lastUpTime[1])) + " Minutes"
         } else {
-            updatedTime = "About " + Math.abs(currHour - parseInt(lastUpTime[0])) + " Hours"
+            updatedTime = Math.abs(currHour - parseInt(lastUpTime[0])) + " Hours"
         }
         let stats = {
             stateName: stateName,
@@ -141,12 +142,23 @@ export class StatesDashboard extends Component {
                                     borderBottom: '0.5px solid grey',
                                     letterSpacing: '1px',
                                     textTransform: 'uppercase'
-                                }}>{this.state.stats.stateName}</span>
+                                }}>
+                                    <Translation>
+                                        {t => t(this.state.stats.stateName)}
+                                    </Translation>
+                                </span>
                             </div>
                             <div className='last-updated-at' style={{
                                 color: `${this.props.isDark ? 'skyblue' : 'red'}`,
                                 fontSize: '13px'
-                            }}><span>Last Updated {this.state.stats.lastupdatedtime} Ago</span></div>
+                            }}>
+                                <Translation>
+                                    {t => <span>
+                                        {t('Last Updated') + " "}
+                                        {this.state.stats.lastupdatedtime.includes('Hours') && t('About') + " "}
+                                        {this.state.stats.lastupdatedtime} {t('Ago')}</span>}
+                                </Translation>
+                            </div>
                             <div className="current-cont">
                                 <CaseBox title={"Infected"}
                                     bgColor={"rgb(1, 176, 230)"}
@@ -189,22 +201,28 @@ export class StatesDashboard extends Component {
                         flexWrap: 'wrap',
                     }} >
                         <div style={{ width: 'fit-content', margin: '0 auto' }}>
-                            <input type="text"
-                                value={this.state.countrySearchVal}
-                                placeholder='Search District'
-                                name="countryname"
-                                id="countryname"
-                                style={{
-                                    width: '250px',
-                                    height: '35px',
-                                    padding: '8px 8px',
-                                    border: 'none',
-                                    boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.8' : '0.4'})`,
-                                    borderRadius: '4px',
-                                    fontSize: '17px'
-                                }}
-                                onChange={(event) => this.setState({ districtSearchVal: event.target.value })}
-                            />
+                            <Translation>
+                                {
+                                    t => <input type="text"
+                                        value={this.state.countrySearchVal}
+                                        placeholder={t('Search District')}
+                                        name="countryname"
+                                        id="countryname"
+                                        style={{
+                                            width: '250px',
+                                            height: '35px',
+                                            padding: '8px 8px',
+                                            border: 'none',
+                                            boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.8' : '0.4'})`,
+                                            borderRadius: '4px',
+                                            fontSize: '17px'
+                                        }}
+                                        onChange={(event) => this.setState({ districtSearchVal: event.target.value })}
+                                    />
+                                }
+
+                            </Translation>
+
                         </div>
                         <div className="table-containers" style={{
                             marginTop: '20px'
@@ -214,23 +232,33 @@ export class StatesDashboard extends Component {
                                 textTransform: 'uppercase',
                                 marginTop: '10px'
                             }}>
-                                {this.state.districtData.length} Districts Affected in {this.state.stats.stateName}</span>
+                                {this.state.districtData.length + " "}
+                                <Translation>
+                                    {t => t('Districts Affected')}
+                                </Translation>
+                            </span>
                             </div>
                             <table className='tfs-table state-dist-table' style={{
                                 background: `${this.props.isDark ? '#1e1d21' : '#fff'}`,
-                                boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.4' : '0.16'})`
+                                boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.4' : '0.16'})`,
+                                marginBottom: "28px"
                             }}>
                                 <thead style={{
                                     background: `${this.props.isDark ?
                                         'rgb(50, 58, 70)' : 'rgb(208, 206, 206)'}`, fontWeight: 'bold'
                                 }}>
-                                    <tr>
-                                        <th></th>
-                                        <th>State</th>
-                                        <th>INFECTED</th>
-                                        <th>RECOVERED</th>
-                                        <th>DEATHS</th>
-                                    </tr>
+                                    <Translation>
+                                        {
+                                            t => <tr>
+                                                <th></th>
+                                                <th>{t("District")}</th>
+                                                <th>{t("INFECTED")}</th>
+                                                <th>{t("RECOVERED")}</th>
+                                                <th>{t("DEATHS")}</th>
+                                            </tr>
+                                        }
+                                    </Translation>
+
                                 </thead>
                                 <tbody>
                                     {
@@ -258,7 +286,11 @@ export class StatesDashboard extends Component {
                                                     </td>
                                                     <td>
                                                         <div>&nbsp;</div>
-                                                        {obj.district}</td>
+                                                        <Translation>
+                                                            {t => t(obj.district)}
+                                                        </Translation>
+                                                        {/* {obj.district} */}
+                                                    </td>
                                                     <td style={{ textAlign: 'center' }}>
                                                         <div style={{
                                                         }}> <i style={{

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
+import { Translation } from 'react-i18next'
 
 export class AffectedGender extends Component {
     constructor(props) {
@@ -47,7 +48,11 @@ export class AffectedGender extends Component {
                     fontWeight: 'bold',
 
                 }}>
-                    <span > Affected Gender Distribution</span>
+                    <span >
+                        <Translation>
+                            {t => t('Affected Genders Distribution')}
+                        </Translation>
+                    </span>
                 </div>
                 <div className="affected-genders" style={{ background: `${this.props.isDark ? '#262529' : '#ebebeb'}` }}>
                     <HighchartsReact

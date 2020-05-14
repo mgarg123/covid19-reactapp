@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
+import { Translation } from 'react-i18next'
 
 export class DeathVsRecovered extends Component {
     constructor(props) {
@@ -28,7 +29,11 @@ export class DeathVsRecovered extends Component {
                     fontWeight: 'bold',
 
                 }}>
-                    <span > {this.props.country !== undefined ? this.props.country : 'Daily Deaths Vs Recovered'}</span>
+                    <span >
+                        <Translation>
+                            {t => this.props.country !== undefined ? t(this.props.country) : t('Daily Deaths Vs Recovered')}
+                        </Translation>
+                    </span>
                 </div>
                 <div className="death-vs-rec" style={{ backgroundColor: `${this.props.isDark ? '#262529' : '#fff'}` }}>
                     <div className="buttons" style={{ marginTop: '10px' }}>

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import ProgressBarStatic from './ProgressBarStatic'
 import CaseBoxDetails from './CaseBoxDetails'
 import Loader from './Loader'
+import { Translation } from 'react-i18next';
 
 export class CaseBox extends Component {
     constructor(props) {
@@ -9,6 +10,9 @@ export class CaseBox extends Component {
 
         this.state = {
         }
+    }
+    componentDidMount() {
+        // this.props.i18n.changeLanguage("hin")
     }
 
     render() {
@@ -21,7 +25,12 @@ export class CaseBox extends Component {
                         boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.4' : '0.16'})`
                     }}>
                     <div className="number-details">
-                        <div id="number-details-heading">{this.props.title}</div>
+                        <div id="number-details-heading">
+                            <Translation>
+                                {t => <span>{t(this.props.title)}</span>}
+                            </Translation>
+
+                        </div>
                         {
                             this.props.val !== "" || this.props.val !== undefined ? <CaseBoxDetails
                                 bgColor={this.props.bgColor}

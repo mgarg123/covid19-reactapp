@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import StateDetailsBox from './StateDetailsBox'
 import axios from 'axios'
+import { Translation } from 'react-i18next'
 
 export class StateDetailsCont extends Component {
     constructor(props) {
@@ -75,15 +76,20 @@ export class StateDetailsCont extends Component {
     }
 
     render() {
+        let stateName = this.props.stateName !== "" && this.props.stateName.toLowerCase().replace(/\b(\w)/g, x => { return x.toUpperCase(); })
+
         return (
             <div className="state-details-cont">
                 <div className="state-name" >
                     <span style={{ fontSize: 16 }}>
-                        {this.props.stateName !== "" && this.props.stateName.toLowerCase().replace(/\b(\w)/g, x => { return x.toUpperCase(); })}
+                        <Translation>
+                            {t => t(stateName)}
+                        </Translation>
+
                     </span>
                 </div>
                 <div className="state-details">
-                    <StateDetailsBox color={"rgb(1, 176, 230)"} title={"CNF"} val={this.state.confirmed}
+                    <StateDetailsBox color={"rgb(1, 176, 230)"} title={"INF"} val={this.state.confirmed}
                         casesCounter={this.state.casesCounter.deltaconfirmed} isDark={this.props.isDark} />
                     <StateDetailsBox color={"rgb(42, 180, 7)"} title={"REC"} val={this.state.recovered}
                         casesCounter={this.state.casesCounter.deltarecovered} isDark={this.props.isDark} />

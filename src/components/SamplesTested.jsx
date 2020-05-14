@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import axios from 'axios'
 import CountUp from 'react-countup'
+import { Translation } from 'react-i18next'
 
 
 export class SamplesTested extends PureComponent {
@@ -29,7 +30,11 @@ export class SamplesTested extends PureComponent {
             <div className="sample-tested-main" >
                 <div className="samples-tested-container" title="Count of samples tested till yet.">
                     <div className="sample-tested-title">
-                        <span>Samples Tested</span>
+                        <span>
+                            <Translation>
+                                {t => t("Samples Tested")}
+                            </Translation>
+                        </span>
                     </div>
                     {/* <div className='last-updated-time'
                         style={{
@@ -46,7 +51,11 @@ export class SamplesTested extends PureComponent {
                                 background: `${this.props.isDark ? '#262529' : '#fff'}`,
                                 boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.4' : '0.16'})`
                             }}>
-                            <div style={{ color: '#2ab407' }}>Tested</div>
+                            <div style={{ color: '#2ab407' }}>
+                                <Translation>
+                                    {t => t("Tested")}
+                                </Translation>
+                            </div>
                             <div className="test-rate">
                                 <div
                                     id="rate-percent"
@@ -78,7 +87,11 @@ export class SamplesTested extends PureComponent {
                             background: `${this.props.isDark ? '#262529' : '#fff'}`,
                             boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.4' : '0.16'})`
                         }}>
-                            <div style={{ color: '#01b0e6' }}>Positive</div>
+                            <div style={{ color: '#01b0e6' }}>
+                                <Translation>
+                                    {t => t("Positive")}
+                                </Translation>
+                            </div>
                             <div className="test-rate">
                                 <div
                                     id="rate-percent"

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import CountUp from 'react-countup'
+import { Translation } from 'react-i18next'
 
 export class CaseBoxDetails extends Component {
     render() {
@@ -27,7 +28,12 @@ export class CaseBoxDetails extends Component {
                     style={{
                         color: `${this.props.isDark ? 'rgb(125, 221, 189)' : 'rgb(34, 143, 106)'}`
                     }}
-                >{`${this.props.todayDelta !== undefined ? '+' + parseInt(this.props.todayDelta).toLocaleString('en-IN') + ' today' : ''}`}
+                >
+                    <Translation>
+                        {t => `${this.props.todayDelta !== undefined ? '+' +
+                            parseInt(this.props.todayDelta).toLocaleString('en-IN') + ' ' + t("today") : ''}`}
+
+                    </Translation>
                 </div>
             </div>
         )

@@ -5,6 +5,7 @@ import StateDetailsCont from './StateDetailsCont'
 import { Link } from 'react-router-dom'
 import Loader from './Loader'
 import { connect } from 'react-redux'
+import { Translation } from 'react-i18next'
 
 export class StatewiseMap extends Component {
     constructor(props) {
@@ -35,26 +36,36 @@ export class StatewiseMap extends Component {
                             marginBottom: '15px',
                             marginTop: '3px'
                         }}>
-                            <span style={{
-                                color: `${this.props.isDark ? 'lightgreen' : 'green'}`,
-                                textTransform: 'uppercase'
-                            }}>
-                                You visited from <b style={{ letterSpacing: '0.5px' }}>{this.props.location.district + ", " +
-                                    this.props.location.state && this.props.location.state + ", " +
-                                    this.props.location.country + "."}</b>
-                                <Link to={`/state-data/${this.props.location.state}`} style={{
-                                    borderBottom: '0.5px solid grey',
-                                    // fontSize: '15px',
-                                    fontWeight: 'bold',
-                                    color: `${this.props.isDark ? 'orange' : 'red'}`
-                                }}>Check Status.</Link>
-                            </span>
+                            <Translation>
+                                {t => <span style={{
+                                    color: `${this.props.isDark ? 'lightgreen' : 'green'}`,
+                                    textTransform: 'uppercase'
+                                }}>{t('You Visited From') + " "}
+                                    <b style={{ letterSpacing: '0.5px' }}>{this.props.location.district + ", " +
+                                        this.props.location.state && this.props.location.state + ", " +
+                                        this.props.location.country + "."}</b>
+                                    <Link to={`/state-data/${this.props.location.state}`} style={{
+                                        borderBottom: '0.5px solid grey',
+                                        // fontSize: '15px',
+                                        fontWeight: 'bold',
+                                        color: `${this.props.isDark ? 'orange' : 'red'}`
+                                    }}>
+                                        {
+                                            t('VIEW STATUS')}
+                                        .</Link>
+                                </span>}
+                            </Translation>
+
                         </div> :
                         <Loader />
                 }
                 <div className="plot-cont-main" >
                     <div className="plot-cont-heading">
-                        <span>Statewise Statistics</span>
+                        <span>
+                            <Translation>
+                                {t => t("Statewise Statistics")}
+                            </Translation>
+                        </span>
                     </div>
                     <StateDetailsCont stateName={this.state.stateName} stateDataCallBack={this.stateDataCall} isDark={this.props.isDark} />
                     <div className="map-container">

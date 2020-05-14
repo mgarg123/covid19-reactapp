@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
 import axios from 'axios'
+import { Translation } from 'react-i18next'
 
 class DailyTrends extends Component {
     constructor(props) {
@@ -164,19 +165,27 @@ class DailyTrends extends Component {
                     paddingTop: '-8px',
                     fontSize: '20px',
                     fontWeight: 'bold'
-                }}>Daily Spread Trends</span>
+                }}><Translation>
+                        {t => t('Daily Spread Trends')}
+                    </Translation></span>
                 <div className="daily-trends" style={{ background: `${this.props.isDark ? '#262529' : '#fff'}` }}>
                     {/* <div className="buttons-left" style={{ border: '1px solid red' }}>
                         
                     </div> */}
-                    <div className="buttons" style={{ marginTop: '10px' }}>
-                        <button onClick={this.toggleLine} id="toggle-line"
-                            style={{ float: 'left', marginLeft: '2px' }}>Toggle Column
-                        </button>
-                        <button onClick={this.loadDayData} id="day">Day</button>
-                        <button onClick={this.loadWeekData} id="week">Week</button>
-                        <button onClick={this.loadMonthData} id="month">Month</button>
-                    </div>
+                    <Translation>
+                        {t =>
+                            <div className="buttons" style={{ marginTop: '10px' }}>
+                                <button onClick={this.toggleLine} id="toggle-line"
+                                    style={{ float: 'left', marginLeft: '2px' }}>{t('Toggle Column')}
+                                </button>
+
+                                <button onClick={this.loadDayData} id="day">{t('Day')}</button>
+                                <button onClick={this.loadWeekData} id="week">{t('Week')}</button>
+                                <button onClick={this.loadMonthData} id="month">{t('Month')}</button>
+
+                            </div>}
+                    </Translation>
+
                     <HighchartsReact
                         // ref={this.chartRef}
                         highcharts={Highcharts}

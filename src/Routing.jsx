@@ -38,8 +38,6 @@ export class Routing extends Component {
     }
 
     componentDidMount() {
-
-
         //Initializing Google Analytics
         ReactGA.initialize('UA-155988779-1')
 

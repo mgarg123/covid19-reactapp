@@ -6,6 +6,7 @@ import SamplesTested from './SamplesTested'
 import TopFiveStates from './TopFiveStates'
 import Loader from './Loader'
 import { Link } from 'react-router-dom'
+import { Translation } from 'react-i18next'
 import { connect } from 'react-redux'
 
 export class CaseNumber extends Component {
@@ -41,7 +42,10 @@ export class CaseNumber extends Component {
                                         color: `${this.props.isDark ? 'lightgreen' : 'green'}`,
                                         textTransform: 'uppercase'
                                     }}>
-                                        You visited from <b> {this.props.location.district + ", " +
+                                        <Translation>
+                                            {t => t('You Visited From')}
+                                        </Translation>
+                                        <b> {this.props.location.district + ", " +
                                             this.props.location.state + ", " +
                                             this.props.location.country + "."}</b>
                                         <Link to={`/state-data/${this.props.location.state}`} style={{
@@ -49,7 +53,12 @@ export class CaseNumber extends Component {
                                             // fontSize: '15px',
                                             fontWeight: 'bold',
                                             color: `${this.props.isDark ? 'orange' : 'red'}`
-                                        }}>CHECK STATUS.</Link>
+                                        }}>
+                                            <Translation>
+                                                {t =>
+                                                    t('VIEW STATUS')}
+                                            </Translation>
+                                        .</Link>
                                     </span>
                                 </div> :
                                 <Loader />
@@ -58,7 +67,17 @@ export class CaseNumber extends Component {
                         <div className='last-updated-at' style={{
                             color: `${this.props.isDark ? 'skyblue' : 'red'}`,
                             fontSize: '13px'
-                        }}><span>Last Updated {this.props.lastUpdated} Ago</span></div>
+                        }}>
+                            <Translation>
+                                {t => <span>
+                                    {t('Last Updated') + " "}
+                                    {this.props.lastUpdated.includes('Hours') && t('About') + " "}
+                                    {this.props.lastUpdated} {t('Ago')}
+                                </span>
+                                }
+                            </Translation>
+                            {/* <span>Last Updated {this.props.lastUpdated} Ago</span> */}
+                        </div>
                         <div className="current-cont">
                             <CaseBox title={"Infected"}
                                 bgColor={"rgb(1, 176, 230)"}
