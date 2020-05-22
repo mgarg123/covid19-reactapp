@@ -101,18 +101,29 @@ export class SamplesTested extends PureComponent {
                                 >
                                     <span className="material-icons" style={{ fontSize: '10px' }}>
                                         trending_up</span>
-                                    {((totalPositive / parseInt(this.state.sampleData.totalsamplestested))
-                                        * 100).toPrecision(3) + "%"}
+                                    {
+                                        this.state.testData === undefined ? ((totalPositive / parseInt(this.state.sampleData.totalsamplestested))
+                                            * 100).toPrecision(3) + "%" : ((parseInt(this.props.testData.positive) / parseInt(this.props.testData.totalsamplestested))
+                                                * 100).toPrecision(3) + "%"
+                                    }
+                                    {}
                                 </div>
                             </div>
                             <div style={{ color: `${this.props.isDark ? '#fff' : '#000'}` }}>
+                                {
+                                    this.props.testData === undefined ? <CountUp
+                                        start={totalPositive - 20}
+                                        end={totalPositive}
+                                        delay={0.5}
+                                        formattingFn={(n) => n.toLocaleString('en-IN')}
+                                    /> : <CountUp
+                                            start={parseInt(this.props.testData.positive) - 20}
+                                            end={parseInt(this.props.testData.positive)}
+                                            delay={0.5}
+                                            formattingFn={(n) => n.toLocaleString('en-IN')}
+                                        />
+                                }
 
-                                <CountUp
-                                    start={totalPositive - 20}
-                                    end={totalPositive}
-                                    delay={0.5}
-                                    formattingFn={(n) => n.toLocaleString('en-IN')}
-                                />
 
 
 
