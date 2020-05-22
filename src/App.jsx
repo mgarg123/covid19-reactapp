@@ -46,26 +46,62 @@ function App(props) {
         //API call for Stats
         // let url = "https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise"
         let url = "https://api.covid19india.org/data.json"
+        axios({
+            method: "post",
+            url: "https://covidstat.info/graphql",
+            data: {
+                query: `{
+                    state(countryName:"India",stateName:"Total"){
+                        cases
+                        recovered
+                        deaths
+                        todayCases
+                        active
+                        todayRecovered
+                        todayDeaths
+                        updated
+                    }
+                }`
+            }
+        }).then(response => {
+            let data = response.data.data.state
+            // console.log(data);
+            let stat = {
+                confirmed: data.cases,
+                recovered: data.recovered,
+                deaths: data.deaths,
+                active: data.active
+            }
+
+            let dailyTrends = {
+                deltaconfirmed: data.todayCases,
+                deltadeaths: data.todayDeaths,
+                deltarecovered: data.todayRecovered
+            }
+
+            let lastUpdated = new Date(data.updated)
+            let lastUpTime = [lastUpdated.getHours(), lastUpdated.getMinutes(), lastUpdated.getSeconds()]
+            let time = new Date()
+            let currHour = time.getHours()
+            let currMin = time.getMinutes()
+
+            if ((currHour - parseInt(lastUpTime[0]) === 0) && (currMin - parseInt(lastUpTime[1]) >= 0)) {
+                setLastUpdated(Math.abs(currMin - parseInt(lastUpTime[1])) + " Minutes")
+            }
+            else if ((currHour - parseInt(lastUpTime[0]) !== 0) && (currMin < parseInt(lastUpTime[1]))) {
+                setLastUpdated(60 - Math.abs(currMin - parseInt(lastUpTime[1])) + " Minutes")
+            } else {
+                setLastUpdated("About " + Math.abs(currHour - parseInt(lastUpTime[0])) + " Hours")
+            }
+            setKeyValues(dailyTrends)
+            setStats(stat)
+            localStorage.setItem('ncovindia_stats', JSON.stringify(stat))
+
+        }).catch(error => console.log(error.message));
+
         axios.get(url).then(response => {
             // var data = response.data.data
             let data = response.data
-
-            // let conf = data.total.confirmed
-            // let rec = data.total.recovered
-            // let death = data.total.deaths
-            // let act = data.total.active
-
-            let conf = data.statewise[0].confirmed
-            let rec = data.statewise[0].recovered
-            let death = data.statewise[0].deaths
-            let act = data.statewise[0].active
-
-            let stat = {
-                confirmed: conf,
-                recovered: rec,
-                deaths: death,
-                active: act
-            }
 
             let statesData = []
             let count = 0
@@ -92,35 +128,14 @@ function App(props) {
                 }
             }
 
-            //this obj has lastupdatedtime,deceaseddelta,confirmeddelta,reecovereddelta
-            let obj = data.statewise[0]
 
-            //Setting up Last Updated Time
-            let lastUpTime = obj.lastupdatedtime.split(" ")[1].split(":")
+            statesData.sort((x, y) => y.confirmed - x.confirmed)
 
-            let time = new Date()
-            let currHour = time.getHours()
-            let currMin = time.getMinutes()
-
-            if ((currHour - parseInt(lastUpTime[0]) === 0) && (currMin - parseInt(lastUpTime[1]) >= 0)) {
-                setLastUpdated(Math.abs(currMin - parseInt(lastUpTime[1])) + " Minutes")
-            }
-            else if ((currHour - parseInt(lastUpTime[0]) !== 0) && (currMin < parseInt(lastUpTime[1]))) {
-                setLastUpdated(60 - Math.abs(currMin - parseInt(lastUpTime[1])) + " Minutes")
-            } else {
-                setLastUpdated("About " + Math.abs(currHour - parseInt(lastUpTime[0])) + " Hours")
-            }
-
-            setKeyValues(obj)       //Daily Confirmed,deaths and recovred data
-
-
-            setStats(stat)
             setAffectedState(count)
             setStateData(statesData)
+
             //Set State data to localStorage also
             localStorage.setItem('ncovindia_stateData', JSON.stringify(statesData))
-            localStorage.setItem('ncovindia_stats', JSON.stringify(stat))
-
 
         }).catch(error => {
             console.log(error.message)

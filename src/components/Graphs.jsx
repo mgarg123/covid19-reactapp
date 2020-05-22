@@ -24,6 +24,7 @@ export class Graphs extends Component {
         // container.style.width = "100%"
         // this.chartRef.current.chart.reflow()
 
+
         //Api Call for Graph
         let url = "https://api.covid19india.org/data.json"
         axios.get(url).then(response => {

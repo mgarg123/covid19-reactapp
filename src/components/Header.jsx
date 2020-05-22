@@ -301,7 +301,16 @@ class Header extends Component {
                                         <Translation>
                                             {t => t("Donate")}
                                         </Translation>
-                                    </span> </Link></li>
+                                    </span> </Link>
+                            </li>
+                            {/* <li> <a href={"https://api.ncovindias.xyz"}><span class="material-icons navbar-icons">
+                                code
+</span><span>
+                                    <Translation>
+                                        {t => t("API")}
+                                    </Translation>
+                                </span> </a>
+                            </li> */}
                             {/* <li id="mob-dark-mode" style={{
                                 padding: `6px ${this.state.switched ? '23px' : '20px'}`
                             }}>

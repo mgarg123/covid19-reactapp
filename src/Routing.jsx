@@ -41,22 +41,6 @@ export class Routing extends Component {
         //Initializing Google Analytics
         ReactGA.initialize('UA-155988779-1')
 
-
-        // //IP Address to Country Name using ipinfo API
-        // axios.get('https://ipinfo.io?token=d67524c3026916').then(response => {
-        //     let data = response.data
-        //     let countryCode = data.country
-
-        //     //Country code to country name mapping
-        //     axios.get('https://restcountries.eu/rest/v2/alpha/' + countryCode).then(response => {
-        //         let countryName = response.data.name
-
-        //         sessionStorage.setItem('ncovindia_usersCountry', countryName)   //Setting User's Country Name to Session Storage
-
-        //     }).catch(error => console.log(error.message))
-
-        // }).catch(error => console.log(error.message))
-
         //Fetching India's Confirmed for updating the cases in India with our API in the world list
         axios.get('https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise').then(response => {
             let data = response.data.data
@@ -69,7 +53,7 @@ export class Routing extends Component {
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
-                console.log(position.coords.latitude + " " + position.coords.longitude);
+                // console.log(position.coords.latitude + " " + position.coords.longitude);
                 let latitude = position.coords.latitude
                 let longitude = position.coords.longitude
 

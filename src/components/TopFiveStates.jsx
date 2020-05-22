@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Translation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 export class TopFiveStates extends Component {
     constructor(props) {
@@ -78,10 +79,18 @@ export class TopFiveStates extends Component {
                                             }}
                                         >
                                             <td>{index + 1}</td>
-                                            <td>
-                                                <Translation>
-                                                    {t => t(obj.state)}
-                                                </Translation>
+                                            <td>{
+                                                obj.state !== "State Unassigned" ?
+                                                    <Link to={`/state-data/${obj.state}`}>
+                                                        <Translation>
+                                                            {t => t(obj.state)}
+                                                        </Translation>
+                                                    </Link> : <Translation>
+                                                        {t => t(obj.state)}
+                                                    </Translation>
+                                            }
+
+
                                             </td>
                                             <td>{parseInt(obj.deltaconfirmed).toLocaleString('en-In')}</td>
                                         </tr>
@@ -96,7 +105,10 @@ export class TopFiveStates extends Component {
                                                 }}
                                             >
                                                 <td>{index + 1}</td>
-                                                <td>{obj.district}</td>
+                                                <Translation>
+                                                    {t => <td>{t(obj.district)}</td>}
+                                                </Translation>
+
                                                 <td>{parseInt(obj.delta.confirmed).toLocaleString('en-In')}</td>
                                             </tr>
                                         )

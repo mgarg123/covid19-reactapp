@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import '../css/table.css'
 import { connect } from 'react-redux'
 import { Translation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 export class StateTable extends Component {
     constructor(props) {
@@ -368,11 +369,21 @@ export class StateTable extends Component {
                                                     id={`data-${obj.state}`}
                                                 >
                                                     <td colSpan="5" className="full-width">
-                                                        <div style={{
-                                                            fontSize: '12px',
-                                                            textAlign: 'left', marginLeft: '18px',
-                                                            color: `${this.props.isDark ? 'lightgreen' : 'green'}`
-                                                        }}>Last Updated at {obj.lastupdatedtime}</div>
+                                                        <div >
+                                                            <div style={{
+                                                                fontSize: '12px',
+                                                                textAlign: 'left', marginLeft: '18px',
+                                                                color: `${this.props.isDark ? 'lightgreen' : 'green'}`
+                                                            }}>Last Updated at {obj.lastupdatedtime}
+                                                            </div>
+                                                            <div style={{
+                                                                fontSize: '12px',
+                                                                textAlign: 'right', marginRight: '18px',
+                                                                color: `${this.props.isDark ? 'orange' : 'orange'}`
+                                                            }}><Link to={`/state-data/${obj.state}`}>View More Details</Link>
+                                                            </div>
+                                                        </div>
+
                                                         <table className="internal-table">
                                                             <thead>
                                                                 <Translation>

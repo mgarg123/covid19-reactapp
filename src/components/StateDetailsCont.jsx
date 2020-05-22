@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import StateDetailsBox from './StateDetailsBox'
 import axios from 'axios'
 import { Translation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 export class StateDetailsCont extends Component {
     constructor(props) {
@@ -81,12 +82,15 @@ export class StateDetailsCont extends Component {
         return (
             <div className="state-details-cont">
                 <div className="state-name" >
-                    <span style={{ fontSize: 16 }}>
-                        <Translation>
-                            {t => t(stateName)}
-                        </Translation>
+                    <Link to={`/state-data/${stateName}`}>
+                        <span style={{ fontSize: 16 }}>
+                            <Translation>
+                                {t => t(stateName)}
+                            </Translation>
 
-                    </span>
+                        </span>
+                    </Link>
+
                 </div>
                 <div className="state-details">
                     <StateDetailsBox color={"rgb(1, 176, 230)"} title={"INF"} val={this.state.confirmed}

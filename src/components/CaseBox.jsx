@@ -32,7 +32,7 @@ export class CaseBox extends Component {
 
                         </div>
                         {
-                            this.props.val !== "" || this.props.val !== undefined ? <CaseBoxDetails
+                            this.props.val !== undefined ? <CaseBoxDetails
                                 bgColor={this.props.bgColor}
                                 title={this.props.title}
                                 val={this.props.val}

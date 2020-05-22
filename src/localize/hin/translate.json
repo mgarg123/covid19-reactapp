@@ -140,7 +140,9 @@
         "Show Bank Details": "बैंक विवरण देखें",
         "Hide Bank Details": "बैंक विवरण छिपाएं",
         "You Visited From": "आपका वर्तमान स्थान",
+        "*Click on State/UT name for more details.": "* अधिक विवरण के लिए राज्य / केन्द्र शासित प्रदेश के नाम पर क्लिक करें।",
         "South Andamans": "दक्षिण अंडमान",
+        "State Unassigned": "अप्रमाणित राज्य",
         "Nicobars": "निकोबार",
         "North And Middle Andaman": "उत्तर और मध्य अंडमान",
         "Kurnool": "कुरनूल",
@@ -869,6 +871,5 @@
         "Alipurduar": "अलीपुरद्वार",
         "Jhargram": "झारग्राम",
         "Other State": "अन्य राज्य"
-
     }
 }

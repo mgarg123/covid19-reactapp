@@ -29,40 +29,42 @@ export class CaseNumber extends Component {
                 <div className="main-cont">
 
                     <div className="current-number-container">
-                        {
-                            this.props.location.state !== "" ?
-                                <div className="user-location" style={{
-                                    display: `${window.screen.width < 768 ? 'block' : 'none'}`,
-                                    textAlign: 'center',
-                                    marginBottom: '15px',
-                                    fontSize: '12.5px',
-                                    marginTop: '-10px'
+
+
+                        <div className="user-location" style={{
+                            display: `${window.screen.width < 768 ? 'block' : 'none'}`,
+                            textAlign: 'center',
+                            marginBottom: '15px',
+                            fontSize: '12.5px',
+                            marginTop: '-10px'
+                        }}>
+                            {
+                                this.props.location.state !== "" ? <span style={{
+                                    color: `${this.props.isDark ? 'lightgreen' : 'green'}`,
+                                    textTransform: 'uppercase'
                                 }}>
-                                    <span style={{
-                                        color: `${this.props.isDark ? 'lightgreen' : 'green'}`,
-                                        textTransform: 'uppercase'
+                                    <Translation>
+                                        {t => t('You Visited From')}
+                                    </Translation>
+                                    <b> {this.props.location.district + ", " +
+                                        this.props.location.state + ", " +
+                                        this.props.location.country + "."}</b>
+                                    <Link to={`/state-data/${this.props.location.state}`} style={{
+                                        borderBottom: '0.5px solid grey',
+                                        // fontSize: '15px',
+                                        fontWeight: 'bold',
+                                        color: `${this.props.isDark ? 'orange' : 'red'}`
                                     }}>
                                         <Translation>
-                                            {t => t('You Visited From')}
+                                            {t =>
+                                                t('VIEW STATUS')}
                                         </Translation>
-                                        <b> {this.props.location.district + ", " +
-                                            this.props.location.state + ", " +
-                                            this.props.location.country + "."}</b>
-                                        <Link to={`/state-data/${this.props.location.state}`} style={{
-                                            borderBottom: '0.5px solid grey',
-                                            // fontSize: '15px',
-                                            fontWeight: 'bold',
-                                            color: `${this.props.isDark ? 'orange' : 'red'}`
-                                        }}>
-                                            <Translation>
-                                                {t =>
-                                                    t('VIEW STATUS')}
-                                            </Translation>
                                         .</Link>
-                                    </span>
-                                </div> :
-                                <Loader />
-                        }
+                                </span> :
+                                    <Loader />
+                            }
+                        </div>
+
 
                         <div className='last-updated-at' style={{
                             color: `${this.props.isDark ? 'skyblue' : 'red'}`,

@@ -26,6 +26,8 @@ export class SamplesTested extends PureComponent {
     }
 
     render() {
+        let totalPositive = parseInt(JSON.parse(localStorage.ncovindia_stats).confirmed)
+
         return (
             <div className="sample-tested-main" >
                 <div className="samples-tested-container" title="Count of samples tested till yet.">
@@ -99,29 +101,21 @@ export class SamplesTested extends PureComponent {
                                 >
                                     <span className="material-icons" style={{ fontSize: '10px' }}>
                                         trending_up</span>
-                                    {this.props.testData === undefined ? this.state.sampleData.totalpositivecases !== "" ?
-                                        ((parseInt(this.state.sampleData.totalpositivecases) / parseInt(this.state.sampleData.totalsamplestested))
-                                            * 100).toPrecision(3) + "%" : '4.37%' :
-                                        ((parseInt(this.props.testData.positive) / parseInt(this.props.testData.totaltested))
-                                            * 100).toPrecision(3) + "%"}
+                                    {((totalPositive / parseInt(this.state.sampleData.totalsamplestested))
+                                        * 100).toPrecision(3) + "%"}
                                 </div>
                             </div>
                             <div style={{ color: `${this.props.isDark ? '#fff' : '#000'}` }}>
-                                {this.props.testData === undefined ? this.state.sampleData.totalpositivecases !== undefined &&
-                                    <CountUp
-                                        start={this.state.sampleData.totalpositivecases - 20}
-                                        end={parseInt(this.state.sampleData.totalpositivecases)}
-                                        delay={0.5}
-                                        formattingFn={(n) => n.toLocaleString('en-IN')}
-                                    /> : <CountUp
-                                        start={parseInt(this.props.testData.positive - 20)}
-                                        end={parseInt(this.props.testData.positive)}
-                                        delay={0.5}
-                                        formattingFn={(n) => n.toLocaleString('en-IN')}
-                                    />
-                                    // this.state.sampleData.totalpositivecases
 
-                                }
+                                <CountUp
+                                    start={totalPositive - 20}
+                                    end={totalPositive}
+                                    delay={0.5}
+                                    formattingFn={(n) => n.toLocaleString('en-IN')}
+                                />
+
+
+
                             </div>
                             <div><hr /></div>
                         </div>

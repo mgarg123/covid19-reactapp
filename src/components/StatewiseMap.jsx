@@ -28,37 +28,37 @@ export class StatewiseMap extends Component {
     render() {
         return (
             <div className="plot-cont">
-                {
-                    this.props.location.state !== "" ?
-                        <div className="user-location" style={{
-                            display: `${window.screen.width < 768 ? 'none' : 'block'}`,
-                            textAlign: 'left',
-                            marginBottom: '15px',
-                            marginTop: '3px'
-                        }}>
-                            <Translation>
-                                {t => <span style={{
-                                    color: `${this.props.isDark ? 'lightgreen' : 'green'}`,
-                                    textTransform: 'uppercase'
-                                }}>{t('You Visited From') + " "}
-                                    <b style={{ letterSpacing: '0.5px' }}>{this.props.location.district + ", " +
-                                        this.props.location.state && this.props.location.state + ", " +
-                                        this.props.location.country + "."}</b>
-                                    <Link to={`/state-data/${this.props.location.state}`} style={{
-                                        borderBottom: '0.5px solid grey',
-                                        // fontSize: '15px',
-                                        fontWeight: 'bold',
-                                        color: `${this.props.isDark ? 'orange' : 'red'}`
-                                    }}>
-                                        {
-                                            t('VIEW STATUS')}
+                <div className="user-location" style={{
+                    display: `${window.screen.width < 768 ? 'none' : 'block'}`,
+                    textAlign: 'left',
+                    marginBottom: '15px',
+                    marginTop: '3px'
+                }}>
+                    {
+                        this.props.location.state !== "" ? <Translation>
+                            {t => <span style={{
+                                color: `${this.props.isDark ? 'lightgreen' : 'green'}`,
+                                textTransform: 'uppercase'
+                            }}>{t('You Visited From') + " "}
+                                <b style={{ letterSpacing: '0.5px' }}>{this.props.location.district + ", " +
+                                    this.props.location.state && this.props.location.state + ", " +
+                                    this.props.location.country + "."}</b>
+                                <Link to={`/state-data/${this.props.location.state}`} style={{
+                                    borderBottom: '0.5px solid grey',
+                                    // fontSize: '15px',
+                                    fontWeight: 'bold',
+                                    color: `${this.props.isDark ? 'orange' : 'red'}`
+                                }}>
+                                    {
+                                        t('VIEW STATUS')}
                                         .</Link>
-                                </span>}
-                            </Translation>
+                            </span>}
+                        </Translation> :
+                            <Loader />
+                    }
 
-                        </div> :
-                        <Loader />
-                }
+                </div>
+
                 <div className="plot-cont-main" >
                     <div className="plot-cont-heading">
                         <span>
@@ -66,6 +66,12 @@ export class StatewiseMap extends Component {
                                 {t => t("Statewise Statistics")}
                             </Translation>
                         </span>
+                    </div>
+                    <div style={{ fontSize: '11px', textAlign: 'left', marginLeft: "10px", marginBottom: '-20px', marginTop: '15px' }}>
+                        <Translation>
+                            {t => <span>{t("*Click on State/UT name for more details.")}</span>}
+                        </Translation>
+
                     </div>
                     <StateDetailsCont stateName={this.state.stateName} stateDataCallBack={this.stateDataCall} isDark={this.props.isDark} />
                     <div className="map-container">

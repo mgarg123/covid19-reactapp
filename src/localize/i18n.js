@@ -1,16 +1,16 @@
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import en from './lang/en.json'
-import hin from './lang/hin.json'
+import enLanguage from './en/translate.json'
+import hinLanguage from './hin/translate.json'
 
 i18n.use(LanguageDetector).init({
     // we init with resources
     resources: {
-        en: en,
-        hin: hin
+        en: enLanguage,
+        hin: hinLanguage
     },
     fallbackLng: "en",
-    debug: true,
+    debug: false,
 
     // have a common namespace used around the full app
     ns: ["translations"],
