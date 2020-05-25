@@ -26,7 +26,11 @@ export class SamplesTested extends PureComponent {
     }
 
     render() {
-        let totalPositive = parseInt(JSON.parse(localStorage.ncovindia_stats).confirmed)
+        let totalPositive = 0
+        if (localStorage.ncovindia_stats) {
+            totalPositive = parseInt(JSON.parse(localStorage.ncovindia_stats).confirmed)
+        }
+
 
         return (
             <div className="sample-tested-main" >

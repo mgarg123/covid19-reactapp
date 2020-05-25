@@ -20,6 +20,8 @@ export class CaseNumber extends Component {
 
     componentDidMount() {
         // this.props.history.push('/stats')
+        // window.location = "/"
+
     }
 
 
@@ -74,7 +76,9 @@ export class CaseNumber extends Component {
                                 {t => <span>
                                     {t('Last Updated') + " "}
                                     {this.props.lastUpdated.includes('Hours') && t('About') + " "}
-                                    {this.props.lastUpdated} {t('Ago')}
+                                    {this.props.lastUpdated.includes("Hours") ?
+                                        this.props.lastUpdated.split(" ")[1] + " " + t("Hours") + " " :
+                                        this.props.lastUpdated.split(" ")[0] + " " + t("Minutes") + " "} {t('Ago')}
                                 </span>
                                 }
                             </Translation>

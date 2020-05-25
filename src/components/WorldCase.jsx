@@ -17,64 +17,107 @@ export class WorldCase extends Component {
     }
 
     componentDidMount() {
-        let url = 'https://api.coronastatistics.live/all'
-        axios.get(url).then(resposne => {
-            let data = resposne.data
-
-            let dt = new Date(data.updated)
-            let prevHr = dt.getHours()
-            let prevMin = dt.getMinutes()
-
-            let currDate = new Date()
-            let currHr = currDate.getHours()
-            let currMin = currDate.getMinutes()
-
-            if ((currHr - prevHr === 0) && (currMin - prevMin >= 0)) {
-                let uptime = Math.abs(currMin - prevMin)
-                if (uptime === 1) {
-                    let lastval = uptime + ' Minute'
-                    this.setState({ lastUpdated: lastval })
-                } else {
-                    let lastval = uptime + ' Minutes'
-                    this.setState({ lastUpdated: lastval })
-                }
-
+        let url = "https://covidstat.info/graphql"
+        axios({
+            url: url,
+            method: "post",
+            data: {
+                query: `{
+                    all{
+                        cases
+                        deaths
+                        recovered
+                        todayCases
+                        todayDeaths
+                        active
+                        updated
+                    }
+                }`
             }
-            else if ((currHr - prevHr !== 0) && (currMin < prevMin)) {
-                let uptime = 60 - Math.abs(currMin - prevMin)
-                if (uptime === 1) {
-                    let lastval = uptime + ' Minute'
-                    this.setState({ lastUpdated: lastval })
-                } else {
-                    let lastval = uptime + ' Minutes'
-                    this.setState({ lastUpdated: lastval })
-                }
-                this.setState({ lastUpdated: uptime })
+        }).then(res => {
+            let data = res.data.data
+            // console.log(data.all);
+            let lastUpdated = new Date(data.all.updated)
+            let lastUpTime = [lastUpdated.getHours(), lastUpdated.getMinutes(), lastUpdated.getSeconds()]
+            let time = new Date()
+            let currHour = time.getHours()
+            let currMin = time.getMinutes()
+
+            if ((currHour - parseInt(lastUpTime[0]) === 0) && (currMin - parseInt(lastUpTime[1]) >= 0)) {
+                let updatedTime = Math.abs(currMin - parseInt(lastUpTime[1])) + " Minutes"
+                this.setState({ lastUpdated: updatedTime })
+            }
+            else if ((currHour - parseInt(lastUpTime[0]) !== 0) && (currMin < parseInt(lastUpTime[1]))) {
+                let updatedTime = 60 - Math.abs(currMin - parseInt(lastUpTime[1])) + " Minutes"
+                this.setState({ lastUpdated: updatedTime })
             } else {
-                let uptime = Math.abs(currHr - prevHr)
-                if (uptime === 1) {
-                    let lastval = uptime + ' Hour'
-                    this.setState({ lastUpdated: lastval })
-                } else {
-                    let lastval = 'About ' + uptime + ' Hours'
-                    this.setState({ lastUpdated: lastval })
-                }
-                // this.setState({ lastUpdated: uptime })
+                let updatedTime = "About " + Math.abs(currHour - parseInt(lastUpTime[0])) + " Hours"
+                this.setState({ lastUpdated: updatedTime })
             }
 
-            this.setState({ worldStats: data })
-        }).catch(error => console.log(error.message));
 
-        axios.get("https://api.covid19api.com/summary").then(response => {
-            let data = response.data
-            let obj = {
-                todayConfirmed: data.Global.NewConfirmed,
-                todayDeaths: data.Global.NewDeaths,
-                todayRecovered: data.Global.NewRecovered,
-            }
-            this.setState({ todayDelta: obj })
+            this.setState({ worldStats: data.all })
+        }).catch(err => console.log(err.message))
 
-        }).catch(error => console.log(error.message));
+
+        //     // let url = 'https://api.coronastatistics.live/all'
+        //     axios.get(url).then(resposne => {
+        //         let data = resposne.data
+
+        //         let dt = new Date(data.updated)
+        //         let prevHr = dt.getHours()
+        //         let prevMin = dt.getMinutes()
+
+        //         let currDate = new Date()
+        //         let currHr = currDate.getHours()
+        //         let currMin = currDate.getMinutes()
+
+        //         if ((currHr - prevHr === 0) && (currMin - prevMin >= 0)) {
+        //             let uptime = Math.abs(currMin - prevMin)
+        //             if (uptime === 1) {
+        //                 let lastval = uptime + ' Minute'
+        //                 this.setState({ lastUpdated: lastval })
+        //             } else {
+        //                 let lastval = uptime + ' Minutes'
+        //                 this.setState({ lastUpdated: lastval })
+        //             }
+
+        //         }
+        //         else if ((currHr - prevHr !== 0) && (currMin < prevMin)) {
+        //             let uptime = 60 - Math.abs(currMin - prevMin)
+        //             if (uptime === 1) {
+        //                 let lastval = uptime + ' Minute'
+        //                 this.setState({ lastUpdated: lastval })
+        //             } else {
+        //                 let lastval = uptime + ' Minutes'
+        //                 this.setState({ lastUpdated: lastval })
+        //             }
+        //             this.setState({ lastUpdated: uptime })
+        //         } else {
+        //             let uptime = Math.abs(currHr - prevHr)
+        //             if (uptime === 1) {
+        //                 let lastval = uptime + ' Hour'
+        //                 this.setState({ lastUpdated: lastval })
+        //             } else {
+        //                 let lastval = 'About ' + uptime + ' Hours'
+        //                 this.setState({ lastUpdated: lastval })
+        //             }
+        //             // this.setState({ lastUpdated: uptime })
+        //         }
+
+        //         this.setState({ worldStats: data })
+        //     }).catch(error => console.log(error.message));
+
+        //     axios.get("https://api.covid19api.com/summary").then(response => {
+        //         let data = response.data
+        //         let obj = {
+        //             todayConfirmed: data.Global.NewConfirmed,
+        //             todayDeaths: data.Global.NewDeaths,
+        //             todayRecovered: data.Global.NewRecovered,
+        //         }
+        //         this.setState({ todayDelta: obj })
+
+        //     }).catch(error => console.log(error.message));
     }
 
     render() {
@@ -84,10 +127,17 @@ export class WorldCase extends Component {
                 color: `${this.props.isDark ? '#fff' : '#222'}`
             }}>
                 <div className='wc-container'>
-                    <div className='last-updated-wc'
-                        style={{ color: `${this.props.isDark ? 'skyblue' : 'red'}` }}>
-                        <span>Last Updated {this.state.lastUpdated} Ago</span>
-                    </div>
+                    <Translation>
+                        {t => <div className='last-updated-wc'
+                            style={{ color: `${this.props.isDark ? 'skyblue' : 'red'}` }}>
+                            <span>{t("Last Updated") + " "}
+                                {this.state.lastUpdated.includes("About") && " " + t("About") + " "}
+                                {this.state.lastUpdated.includes("Hours") ?
+                                    this.state.lastUpdated.split(" ")[1] + " " + t("Hours") + " " :
+                                    this.state.lastUpdated.split(" ")[0] + " " + t("Minutes") + " "} {t('Ago')}</span>
+                        </div>}
+                    </Translation>
+
                     <div className='world-cases-main'
                         style={{ border: ` 0.5px solid ${this.props.isDark ? '#1c1c1c' : '#eee'}` }}>
 
@@ -106,18 +156,21 @@ export class WorldCase extends Component {
                                                 trending_up</span></span>
                                         </div>
                                         <div className='wc-case-count'>
-                                            <span>{this.props.countryStat !== undefined ?
+                                            <span>{this.props.countryStat ?
                                                 this.props.countryStat.confirmed.toLocaleString('en-IN')
                                                 : this.state.worldStats.cases.toLocaleString('en-IN')}</span>
                                         </div>
-                                        <div className="today-delta"
-                                            style={{
-                                                color: `${this.props.isDark ? 'rgb(125, 221, 189)' : 'rgb(34, 143, 106)'}`,
-                                                padding: '20px 0px 20px 0px'
-                                            }}
-                                        >{`${this.props.todayStats !== undefined ? "+" + this.props.todayStats.todayConfirmed + " today" :
-                                            this.state.todayDelta.todayConfirmed !== undefined ? '+' + (this.state.todayDelta.todayConfirmed.toLocaleString('en-IN')) + ' today' : ''}`}
-                                        </div>
+                                        <Translation>
+                                            {t => <div className="today-delta"
+                                                style={{
+                                                    color: `${this.props.isDark ? 'rgb(125, 221, 189)' : 'rgb(34, 143, 106)'}`,
+                                                    padding: '20px 0px 20px 0px'
+                                                }}
+                                            >{`${this.props.todayStats !== undefined ? "+" + this.props.todayStats.todayConfirmed.toLocaleString('en-IN') + " " + t("today") :
+                                                this.state.worldStats.todayCases !== undefined ? '+' + (this.state.worldStats.todayCases.toLocaleString('en-IN')) + ' today' : ''}`}
+                                            </div>}
+                                        </Translation>
+
                                     </Fragment>
 
                             }
@@ -178,14 +231,17 @@ export class WorldCase extends Component {
                                                 this.props.countryStat.deaths.toLocaleString('en-IN')
                                                 : this.state.worldStats.deaths.toLocaleString('en-IN')}</span>
                                         </div>
-                                        <div className="today-delta"
-                                            style={{
-                                                color: `${this.props.isDark ? 'rgb(125, 221, 189)' : 'rgb(34, 143, 106)'}`,
-                                                padding: '20px 0px 20px 0px'
-                                            }}
-                                        >{`${this.props.todayStats !== undefined ? "+" + this.props.todayStats.todayDeaths + " today" :
-                                            this.state.todayDelta.todayDeaths !== undefined ? '+' + (this.state.todayDelta.todayDeaths.toLocaleString('en-IN')) + ' today' : ''}`}
-                                        </div>
+                                        <Translation>
+                                            {t => <div className="today-delta"
+                                                style={{
+                                                    color: `${this.props.isDark ? 'rgb(125, 221, 189)' : 'rgb(34, 143, 106)'}`,
+                                                    padding: '20px 0px 20px 0px'
+                                                }}
+                                            >{`${this.props.todayStats !== undefined ? "+" + this.props.todayStats.todayDeaths.toLocaleString('en-IN') + " " + t("today") :
+                                                this.state.worldStats.todayDeaths !== undefined ? '+' + (this.state.worldStats.todayDeaths.toLocaleString('en-IN')) + ' today' : ''}`}
+                                            </div>}
+                                        </Translation>
+
                                     </Fragment>
 
                             }

@@ -28,8 +28,7 @@ export class StateTable extends Component {
     }
 
     componentDidMount() {
-
-
+        // window.location = "lists"
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -323,7 +322,7 @@ export class StateTable extends Component {
                                                             fontSize: '12px',
                                                             visibility: `${parseInt(obj.deltaconfirmed) > 0 ? 'visible' : 'hidden'}`,
                                                         }} className="fa fa-arrow-up">
-                                                                {obj.deltaconfirmed}
+                                                                {parseInt(obj.deltaconfirmed).toLocaleString()}
                                                             </i>
 
                                                         </div>
@@ -337,7 +336,7 @@ export class StateTable extends Component {
                                                             fontSize: '12px',
                                                             visibility: `${parseInt(obj.deltarecovered) > 0 ? 'visible' : 'hidden'}`,
                                                         }} className="fa fa-arrow-up">
-                                                                {obj.deltarecovered}
+                                                                {parseInt(obj.deltarecovered).toLocaleString()}
                                                             </i>
                                                         </div>
                                                         {parseInt(obj.recovered).toLocaleString('en-IN')}</td>
@@ -350,7 +349,7 @@ export class StateTable extends Component {
                                                             fontSize: '12px',
                                                             visibility: `${parseInt(obj.deltadeaths) > 0 ? 'visible' : 'hidden'}`,
                                                         }} className="fa fa-arrow-up">
-                                                                {obj.deltadeaths}
+                                                                {parseInt(obj.deltadeaths).toLocaleString()}
                                                             </i>
                                                         </div>
                                                         {parseInt(obj.deaths).toLocaleString('en-IN')}</td>
@@ -369,20 +368,25 @@ export class StateTable extends Component {
                                                     id={`data-${obj.state}`}
                                                 >
                                                     <td colSpan="5" className="full-width">
-                                                        <div >
-                                                            <div style={{
-                                                                fontSize: '12px',
-                                                                textAlign: 'left', marginLeft: '18px',
-                                                                color: `${this.props.isDark ? 'lightgreen' : 'green'}`
-                                                            }}>Last Updated at {obj.lastupdatedtime}
-                                                            </div>
-                                                            <div style={{
-                                                                fontSize: '12px',
-                                                                textAlign: 'right', marginRight: '18px',
-                                                                color: `${this.props.isDark ? 'orange' : 'orange'}`
-                                                            }}><Link to={`/state-data/${obj.state}`}>View More Details</Link>
-                                                            </div>
-                                                        </div>
+                                                        <Translation>
+                                                            {t =>
+                                                                <div >
+
+                                                                    <div style={{
+                                                                        fontSize: '12px',
+                                                                        textAlign: 'left', marginLeft: '18px',
+                                                                        color: `${this.props.isDark ? 'lightgreen' : 'green'}`
+                                                                    }}>{t("Last updated at")} {obj.lastupdatedtime}
+                                                                    </div>
+                                                                    <div style={{
+                                                                        fontSize: '12px',
+                                                                        textAlign: 'right', marginRight: '18px',
+                                                                        color: `${this.props.isDark ? 'orange' : 'orange'}`
+                                                                    }}><Link to={`/state-data/${obj.state}`}>{t("View More Details")}</Link>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </Translation>
 
                                                         <table className="internal-table">
                                                             <thead>
@@ -445,7 +449,8 @@ export class StateTable extends Component {
 
                                                                                             }}>
                                                                                             <td style={{ background: `${this.props.isDark ? '#1e1d21' : '#ebebeb'}` }}>
-                                                                                                <div>&nbsp;</div><i className="fa fa-angle-right"></i>
+                                                                                                <div>&nbsp;</div>
+                                                                                                <i className="fa fa-angle-right"></i>
                                                                                             </td>
                                                                                             <td style={{ color: `${this.props.isDark ? '#fff' : '#222'}` }}>
                                                                                                 <div>&nbsp;</div>
@@ -464,7 +469,7 @@ export class StateTable extends Component {
                                                                                                     fontSize: '12px',
                                                                                                     visibility: `${y.delta.confirmed > 0 ? 'visible' : 'hidden'}`,
                                                                                                 }} className="fa fa-arrow-up">
-                                                                                                        {y.delta.confirmed}</i>
+                                                                                                        {parseInt(y.delta.confirmed).toLocaleString()}</i>
                                                                                                 </div>
                                                                                                 <span
                                                                                                 // style={{
@@ -485,7 +490,7 @@ export class StateTable extends Component {
                                                                                                     fontSize: '12px',
                                                                                                     visibility: `${y.delta.recovered > 0 ? 'visible' : 'hidden'}`,
                                                                                                 }} className="fa fa-arrow-up">
-                                                                                                        {y.delta.recovered}</i>
+                                                                                                        {parseInt(y.delta.recovered).toLocaleString()}</i>
                                                                                                 </div>
                                                                                                 <span
                                                                                                 // style={{
@@ -507,7 +512,7 @@ export class StateTable extends Component {
                                                                                                     fontSize: '12px',
                                                                                                     visibility: `${y.delta.deceased > 0 ? 'visible' : 'hidden'}`,
                                                                                                 }} className="fa fa-arrow-up">
-                                                                                                        {y.delta.deceased}</i>
+                                                                                                        {parseInt(y.delta.deceased).toLocaleString()}</i>
                                                                                                 </div>
                                                                                                 <span
                                                                                                 // style={{

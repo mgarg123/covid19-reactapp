@@ -22,7 +22,15 @@ class CountryData extends Component {
             confirmed: [],
             recover: [],
             deaths: [],
-            countryStat: {}
+            countryStat: {
+                confirmed: "",
+                deaths: "",
+                active: "",
+                recovered: "",
+                deathRate: "",
+                recoveryRate: "",
+                activeRate: ""
+            }
 
         }
     }
@@ -46,7 +54,7 @@ class CountryData extends Component {
             var DailyDeathRecords = 0;
             var confirmed = []
             var deaths = []
-            let country = params.countryname.replace('-', ' ')
+            let country = params.countryname
             let cData = data[country].map(x => x)
 
 
@@ -98,21 +106,55 @@ class CountryData extends Component {
         }).catch(error => console.log(error.message));
 
         //Today Stats Country Wise
-        axios.get('http://api.coronastatistics.live/countries/' + params.countryname.replace('-', ' ')).then(response => {
-            let data2 = response.data
-            var todayDeaths = data2.todayDeaths
-            var todayCases = data2.todayCases
+        // axios.get('http://api.coronastatistics.live/countries/' + params.countryname.replace('-', ' ')).then(response => {
+        //     let data2 = response.data
+        //     var todayDeaths = data2.todayDeaths
+        //     var todayCases = data2.todayCases
+
+        //     let todayDelta = {
+        //         todayDeaths: todayDeaths,
+        //         todayConfirmed: todayCases
+        //     }
+
+        //     this.setState({
+        //         todayDeltaCountry: todayDelta
+        //     })
+
+        // }).catch(error => console.log(error.message));
+        let url1 = "https://covidstat.info/graphql"
+        let countryName = params.countryname
+        let newCountryName = ""
+        if (countryName === "US") {
+            newCountryName = '"USA"'
+        } else if (countryName === "United Kingdom") {
+            newCountryName = '"UK"'
+        } else {
+            newCountryName = '"' + countryName + '"'
+        }
+        // console.log(countryName + " " + newCountryName);
+        axios({
+            url: url1,
+            method: "post",
+            data: {
+                query: `{
+                    country(name:${newCountryName}){
+                        updated
+                        todayCases
+                        todayDeaths
+                        country
+                    }
+                }`
+            }
+        }).then(res => {
+            let data = res.data.data
 
             let todayDelta = {
-                todayDeaths: todayDeaths,
-                todayConfirmed: todayCases
+                todayConfirmed: data.country.todayCases,
+                todayDeaths: data.country.todayDeaths
             }
-
-            this.setState({
-                todayDeltaCountry: todayDelta
-            })
-
-        }).catch(error => console.log(error.message));
+            this.setState({ todayDeltaCountry: todayDelta })
+            // console.log(todayDelta);
+        }).catch(err => console.log(err.message));
 
     }
 

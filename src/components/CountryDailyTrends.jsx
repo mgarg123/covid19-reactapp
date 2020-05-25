@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
+import { Translation } from 'react-i18next';
 
 class CountryDailyTrends extends Component {
     constructor(props) {
@@ -179,16 +180,19 @@ class CountryDailyTrends extends Component {
                     {/* <div className="buttons-left" style={{ border: '1px solid red' }}>
                         
                     </div> */}
-                    <div className="buttons" style={{ marginTop: '10px' }}>
-                        <button onClick={this.toggleLine} id="toggle-line"
-                            style={{ float: 'left', marginLeft: '2px' }}>Toggle Column
-                        </button>
-                        <button
-                            style={{ display: `${this.props.comparision ? 'none' : 'inline-block'}` }}
-                            onClick={this.loadDayData} id="day">Day</button>
-                        <button onClick={this.loadWeekData} id="week">Week</button>
-                        <button onClick={this.loadMonthData} id="month">Month</button>
-                    </div>
+                    <Translation>
+                        {t => <div className="buttons" style={{ marginTop: '10px' }}>
+                            <button onClick={this.toggleLine} id="toggle-line"
+                                style={{ float: 'left', marginLeft: '2px' }}>{t("Toggle Column")}
+                            </button>
+                            <button
+                                style={{ display: `${this.props.comparision ? 'none' : 'inline-block'}` }}
+                                onClick={this.loadDayData} id="day">{t("Day")}</button>
+                            <button onClick={this.loadWeekData} id="week">{t("Week")}</button>
+                            <button onClick={this.loadMonthData} id="month">{t("Month")}</button>
+                        </div>}
+                    </Translation>
+
                     <HighchartsReact
                         // ref={this.chartRef}
                         highcharts={Highcharts}
