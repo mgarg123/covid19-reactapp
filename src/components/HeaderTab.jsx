@@ -10,7 +10,7 @@ export class HeaderTab extends Component {
         super(props)
 
         this.state = {
-            isStatsClicked: false,
+            isStatsClicked: true,
             isStatewiseClicked: false,
             isGraphsClicked: false,
             isPredictionClicked: false
