@@ -62,12 +62,21 @@ th {
     .label-div th {
         width: 70px !important;
     }
+    .label-div th:nth-child(5) {
+        /* width: 90px !important; */
+        text-align: left !important;
+    }
     .data-div td:nth-child(1) {
         width: 10px !important;
     }
     .data-div td:nth-child(2) {
         width: fit-content !important;
         text-align: left !important;
+    }
+    .data-div td:nth-child(5) {
+        width: fit-content !important;
+        text-align: right !important;
+        padding-left: 15px;
     }
     .data-div td {
         text-align: center !important;

@@ -132,7 +132,7 @@ export class Routing extends Component {
                 <ScrollMemory />        {/*Used to Restore Scroll */}
                 <Switch>
                     <Route exact path='/'
-                        render={(props) => <App />}
+                        render={(props) => <App match={props.match} />}
                     >
                     </Route>     {/* Use render props in react router to pass props down the comp.*/}
                     <Route exact path='/about-corona' component={AboutCorona}></Route>

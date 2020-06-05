@@ -11,6 +11,7 @@ import Graphs from './components/Graphs'
 import Predictions from './components/Predictions'
 import Loader from './components/Loader'
 import { connect } from 'react-redux'
+// import { Switch, Route } from 'react-router-dom'
 // import { useSwipeable } from 'react-swipeable'
 // import SamplesTested from './components/SamplesTested'
 
@@ -48,10 +49,10 @@ function App(props) {
         let url = "https://api.covid19india.org/data.json"
         axios({
             method: "post",
-            url: "https://covidstat.info/graphql",
+            url: "https://api.ncovindias.xyz/api/graphql",
             data: {
                 query: `{
-                    state(countryName:"India",stateName:"Total"){
+                    country{
                         cases
                         recovered
                         deaths
@@ -59,13 +60,14 @@ function App(props) {
                         active
                         todayRecovered
                         todayDeaths
-                        updated
+                        lastupdated
                     }
                 }`
             }
         }).then(response => {
-            let data = response.data.data.state
+            let data = response.data.data.country
             // console.log(data);
+            // console.log(data.cases);
             let stat = {
                 confirmed: data.cases,
                 recovered: data.recovered,
@@ -79,8 +81,11 @@ function App(props) {
                 deltarecovered: data.todayRecovered
             }
 
-            let lastUpdated = new Date(data.updated)
-            let lastUpTime = [lastUpdated.getHours(), lastUpdated.getMinutes(), lastUpdated.getSeconds()]
+            // let lastUpdated = new Date(data.updated)     Timestamp from milliseconds
+            let lastUpdated = data.lastupdated.split(" ")[1]
+            let lastUpTime = [parseInt(lastUpdated.split(":")[0]),
+            parseInt(lastUpdated.split(":")[1]),
+            parseInt(lastUpdated.split(":")[2])]
             let time = new Date()
             let currHour = time.getHours()
             let currMin = time.getMinutes()
@@ -249,6 +254,9 @@ function App(props) {
                         // </div>
 
                     }
+
+
+
                     <Footer isDark={props.isDark} />
                 </div>
             </Suspense>
