@@ -317,9 +317,9 @@ export class StatesDashboard extends Component {
                                                                             fontSize: '12px',
                                                                             visibility: `${obj.delta.confirmed > 0 ? 'visible' : 'hidden'}`,
                                                                         }} className="fa fa-arrow-up">
-                                                                                {obj.delta.confirmed}</i>
+                                                                                {obj.delta.confirmed.toLocaleString()}</i>
                                                                         </div>
-                                                                        {obj.confirmed}</td>
+                                                                        {obj.confirmed.toLocaleString()}</td>
                                                                     <td style={{ textAlign: 'center' }}>
                                                                         <div style={{
                                                                         }}> <i style={{
@@ -328,9 +328,9 @@ export class StatesDashboard extends Component {
                                                                             fontSize: '12px',
                                                                             visibility: `${obj.delta.recovered > 0 ? 'visible' : 'hidden'}`,
                                                                         }} className="fa fa-arrow-up">
-                                                                                {obj.delta.recovered}</i>
+                                                                                {obj.delta.recovered.toLocaleString()}</i>
                                                                         </div>
-                                                                        {obj.recovered}</td>
+                                                                        {obj.recovered.toLocaleString()}</td>
                                                                     <td style={{ textAlign: 'center' }}>
                                                                         <div style={{
                                                                         }}> <i style={{
@@ -339,9 +339,9 @@ export class StatesDashboard extends Component {
                                                                             fontSize: '12px',
                                                                             visibility: `${obj.delta.deceased > 0 ? 'visible' : 'hidden'}`,
                                                                         }} className="fa fa-arrow-up">
-                                                                                {obj.delta.deceased}</i>
+                                                                                {obj.delta.deceased.toLocaleString()}</i>
                                                                         </div>
-                                                                        {obj.deceased}</td>
+                                                                        {obj.deceased.toLocaleString()}</td>
                                                                 </tr>
                                                             )
                                                         })
