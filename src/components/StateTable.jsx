@@ -3,6 +3,7 @@ import '../css/table.css'
 import { connect } from 'react-redux'
 import { Translation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import Typical from 'react-typical'
 
 export class StateTable extends Component {
     constructor(props) {
@@ -23,8 +24,10 @@ export class StateTable extends Component {
             sortDistrictDth: false,
             stateSearchVal: "",
             districtData: props.districtDatas,
+            disableAnimation: false
             // zoneData: JSON.parse(localStorage.getItem('ncovindia_zoneDataV2'))
         }
+        this.typicalRef = React.createRef()
     }
 
     componentDidMount() {
@@ -32,6 +35,12 @@ export class StateTable extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        // if (this.state.disableAnimation !== prevState.disableAnimation) {
+        //     if (this.state.disableAnimation === true)
+        //         document.getElementsByClassName("styles_typicalWrapper__1_Uvh")[0].style.display = "none"
+        //     else
+        //         document.getElementsByClassName("styles_typicalWrapper__1_Uvh")[0].style.display = "inline-block"
+        // }
         // if (this.state.sortState !== prevState.sortState) {
         //     if (this.state.sortState === true) {
         //         let arr = this.state.stateData
@@ -142,24 +151,39 @@ export class StateTable extends Component {
                         width: '100%',
                         margin: '20px 0px 0px 0px'
                     }}>
-                        <div style={{ width: 'fit-content', margin: '0 auto' }}>
+                        <div style={{ width: 'fit-content', margin: '0 auto', position: "relative" }}>
                             <Translation>
-                                {t => <input type="text"
-                                    value={this.state.countrySearchVal}
-                                    placeholder={t('Search State or UT')}
-                                    name="countryname"
-                                    id="countryname"
-                                    style={{
-                                        width: '250px',
-                                        height: '35px',
-                                        padding: '8px 8px',
-                                        border: 'none',
-                                        boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.8' : '0.4'})`,
-                                        borderRadius: '4px',
-                                        fontSize: '17px'
-                                    }}
-                                    onChange={(event) => this.setState({ stateSearchVal: event.target.value })}
-                                />}
+                                {t => <>
+                                    <input type="text"
+                                        value={this.state.countrySearchVal}
+                                        name="countryname"
+                                        id="countryname"
+                                        style={{
+                                            width: '250px',
+                                            height: '35px',
+                                            padding: '8px 8px',
+                                            border: 'none',
+                                            boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.8' : '0.4'})`,
+                                            borderRadius: '4px',
+                                            fontSize: '17px'
+                                        }}
+                                        onChange={(event) => this.setState({ stateSearchVal: event.target.value })}
+                                        onFocus={() => this.setState({ disableAnimation: true })}
+                                        onBlur={() => this.setState({ disableAnimation: false })}
+                                    />
+                                    {
+                                        this.state.disableAnimation ? <></> : <Typical
+                                            steps={["Jharkhand", 1000,
+                                                "Maharashtra", 1000,
+                                                "Madhya Pradesh", 1000,
+                                                "Delhi", 1000
+                                            ]}
+                                            loop={Infinity}
+                                            wrapper="span" />
+                                    }
+
+                                </>
+                                }
                             </Translation>
 
                         </div>

@@ -86,6 +86,17 @@
     border-radius: 7px;
 }
 
+
+/* Input Typewriter Effect */
+
+.styles_typicalWrapper__1_Uvh {
+    position: absolute;
+    font-weight: 480;
+    top: 7px;
+    left: 7px;
+    color: rgb(117, 117, 117);
+}
+
 @media(max-width:700px) {
     .world-cases {
         width: 100%;

@@ -10,6 +10,7 @@ import Footer from './Footer'
 import { Translation } from 'react-i18next'
 import HeaderTab from './HeaderTab'
 import StatesDashboardGraphs from './StatesDashboardGraphs'
+import Typical from 'react-typical'
 
 
 
@@ -26,7 +27,9 @@ export class StatesDashboard extends Component {
             showDistrictData: [],
             districtSearchVal: "",
             isStats: true,
-            stateName: ''
+            stateName: '',
+            disableTypingAnimation: false,
+            animatedDistrict: []
         }
     }
 
@@ -51,10 +54,18 @@ export class StatesDashboard extends Component {
                 topFiveData.push(tfDatas[i])
             }
             tfDatas.sort((x, y) => y.confirmed - x.confirmed)
+            // console.log(tfDatas);
+            let animDist = [tfDatas[3].district, 1000,
+            tfDatas[0].district, 1000,
+            tfDatas[2].district, 1000,
+            tfDatas[4].district, 1000
+
+            ]
             this.setState({
                 topFiveDistrictData: topFiveData,
                 districtData: tfDatas,
-                showDistrictData: tfDatas
+                showDistrictData: tfDatas,
+                animatedDistrict: animDist
             })
             //Setting District Data to LocalStorage
             localStorage.setItem('ncovindia_districtData', JSON.stringify(data))
@@ -128,6 +139,8 @@ export class StatesDashboard extends Component {
     }
 
     render() {
+        console.log(this.state.districtData.length > 0);
+
         return (
             <Fragment>
                 <div className="site-holder" style={{
@@ -218,25 +231,35 @@ export class StatesDashboard extends Component {
                                         marginBottom: '30px',
                                         flexWrap: 'wrap',
                                     }} >
-                                        <div style={{ width: 'fit-content', margin: '0 auto' }}>
+                                        <div style={{ width: 'fit-content', margin: '0 auto', position: "relative" }}>
                                             <Translation>
                                                 {
-                                                    t => <input type="text"
-                                                        value={this.state.countrySearchVal}
-                                                        placeholder={t('Search District')}
-                                                        name="countryname"
-                                                        id="countryname"
-                                                        style={{
-                                                            width: '250px',
-                                                            height: '35px',
-                                                            padding: '8px 8px',
-                                                            border: 'none',
-                                                            boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.8' : '0.4'})`,
-                                                            borderRadius: '4px',
-                                                            fontSize: '17px'
-                                                        }}
-                                                        onChange={(event) => this.setState({ districtSearchVal: event.target.value })}
-                                                    />
+                                                    t => <>
+                                                        <input type="text"
+                                                            value={this.state.countrySearchVal}
+                                                            name="countryname"
+                                                            id="countryname"
+                                                            style={{
+                                                                width: '250px',
+                                                                height: '35px',
+                                                                padding: '8px 8px',
+                                                                border: 'none',
+                                                                boxShadow: `7px 7px 15px 1px rgba(0, 0, 0,${this.props.isDark ? '0.8' : '0.4'})`,
+                                                                borderRadius: '4px',
+                                                                fontSize: '17px'
+                                                            }}
+                                                            onChange={(event) => this.setState({ districtSearchVal: event.target.value })}
+                                                            onFocus={() => this.setState({ disableTypingAnimation: true })}
+                                                            onBlur={() => this.setState({ disableTypingAnimation: false })}
+                                                        />
+                                                        {
+                                                            this.state.disableTypingAnimation ? <></> :
+                                                                <Typical
+                                                                    steps={this.state.animatedDistrict}
+                                                                    loop={Infinity}
+                                                                    wrapper="span" />
+                                                        }
+                                                    </>
                                                 }
 
                                             </Translation>

@@ -8,7 +8,7 @@ import StateTable from './components/StateTable'
 import axios from 'axios'
 import '../src/css/plot.css'
 import Graphs from './components/Graphs'
-import Predictions from './components/Predictions'
+// import Predictions from './components/Predictions'
 import Loader from './components/Loader'
 import { connect } from 'react-redux'
 // import { Switch, Route } from 'react-router-dom'
@@ -229,7 +229,7 @@ function App(props) {
                     color: `${props.isDark ? '#fff' : '#2d2d2d'}`
                 }}>
                     <Header />     {/*isDarkCallBack = { isDarkModeActive }*/}
-                    <HeaderTab tabs={["Stats", "Lists", "Graphs", "Prediction"]}
+                    <HeaderTab tabs={["Stats", "Lists", "Graphs"]}
                         tabClickedCallBack={whichTab}
                         statsSwiped={isStatsClicked}
                         statewiseSwiped={isStatewiseClicked}
@@ -246,9 +246,8 @@ function App(props) {
                                 affectedState={affectedState}
                                 districtDatas={districtDatas}
                                 isDark={props.isDark}
-                            /> : isGraphsClicked ?
-                                    <Graphs isDark={props.isDark} /> :
-                                    <Predictions isDark={props.isDark} />
+                            /> : isGraphsClicked &&
+                                <Graphs isDark={props.isDark} />
 
 
                         // </div>

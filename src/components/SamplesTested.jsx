@@ -31,7 +31,13 @@ export class SamplesTested extends PureComponent {
             totalPositive = parseInt(JSON.parse(localStorage.ncovindia_stats).confirmed)
         }
 
-
+        let statePositiveRate = 0
+        if (this.props.testData) {
+            let positive = parseInt(this.props.testData.positive)
+            let totalTested = parseInt(this.props.testData.totaltested)
+            console.log(positive + " " + totalTested);
+            statePositiveRate = ((positive / totalTested) * 100).toPrecision(3)
+        }
         return (
             <div className="sample-tested-main" >
                 <div className="samples-tested-container" title="Count of samples tested till yet.">
@@ -106,9 +112,8 @@ export class SamplesTested extends PureComponent {
                                     <span className="material-icons" style={{ fontSize: '10px' }}>
                                         trending_up</span>
                                     {
-                                        this.state.testData === undefined ? ((totalPositive / parseInt(this.state.sampleData.totalsamplestested))
-                                            * 100).toPrecision(3) + "%" : ((parseInt(this.props.testData.positive) / parseInt(this.props.testData.totalsamplestested))
-                                                * 100).toPrecision(3) + "%"
+                                        this.props.testData === undefined ? ((totalPositive / parseInt(this.state.sampleData.totalsamplestested))
+                                            * 100).toPrecision(3) + "%" : statePositiveRate + "%"
                                     }
                                     {}
                                 </div>

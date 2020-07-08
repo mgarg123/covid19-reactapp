@@ -58,6 +58,17 @@ th {
     /* width: 100px !important; */
 }
 
+
+/* Input Typewriter Effect */
+
+.styles_typicalWrapper__1_Uvh {
+    position: absolute;
+    font-weight: 480;
+    top: 7px;
+    left: 7px;
+    color: rgb(117, 117, 117);
+}
+
 @media (max-width:600px) {
     .label-div th {
         width: 70px !important;

@@ -788,6 +788,17 @@ tbody {
 }
 
 
+/* Typing Animation */
+
+.styles_typicalWrapper__1_Uvh {
+    position: absolute;
+    font-weight: 480;
+    top: 7px;
+    left: 7px;
+    color: rgb(117, 117, 117);
+}
+
+
 /* State District Table CSS Ends  */
 
 @media(max-width:768px) {

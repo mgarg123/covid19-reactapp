@@ -7,6 +7,7 @@ import WorldDataList from './WorldDataList'
 import '../css/world.css'
 import WorldCase from './WorldCase'
 import { connect } from 'react-redux'
+import Typical from 'react-typical'
 
 class WorldData extends Component {
     constructor(props) {
@@ -18,7 +19,8 @@ class WorldData extends Component {
             patientsData: props.worldPatientsData,
             showData: [],
             showDataMain: [],
-            indiaStat: {}
+            indiaStat: {},
+            disableTypingAnimation: false
         }
     }
 
@@ -139,10 +141,9 @@ class WorldData extends Component {
                             width: '100%',
                             margin: '20px 0px 0px 0px'
                         }}>
-                            <div style={{ width: 'fit-content', margin: '0 auto' }}>
+                            <div style={{ width: 'fit-content', margin: '0 auto', position: "relative" }}>
                                 <input type="text"
                                     value={this.state.countrySearchVal}
-                                    placeholder='Search Country'
                                     name="countryname"
                                     id="countryname"
                                     style={{
@@ -155,7 +156,15 @@ class WorldData extends Component {
                                         fontSize: '17px'
                                     }}
                                     onChange={(event) => this.setState({ countrySearchVal: event.target.value })}
+                                    onFocus={() => this.setState({ disableTypingAnimation: true })}
+                                    onBlur={() => this.setState({ disableTypingAnimation: false })}
                                 />
+                                {
+                                    this.state.disableTypingAnimation ? <></> : <Typical
+                                        steps={["India", 1000, "Australia", 1000, "Brazil", 1000, "United Kingdom", 1000]}
+                                        loop={Infinity}
+                                        wrapper="span" />
+                                }
                             </div>
 
                         </div>
