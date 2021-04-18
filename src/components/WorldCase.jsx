@@ -17,27 +17,12 @@ export class WorldCase extends Component {
     }
 
     componentDidMount() {
-        let url = "https://covidstat.info/graphql"
-        axios({
-            url: url,
-            method: "post",
-            data: {
-                query: `{
-                    all{
-                        cases
-                        deaths
-                        recovered
-                        todayCases
-                        todayDeaths
-                        active
-                        updated
-                    }
-                }`
-            }
-        }).then(res => {
-            let data = res.data.data
+        console.log(this.props.countryStat)
+        let url = "https://api.covid19api.com/summary"
+        axios.get(url).then(res => {
+            let data = res.data
             // console.log(data.all);
-            let lastUpdated = new Date(data.all.updated)
+            let lastUpdated = new Date(data.Global.Date)
             let lastUpTime = [lastUpdated.getHours(), lastUpdated.getMinutes(), lastUpdated.getSeconds()]
             let time = new Date()
             let currHour = time.getHours()
@@ -56,68 +41,11 @@ export class WorldCase extends Component {
             }
 
 
-            this.setState({ worldStats: data.all })
+            this.setState({ worldStats: data.Global })
+            // console.log(this.state.worldStats)
+            // console.log(this.state.lastUpdated)
         }).catch(err => console.log(err.message))
 
-
-        //     // let url = 'https://api.coronastatistics.live/all'
-        //     axios.get(url).then(resposne => {
-        //         let data = resposne.data
-
-        //         let dt = new Date(data.updated)
-        //         let prevHr = dt.getHours()
-        //         let prevMin = dt.getMinutes()
-
-        //         let currDate = new Date()
-        //         let currHr = currDate.getHours()
-        //         let currMin = currDate.getMinutes()
-
-        //         if ((currHr - prevHr === 0) && (currMin - prevMin >= 0)) {
-        //             let uptime = Math.abs(currMin - prevMin)
-        //             if (uptime === 1) {
-        //                 let lastval = uptime + ' Minute'
-        //                 this.setState({ lastUpdated: lastval })
-        //             } else {
-        //                 let lastval = uptime + ' Minutes'
-        //                 this.setState({ lastUpdated: lastval })
-        //             }
-
-        //         }
-        //         else if ((currHr - prevHr !== 0) && (currMin < prevMin)) {
-        //             let uptime = 60 - Math.abs(currMin - prevMin)
-        //             if (uptime === 1) {
-        //                 let lastval = uptime + ' Minute'
-        //                 this.setState({ lastUpdated: lastval })
-        //             } else {
-        //                 let lastval = uptime + ' Minutes'
-        //                 this.setState({ lastUpdated: lastval })
-        //             }
-        //             this.setState({ lastUpdated: uptime })
-        //         } else {
-        //             let uptime = Math.abs(currHr - prevHr)
-        //             if (uptime === 1) {
-        //                 let lastval = uptime + ' Hour'
-        //                 this.setState({ lastUpdated: lastval })
-        //             } else {
-        //                 let lastval = 'About ' + uptime + ' Hours'
-        //                 this.setState({ lastUpdated: lastval })
-        //             }
-        //             // this.setState({ lastUpdated: uptime })
-        //         }
-
-        //         this.setState({ worldStats: data })
-        //     }).catch(error => console.log(error.message));
-
-        //     axios.get("https://api.covid19api.com/summary").then(response => {
-        //         let data = response.data
-        //         let obj = {
-        //             todayConfirmed: data.Global.NewConfirmed,
-        //             todayDeaths: data.Global.NewDeaths,
-        //             todayRecovered: data.Global.NewRecovered,
-        //         }
-        //         this.setState({ todayDelta: obj })
-
-        //     }).catch(error => console.log(error.message));
     }
 
     render() {
@@ -149,7 +77,7 @@ export class WorldCase extends Component {
                             </div>
 
                             {
-                                this.state.worldStats.cases === undefined ? <Loader /> :
+                                this.state.worldStats.TotalConfirmed === undefined ? <Loader /> :
                                     <Fragment>
                                         <div className="wc-rate"><span style={{ background: 'rgb(1, 176, 230)' }}>
                                             <span className="material-icons wc-rate" style={{ fontSize: 10 }}>
@@ -158,7 +86,7 @@ export class WorldCase extends Component {
                                         <div className='wc-case-count'>
                                             <span>{this.props.countryStat ?
                                                 this.props.countryStat.confirmed.toLocaleString('en-IN')
-                                                : this.state.worldStats.cases.toLocaleString('en-IN')}</span>
+                                                : this.state.worldStats.TotalConfirmed.toLocaleString('en-IN')}</span>
                                         </div>
                                         <Translation>
                                             {t => <div className="today-delta"
@@ -167,7 +95,7 @@ export class WorldCase extends Component {
                                                     padding: '20px 0px 20px 0px'
                                                 }}
                                             >{`${this.props.todayStats !== undefined ? "+" + this.props.todayStats.todayConfirmed.toLocaleString('en-IN') + " " + t("today") :
-                                                this.state.worldStats.todayCases !== undefined ? '+' + (this.state.worldStats.todayCases.toLocaleString('en-IN')) + ' today' : ''}`}
+                                                this.state.worldStats.NewConfirmed !== undefined ? '+' + (this.state.worldStats.NewConfirmed.toLocaleString('en-IN')) + ' today' : ''}`}
                                             </div>}
                                         </Translation>
 
@@ -185,26 +113,25 @@ export class WorldCase extends Component {
                             </div>
 
                             {
-                                this.state.worldStats.cases === undefined ? <Loader /> :
+                                this.state.worldStats.TotalRecovered === undefined ? <Loader /> :
                                     <Fragment>
                                         <div className="wc-rate">
                                             <span style={{ background: 'rgb(42, 180, 7)' }}>
                                                 <span className="material-icons wc-rate" style={{ fontSize: 10 }}>
                                                     trending_up</span>{this.props.countryStat !== undefined ? this.props.countryStat.recoveryRate :
-                                                    ((this.state.worldStats.recovered / this.state.worldStats.cases) * 100).toPrecision(3) + "%"}</span>
+                                                    ((this.state.worldStats.TotalRecovered / this.state.worldStats.TotalConfirmed) * 100).toPrecision(3) + "%"}</span>
                                         </div>
                                         <div className='wc-case-count'>
                                             <span>{this.props.countryStat !== undefined ?
                                                 this.props.countryStat.recovered.toLocaleString('en-IN')
-                                                : this.state.worldStats.recovered.toLocaleString('en-IN')}</span>
+                                                : this.state.worldStats.TotalRecovered.toLocaleString('en-IN')}</span>
                                         </div>
                                         <div className="today-delta"
                                             style={{
                                                 color: `${this.props.isDark ? 'rgb(125, 221, 189)' : 'rgb(34, 143, 106)'}`,
                                                 padding: '20px 0px 20px 0px'
                                             }}
-                                        >{`${this.props.todayStats !== undefined ? '' :
-                                            this.state.todayDelta.todayRecovered !== undefined ? '+' + (this.state.todayDelta.todayRecovered.toLocaleString('en-IN')) + ' today' : ''}`}
+                                        >{`${this.state.todayDelta.todayRecovered !== undefined ? '+' + (this.state.todayDelta.todayRecovered.toLocaleString('en-IN')) + ' today' : '+' + this.state.worldStats.NewRecovered + ' today'}`}
                                         </div>
                                     </Fragment>
 
@@ -219,17 +146,17 @@ export class WorldCase extends Component {
                             </div>
 
                             {
-                                this.state.worldStats.cases === undefined ? <Loader /> :
+                                this.state.worldStats.TotalConfirmed === undefined ? <Loader /> :
                                     <Fragment>
                                         <div className="wc-rate"><span style={{ background: 'rgb(255, 0, 0)' }}>
                                             <span className="material-icons wc-rate" style={{ fontSize: 10 }}>
                                                 trending_up</span>{this.props.countryStat !== undefined ? this.props.countryStat.deathRate :
-                                                ((this.state.worldStats.deaths / this.state.worldStats.cases) * 100).toPrecision(3) + "%"}</span>
+                                                ((this.state.worldStats.TotalDeaths / this.state.worldStats.TotalConfirmed) * 100).toPrecision(3) + "%"}</span>
                                         </div>
                                         <div className='wc-case-count'>
                                             <span>{this.props.countryStat !== undefined ?
                                                 this.props.countryStat.deaths.toLocaleString('en-IN')
-                                                : this.state.worldStats.deaths.toLocaleString('en-IN')}</span>
+                                                : this.state.worldStats.TotalDeaths.toLocaleString('en-IN')}</span>
                                         </div>
                                         <Translation>
                                             {t => <div className="today-delta"
@@ -238,7 +165,7 @@ export class WorldCase extends Component {
                                                     padding: '20px 0px 20px 0px'
                                                 }}
                                             >{`${this.props.todayStats !== undefined ? "+" + this.props.todayStats.todayDeaths.toLocaleString('en-IN') + " " + t("today") :
-                                                this.state.worldStats.todayDeaths !== undefined ? '+' + (this.state.worldStats.todayDeaths.toLocaleString('en-IN')) + ' today' : ''}`}
+                                                this.state.worldStats.NewDeaths !== undefined ? '+' + (this.state.worldStats.NewDeaths.toLocaleString('en-IN')) + ' today' : ''}`}
                                             </div>}
                                         </Translation>
 
@@ -255,19 +182,19 @@ export class WorldCase extends Component {
                             </div>
 
                             {
-                                this.state.worldStats.cases === undefined ? <Loader /> :
+                                this.state.worldStats.TotalConfirmed === undefined ? <Loader /> :
                                     <Fragment>
                                         <div className="wc-rate"><span style={{ background: "rgb(196, 4, 221)" }}>
                                             <span className="material-icons wc-rate" style={{ fontSize: 10 }}>
                                                 trending_up</span>{this.props.countryStat !== undefined ? this.props.countryStat.activeRate :
-                                                (((this.state.worldStats.cases - (this.state.worldStats.deaths +
-                                                    this.state.worldStats.recovered)) /
-                                                    this.state.worldStats.cases) * 100).toPrecision(3) + "%"}</span>
+                                                (((this.state.worldStats.TotalConfirmed - (this.state.worldStats.TotalDeaths +
+                                                    this.state.worldStats.TotalRecovered)) /
+                                                    this.state.worldStats.TotalConfirmed) * 100).toPrecision(3) + "%"}</span>
                                         </div>
                                         <div className='wc-case-count'>
                                             <span>{this.props.countryStat !== undefined ?
                                                 this.props.countryStat.active.toLocaleString('en-IN')
-                                                : (this.state.worldStats.cases - (this.state.worldStats.deaths + this.state.worldStats.recovered)).toLocaleString('en-IN')}
+                                                : (this.state.worldStats.TotalConfirmed - (this.state.worldStats.TotalDeaths + this.state.worldStats.TotalRecovered)).toLocaleString('en-IN')}
                                             </span>
                                         </div>
                                         <div className="today-delta"

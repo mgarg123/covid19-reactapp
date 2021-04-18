@@ -10,6 +10,7 @@ export class StatesDashboardGraphs extends Component {
         super(props)
 
         this.state = {
+            apiResponse: [],
             labels: [],
             confirmed: [],
             deaths: [],
@@ -23,36 +24,77 @@ export class StatesDashboardGraphs extends Component {
     }
 
     componentDidMount() {
-        let url = "https://covidstat.info/graphql"
-        let query = `{
-                    state(countryName:"India",stateName:${this.props.stateName}){
-                        historical{
-                            date
-                            cases
-                            deaths
-                            recovered
-                        }
-                    }
-        }`
-        axios({
-            url: url,
-            method: "post",
-            data: {
-                query: query
-            }
-        }).then(res => {
-            let data = res.data.data.state
+        let states = {
+            "Andaman and Nicobar Islands": "AN",
+            "Andhra Pradesh": "AP",
+            "Arunachal Pradesh": "AR",
+            "Assam": "AS",
+            "Bihar": "BR",
+            "Chandigarh": "CH",
+            "Chhattisgarh": "CT",
+            "Dadra and Nagar Haveli": "DN",
+            "Daman and Diu": "DD",
+            "Delhi": "DL",
+            "Goa": "GA",
+            "Gujarat": "GJ",
+            "Haryana": "HR",
+            "Himachal Pradesh": "HP",
+            "Jammu and Kashmir": "JK",
+            "Jharkhand": "JH",
+            "Karnataka": "KA",
+            "Kerala": "KL",
+            "Lakshadweep": "LD",
+            "Madhya Pradesh": "MP",
+            "Maharashtra": "MH",
+            "Manipur": "MN",
+            "Meghalaya": "ML",
+            "Mizoram": "MZ",
+            "Nagaland": "NL",
+            "Odisha": "OR",
+            "Puducherry": "PY",
+            "Punjab": "PB",
+            "Rajasthan": "RJ",
+            "Sikkim": "SK",
+            "Tamil Nadu": "TN",
+            "Telangana": "TG",
+            "Tripura": "TR",
+            "Uttar Pradesh": "UP",
+            "Uttarakhand": "UT",
+            "West Bengal": "WB"
+        }
+        let stateCode = states[this.props.stateName.split("\"")[1]]
+        let url = "https://api.covid19india.org/v4/min/timeseries-" + stateCode + ".min.json"
+        axios.get(url).then(res => {
+            let data = res.data
             let month = ["January", "February", "March", "April", "May", "June", "July",
                 "August", "September", "October", "November", "December"]
 
-            let labels = data.historical.map(x => x.date.split('/')[1] + " " + month[parseInt(x.date.split('/')[0]) - 1])
-            let confirmedCases = data.historical.map(x => x.cases)
-            let deaths = data.historical.map(x => x.deaths)
-            let recovered = data.historical.map(x => x.recovered)
+            let dates = Object.keys(data[stateCode].dates)
+            let data_total = Object.values(data[stateCode].dates)
+
+            // console.log(dates);
+            // console.log(data_total);
+
+            //Fixing data (deceased,recovered)
+            for (let i = 0; i < data_total.length; i++) {
+                if (data_total[i].total.deceased === undefined)
+                    data_total[i].total.deceased = 0
+                if (data_total[i].total.recovered === undefined)
+                    data_total[i].total.recovered = 0
+            }
+
+            let labels = dates.map(x => x.split('-')[2] + "-" + month[parseInt(x.split('-')[1]) - 1] + "-" + x.split('-')[0].substr(2, 4))
+            let confirmedCases = data_total.map(x => x.total.confirmed)
+            let deaths = data_total.map(x => x.total.deceased)
+            let recovered = data_total.map(x => x.total.recovered)
 
             // console.log(labels);
             // console.log(confirmedCases);
+
+            console.log(data)
+
             this.setState({
+                apiResponse: data[stateCode],
                 labels: labels,
                 confirmed: confirmedCases,
                 deaths: deaths,
@@ -62,7 +104,6 @@ export class StatesDashboardGraphs extends Component {
                 totalDeaths: deaths,
                 totalRecovered: recovered
             })
-
         }).catch(err => console.log(err.message));
     }
 
@@ -76,49 +117,39 @@ export class StatesDashboardGraphs extends Component {
                     recovered: this.state.totalRecovered,
                 })
             } else {
-                let url = "https://covidstat.info/graphql"
-                axios({
-                    url: url,
-                    method: "post",
-                    data: {
-                        query: `{
-                            state(countryName:"India",stateName:${this.props.stateName}){
-                                districts{
-                                    district
-                                    historical{
-                                        date
-                                        cases
-                                        deaths
-                                        recovered
-                                    }
-                                }
-                            }
-                        }`
-                    }
-                }).then(res => {
-                    let data = res.data.data.state.districts
-                    let month = ["January", "February", "March", "April", "May", "June", "July",
-                        "August", "September", "October", "November", "December"]
+                let data = this.state.apiResponse
+                let month = ["January", "February", "March", "April", "May", "June", "July",
+                    "August", "September", "October", "November", "December"]
 
-                    // console.log(data);
-                    let districtData = data.filter(x => x.district === this.state.selectedDistrictName)[0]
-                    // console.log(districtData);
+                let districtDatas = data.districts[this.state.selectedDistrictName]
 
-                    let labels = districtData.historical.map(x => x.date.split('/')[1] + " " + month[parseInt(x.date.split('/')[0]) - 1])
-                    let confirmedCases = districtData.historical.map(x => x.cases)
-                    let deaths = districtData.historical.map(x => x.deaths)
-                    let recovered = districtData.historical.map(x => x.recovered)
+                let dates = Object.keys(districtDatas.dates)
+                let data_total = Object.values(districtDatas.dates)
 
-                    // console.log(labels);
-                    // console.log(confirmedCases);
-                    this.setState({
-                        labels: labels,
-                        confirmed: confirmedCases,
-                        deaths: deaths,
-                        recovered: recovered
-                    })
 
-                }).catch(err => console.log(err.message));
+                //Fixing data (deceased,recovered)
+                for (let i = 0; i < data_total.length; i++) {
+                    if (data_total[i].total.deceased === undefined)
+                        data_total[i].total.deceased = 0
+                    if (data_total[i].total.recovered === undefined)
+                        data_total[i].total.recovered = 0
+                }
+
+
+                let labels = dates.map(x => x.split('-')[2] + "-" + month[parseInt(x.split('-')[1]) - 1] + "-" + x.split('-')[0].substr(2, 4))
+                let confirmedCases = data_total.map(x => x.total.confirmed)
+                let deaths = data_total.map(x => x.total.deceased)
+                let recovered = data_total.map(x => x.total.recovered)
+
+                // console.log(labels);
+                // console.log(confirmedCases);
+                this.setState({
+                    labels: labels,
+                    confirmed: confirmedCases,
+                    deaths: deaths,
+                    recovered: recovered
+                })
+
 
             }
         }

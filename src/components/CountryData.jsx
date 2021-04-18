@@ -74,7 +74,7 @@ class CountryData extends Component {
                     cData[cData.length - 1].confirmed) * 100).toPrecision(3) + "%",
 
             }
-
+            console.log(cntryStat)
             this.setState({ countryStat: cntryStat })
 
             cData.map((confirmedDatas) => {
@@ -121,37 +121,28 @@ class CountryData extends Component {
         //     })
 
         // }).catch(error => console.log(error.message));
-        let url1 = "https://covidstat.info/graphql"
+        let url1 = "https://api.covid19api.com/summary"
         let countryName = params.countryname
         let newCountryName = ""
         if (countryName === "US") {
-            newCountryName = '"USA"'
-        } else if (countryName === "United Kingdom") {
-            newCountryName = '"UK"'
+            newCountryName = 'United States of America'
         } else {
-            newCountryName = '"' + countryName + '"'
+            newCountryName = countryName
         }
         // console.log(countryName + " " + newCountryName);
-        axios({
-            url: url1,
-            method: "post",
-            data: {
-                query: `{
-                    country(name:${newCountryName}){
-                        updated
-                        todayCases
-                        todayDeaths
-                        country
-                    }
-                }`
-            }
-        }).then(res => {
-            let data = res.data.data
-
+        axios.get(url1).then(res => {
+            let data = res.data
+            let countryDetail = data.Countries.find(x => x.Country === newCountryName)
             let todayDelta = {
-                todayConfirmed: data.country.todayCases,
-                todayDeaths: data.country.todayDeaths
+                todayConfirmed: countryDetail.NewConfirmed,
+                todayDeaths: countryDetail.NewDeaths,
+                todayRecovered: countryDetail.NewRecovered,
+                totalConfirmed: countryDetail.TotalConfirmed,
+                totalDeaths: countryDetail.TotalDeaths,
+                totalRecovered: countryDetail.TotalRecovered
+
             }
+            console.log(todayDelta)
             this.setState({ todayDeltaCountry: todayDelta })
             // console.log(todayDelta);
         }).catch(err => console.log(err.message));

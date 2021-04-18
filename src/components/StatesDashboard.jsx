@@ -139,7 +139,7 @@ export class StatesDashboard extends Component {
     }
 
     render() {
-        console.log(this.state.districtData.length > 0);
+        // console.log(this.state.districtData.length > 0);
 
         return (
             <Fragment>
